@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import CreateGiftList from '@/components/CreateGiftList';
 
 export default function CreateGiftListPage() {
-  return <CreateGiftList />;
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <CreateGiftList />
+    </Suspense>
+  );
 }
