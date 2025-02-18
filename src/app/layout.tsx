@@ -22,10 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${inter.className} bg-background`}>
-      <body>
+    <html lang="pt-BR" className={`${inter.className}`}>
+      <body className="flex flex-col min-h-screen bg-background">
         <Header />
-        <div className="w-full max-w-screen-xl mx-auto px-8">
+        <div className="flex flex-1 w-full max-w-screen-xl mx-auto px-8">
           {children}
         </div>
       </body>

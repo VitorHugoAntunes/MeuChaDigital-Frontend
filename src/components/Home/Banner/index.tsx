@@ -7,7 +7,7 @@ import { Gift, Mail, ListChecks } from 'lucide-react';
 export default function Banner() {
   return (
     <section className="grid grid-cols-2 gap-16 my-16">
-      <aside className="flex flex-col justify-center space-y-4">
+      <aside className="flex flex-col justify-center space-y-4 w-fit">
         <h1 className="text-4xl font-semibold">
           Planeje o Chá Perfeito do Jeito Que Sempre Sonhou!
         </h1>
