@@ -1,6 +1,5 @@
 import Banner from "@/components/Home/Banner";
 import Features from "@/components/Home/Features";
-import Footer from "@/components/Home/Footer";
 import GetStarted from "@/components/Home/GetStarted";
 
 export default function Home() {
@@ -9,7 +8,6 @@ export default function Home() {
       <Banner />
       <Features />
       <GetStarted />
-      <Footer />
     </main>
   );
 }
