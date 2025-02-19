@@ -1,14 +1,14 @@
 import Tag from "..";
 
 interface PriorityTagProps {
-  priority: "low priority" | "medium priority" | "high priority";
+  priority: "baixa" | "média" | "alta";
 }
 export default function PriorityTag({ priority }: PriorityTagProps) {
   const priorityColors = {
-    "low priority": "bg-green-200 text-green-800",
-    "medium priority": "bg-yellow-200 text-yellow-800",
-    "high priority": "bg-red-200 text-red-800",
+    "baixa": "bg-green-200 text-green-800",
+    "média": "bg-yellow-200 text-yellow-800",
+    "alta": "bg-red-200 text-red-800",
   };
 
-  return <Tag label={priority} color={priorityColors[priority]} />;
+  return <Tag label={`${priority} prioridade`} color={priorityColors[priority]} />;
 };

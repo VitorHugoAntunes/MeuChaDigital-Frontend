@@ -9,7 +9,7 @@ interface GiftCardProps {
   category: string;
   price: number;
   description: string;
-  priority: "low priority" | "medium priority" | "high priority";
+  priority: "baixa" | "média" | "alta";
 }
 
 const GiftCard = ({ photo, title, category, price, description, priority }: GiftCardProps) => {
@@ -28,7 +28,7 @@ const GiftCard = ({ photo, title, category, price, description, priority }: Gift
       <section className="p-4 space-y-4">
         <header className="flex items-center justify-between">
           <Tag label={category} color="bg-primary text-white" />
-          <span className="text-sm font-semibold text-text-primary">${price.toFixed(2)}</span>
+          <span className="text-lg font-bold text-success-dark">${price.toFixed(2)}</span>
         </header>
 
         <h3 className="text-lg font-semibold text-text-primary">{title}</h3>

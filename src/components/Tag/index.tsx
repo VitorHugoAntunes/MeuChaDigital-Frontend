@@ -6,7 +6,7 @@ interface TagProps {
 export default function Tag({ label, color }: TagProps) {
   return (
     <span
-      className={`text-xs font-semibold px-2 py-1 rounded-full ${color}`}
+      className={`text-xs font-semibold px-4 py-1 rounded-full ${color} first-letter:uppercase`}
       role="tag"
       aria-label={`Categoria: ${label}`}
     >
