@@ -1,11 +1,17 @@
+"use client";
+
 import Button from "@/components/Button";
 import { Plus, ShieldCheck, TriangleAlert } from "lucide-react";
 import Image from "next/image";
 import Card from "@/components/Card";
 import KeyInfo from "@/components/Profile/KeyInfo";
 import TipCard from "@/components/Profile/TipCard";
+import { useState } from "react";
+import Modal from "@/components/Modal";
 
 export default function Profile() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">
       <section className="flex flex-col gap-6">
@@ -29,7 +35,7 @@ export default function Profile() {
         <Card>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-text-primary">Chaves PIX</h2>
-            <Button>
+            <Button onClick={() => setIsModalOpen(true)}>
               Adicionar chave
               <Plus size={20} />
             </Button>
@@ -63,6 +69,11 @@ export default function Profile() {
           </div>
         </Card>
       </aside>
+
+
+      {isModalOpen && (
+        <Modal modalType="pix" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      )}
     </main>
   );
 }

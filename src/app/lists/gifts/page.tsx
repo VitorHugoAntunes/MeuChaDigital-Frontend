@@ -69,7 +69,7 @@ export default function Gifts() {
       </section>
 
       {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <Modal modalType="present" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       )}
     </main>
   );
