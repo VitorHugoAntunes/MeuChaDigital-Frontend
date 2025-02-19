@@ -30,28 +30,32 @@ export default function ListsPage() {
           date="10/10/2021"
           totalGifts={10}
           totalContributors={5}
-          progress={50}
+          totalRaised={5000}
+          totalGoal={10000}
         />
         <ListCard
           title="Aniversário da Ana"
           date="10/10/2021"
           totalGifts={10}
           totalContributors={5}
-          progress={50}
+          totalRaised={6000}
+          totalGoal={9000}
         />
         <ListCard
           title="Aniversário da Ana"
           date="10/10/2021"
           totalGifts={10}
           totalContributors={5}
-          progress={50}
+          totalRaised={7000}
+          totalGoal={8000}
         />
         <ListCard
           title="Aniversário da Ana"
           date="10/10/2021"
           totalGifts={10}
           totalContributors={5}
-          progress={50}
+          totalRaised={8000}
+          totalGoal={10000}
         />
       </section>
     </main>

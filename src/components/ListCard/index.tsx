@@ -11,10 +11,11 @@ interface ListCardProps {
   date: string;
   totalGifts: number;
   totalContributors: number;
-  progress: number;
+  totalRaised: number;
+  totalGoal: number;
 }
 
-export default function ListCard({ photo, title, date, totalGifts, totalContributors, progress }: ListCardProps) {
+export default function ListCard({ photo, title, date, totalGifts, totalContributors, totalRaised, totalGoal }: ListCardProps) {
   return (
     <article className="bg-white rounded-lg shadow-md flex flex-col flex-1 w-full">
       {/* Imagem do Banner */}
@@ -35,7 +36,7 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
 
         <ListCardInfo date={date} totalGifts={totalGifts} totalContributors={totalContributors} />
 
-        <ProgressBar progress={progress} />
+        <ProgressBar initialValue={totalRaised} goalValue={totalGoal} />
 
         <footer>
           <Button variant="default" widthFull>

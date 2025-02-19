@@ -39,16 +39,16 @@ export default function Gifts() {
             category="Eletrônico"
             price={7999.99}
             description="O novo iPhone 13 é o presente perfeito para quem ama tecnologia."
-            priority="high priority"
+            priority="alta"
           />
         </Link>
         <GiftCard
-          photo="/images/gifts/airfryer.jpg"
+          photo="/images/gifts/fritadeira.jpg"
           title="Fritadeira Elétrica"
           category="Casa"
           price={499.99}
           description="Prepare alimentos mais saudáveis com a fritadeira elétrica."
-          priority="medium priority"
+          priority="média"
         />
         <GiftCard
           photo="/images/gifts/ps5.jpg"
@@ -56,7 +56,7 @@ export default function Gifts() {
           category="Lazer"
           price={4999.99}
           description="O PlayStation 5 é o presente ideal para quem ama jogos."
-          priority="low priority"
+          priority="baixa"
         />
         <GiftCard
           photo="/images/gifts/iphone.jpg"
@@ -64,7 +64,7 @@ export default function Gifts() {
           category="Eletrônico"
           price={7999.99}
           description="O novo iPhone 13 é o presente perfeito para quem ama tecnologia."
-          priority="high priority"
+          priority="alta"
         />
       </section>
 
