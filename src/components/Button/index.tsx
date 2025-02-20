@@ -1,7 +1,7 @@
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  variant?: 'default' | 'outlined' | 'google';
+  variant?: 'default' | 'outlined' | 'google' | 'outlined-danger' | 'outlined-warning';
   borderStyle?: 'rounded' | 'rounded-full';
   widthFull?: boolean; // Nova propriedade para controlar a largura
 }
@@ -16,6 +16,8 @@ export default function Button({
   const variantStyles = {
     default: 'bg-primary-light text-white px-8 py-2 rounded-full hover:bg-primary-dark',
     outlined: 'bg-transparent text-primary-light px-8 py-2 rounded-full border-2 border-primary-light hover:border-primary-dark hover:text-primary-dark',
+    "outlined-danger": 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200 hover:border-danger-dark hover:text-danger-dark',
+    "outlined-warning": 'bg-transparent text-warning px-8 py-2 rounded-full border-2 border-gray-200 hover:border-warning-dark hover:text-warning-dark',
     google: 'bg-white text-gray-700 px-8 py-2 rounded-full border border-gray-300 hover:bg-gray-50',
   };
 

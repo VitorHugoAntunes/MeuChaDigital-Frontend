@@ -47,7 +47,7 @@ export default function CreateGiftList() {
       <div className="flex justify-between w-full mt-6">
         {step === 1 && (
           <Button
-            variant="outlined"
+            variant="outlined-danger"
             onClick={() => router.push('/lists')}
           >
             Cancelar

@@ -85,7 +85,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType }: ModalProps) => {
 
               <div className="flex justify-between gap-4">
                 <Button
-                  variant="outlined"
+                  variant="outlined-danger"
                   widthFull
                   onClick={closeModal}
                   aria-label="Cancelar"
@@ -112,7 +112,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType }: ModalProps) => {
 
             <div className="flex justify-between gap-4">
               <Button
-                variant="outlined"
+                variant="outlined-danger"
                 widthFull
                 onClick={closeModal}
                 aria-label="Cancelar"
