@@ -1,12 +1,17 @@
+"use client";
+
 import Button from "@/components/Button";
 import Image from "next/image";
 import Tag from "@/components/Tag";
 import PriorityTag from "@/components/Tag/PriorityTag";
 import ProgressBar from "@/components/ProgressBar";
-import { Info } from 'lucide-react';
+import { Info, Trash, Edit, Share2 } from 'lucide-react';
 import Link from "next/link";
+import { useState } from "react";
 
 export default function GiftPage() {
+  const [isUserOwner, setIsUserOwner] = useState(true);
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">
       <section className="bg-white rounded-lg p-6 border border-gray-200">
@@ -26,6 +31,20 @@ export default function GiftPage() {
           <div className="mt-4">
             <ProgressBar initialValue={4500} goalValue={7999.99} />
           </div>
+
+          {isUserOwner && (
+            <div className="flex items-center mt-4 gap-4 justify-end">
+              <Button variant="outlined-warning">
+                <Edit size={20} />
+                Editar
+              </Button>
+
+              <Button variant="outlined-danger">
+                <Trash size={20} />
+                Excluir
+              </Button>
+            </div>
+          )}
         </header>
 
         <figure className="mt-6 bg-gray-500">
@@ -84,26 +103,49 @@ export default function GiftPage() {
           </div>
         </div>
 
-        <div className="mt-6">
-          <Button widthFull>
-            Pagar
-          </Button>
-        </div>
+        {isUserOwner ? (
 
-        <div className="mt-6 flex items-start gap-3">
-          <Info size={20} className="text-gray-600 flex-shrink-0" />
-          <div>
-            <p className="text-sm text-gray-600">
-              Pagamento seguro garantido pelo Efi Bank
-            </p>
-            <p className="text-sm text-gray-600">
-              Ao clicar em &quot;Pagar&quot;, você concorda com os{" "}
-              <Link href="#" className="text-primary hover:underline">
-                Termos de Uso.
-              </Link>
-            </p>
-          </div>
-        </div>
+          <>
+            <div className="mt-6">
+              <Button widthFull>
+                <Share2 size={20} />
+                Compartilhar link
+              </Button>
+            </div>
+
+            <div className="mt-6 flex items-start gap-3">
+              <Info size={20} className="text-gray-600 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-600">
+                  Compartilhe o link para que outras pessoas possam contribuir com o presente.
+                </p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="mt-6">
+              <Button widthFull>
+                Pagar
+              </Button>
+            </div>
+
+            <div className="mt-6 flex items-start gap-3">
+              <Info size={20} className="text-gray-600 flex-shrink-0" />
+              <div>
+                <p className="text-sm text-gray-600">
+                  Pagamento seguro garantido pelo Efi Bank
+                </p>
+                <p className="text-sm text-gray-600">
+                  Ao clicar em &quot;Pagar&quot;, você concorda com os{" "}
+                  <Link href="#" className="text-primary hover:underline">
+                    Termos de Uso.
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </>
+        )}
       </aside>
     </main>
   );

@@ -9,27 +9,39 @@ import Modal from "@/components/Modal";
 import StatCard from "@/components/StatCard";
 
 export default function GiftsPage() {
+  const [isUserOwner, setIsUserOwner] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <main className="flex flex-col flex-1 w-screen my-8">
-      <header>
-        <h1 className="text-2xl font-semibold text-text-primary">Meus Presentes</h1>
-        <p className="text-md mt-2 text-text-secondary">
-          Gerencie seus presentes de forma fácil e prática.
-        </p>
-      </header>
+      {isUserOwner ? (
+        <>
+          <header>
+            <h1 className="text-2xl font-semibold text-text-primary">Meus Presentes</h1>
+            <p className="text-md mt-2 text-text-secondary">
+              Gerencie seus presentes de forma fácil e prática.
+            </p>
+          </header>
 
-      <section className="grid grid-cols-4 gap-4 mt-8">
-        <StatCard title="Total de Presentes" value="0" color="blue" />
-        <StatCard title="Valor arrecadado" value="R$ 0,00" color="success" />
-        <StatCard title="Presentes comprados" value="0" color="purple" />
-        <StatCard title="Contribuições" value="0" color="warning" />
-      </section>
+          <section className="grid grid-cols-4 gap-4 mt-8">
+            <StatCard title="Total de Presentes" value="0" color="blue" />
+            <StatCard title="Valor arrecadado" value="R$ 0,00" color="success" />
+            <StatCard title="Presentes comprados" value="0" color="purple" />
+            <StatCard title="Contribuições" value="0" color="warning" />
+          </section>
 
-      <div className="mt-8">
-        <Button onClick={() => setIsModalOpen(true)}>Adicionar Presente <Plus /></Button>
-      </div>
+          <div className="mt-8">
+            <Button onClick={() => setIsModalOpen(true)}>Adicionar Presente <Plus /></Button>
+          </div>
+        </>
+      ) : (
+        <header>
+          <h1 className="text-2xl font-semibold text-text-primary">Presentes</h1>
+          <p className="text-md mt-2 text-text-secondary">
+            Veja os presentes disponíveis para contribuição.
+          </p>
+        </header>
+      )}
 
       <section className="mt-8 grid grid-cols-4 gap-4">
         <Link href="/lists/gifts/1">
@@ -40,6 +52,7 @@ export default function GiftsPage() {
             price={7999.99}
             description="O novo iPhone 13 é o presente perfeito para quem ama tecnologia."
             priority="alta"
+            isUserOwner={isUserOwner}
           />
         </Link>
         <GiftCard
@@ -49,6 +62,7 @@ export default function GiftsPage() {
           price={499.99}
           description="Prepare alimentos mais saudáveis com a fritadeira elétrica."
           priority="média"
+          isUserOwner={isUserOwner}
         />
         <GiftCard
           photo="/images/gifts/ps5.jpg"
@@ -57,6 +71,7 @@ export default function GiftsPage() {
           price={4999.99}
           description="O PlayStation 5 é o presente ideal para quem ama jogos."
           priority="baixa"
+          isUserOwner={isUserOwner}
         />
         <GiftCard
           photo="/images/gifts/iphone.jpg"
@@ -65,6 +80,7 @@ export default function GiftsPage() {
           price={7999.99}
           description="O novo iPhone 13 é o presente perfeito para quem ama tecnologia."
           priority="alta"
+          isUserOwner={isUserOwner}
         />
       </section>
 

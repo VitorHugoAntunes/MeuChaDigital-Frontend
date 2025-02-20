@@ -10,9 +10,10 @@ interface GiftCardProps {
   price: number;
   description: string;
   priority: "baixa" | "média" | "alta";
+  isUserOwner?: boolean;
 }
 
-const GiftCard = ({ photo, title, category, price, description, priority }: GiftCardProps) => {
+const GiftCard = ({ photo, title, category, price, description, priority, isUserOwner }: GiftCardProps) => {
   return (
     <article className="w-full max-w-sm border border-gray-200 rounded-lg bg-white overflow-hidden shadow-md">
       <div className="relative w-full h-40 bg-gray-500">
@@ -37,20 +38,22 @@ const GiftCard = ({ photo, title, category, price, description, priority }: Gift
 
         <footer className="flex justify-between items-center">
           <PriorityTag priority={priority} />
-          <div className="flex gap-4">
-            <button
-              className="text-warning hover:text-warning-dark"
-              aria-label={`Editar ${title}`}
-            >
-              <Edit size={20} />
-            </button>
-            <button
-              className="text-danger hover:text-danger-dark"
-              aria-label={`Excluir ${title}`}
-            >
-              <Trash size={20} />
-            </button>
-          </div>
+          {isUserOwner && (
+            <div className="flex gap-4">
+              <button
+                className="text-warning hover:text-warning-dark"
+                aria-label={`Editar ${title}`}
+              >
+                <Edit size={20} />
+              </button>
+              <button
+                className="text-danger hover:text-danger-dark"
+                aria-label={`Excluir ${title}`}
+              >
+                <Trash size={20} />
+              </button>
+            </div>
+          )}
         </footer>
       </section>
     </article>
