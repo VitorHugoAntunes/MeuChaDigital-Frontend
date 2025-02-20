@@ -10,6 +10,7 @@ export default function StatCard({ title, value, color }: StatCardProps) {
     success: "bg-success-extraLight text-success-dark",
     purple: "bg-purple-extraLight text-purple-dark",
     warning: "bg-warning-extraLight text-warning-dark",
+    danger: "bg-danger-extraLight text-danger-dark",
   };
 
   return (
