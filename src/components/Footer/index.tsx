@@ -10,7 +10,7 @@ export default function Footer() {
   const currentUrl = pathName.split('?')[0];
 
   // Não exibe o footer em páginas específicas
-  if (currentUrl === '/sign-in' || currentUrl === '/create-gift-list') {
+  if (currentUrl === '/sign-in' || currentUrl === '/create-gift-list' || currentUrl === '/invitation') {
     return null;
   }
 

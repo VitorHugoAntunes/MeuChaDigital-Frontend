@@ -12,7 +12,7 @@ export default function Header() {
   const pathName = usePathname();
   const currentUrl = pathName.split('?')[0];
 
-  if (currentUrl === '/sign-in') {
+  if (currentUrl === '/sign-in' || currentUrl === '/invitation') {
     return null;
   }
 
