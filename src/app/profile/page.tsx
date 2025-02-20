@@ -9,7 +9,7 @@ import TipCard from "@/components/Profile/TipCard";
 import { useState } from "react";
 import Modal from "@/components/Modal";
 
-export default function Profile() {
+export default function ProfilePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

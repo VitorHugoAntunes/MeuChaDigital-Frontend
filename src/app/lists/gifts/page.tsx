@@ -8,7 +8,7 @@ import { useState } from "react";
 import Modal from "@/components/Modal";
 import StatCard from "@/components/StatCard";
 
-export default function Gifts() {
+export default function GiftsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
