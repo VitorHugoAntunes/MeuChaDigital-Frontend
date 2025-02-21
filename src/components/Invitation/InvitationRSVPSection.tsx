@@ -12,9 +12,10 @@ export default function InvitationRSVPSection() {
           <InputField label="Nome" placeholder="Digite seu nome" />
           <InputField label="E-mail" placeholder="Digite seu e-mail" />
           <InputField label="Telefone" placeholder="Digite seu telefone" />
-          <InputTextArea label="Observações" placeholder="Restrições alimentares, dúvidas, etc." />
+          <InputField type='number' label="Convidados" placeholder="Quantas pessoas você levará?" />
+          <InputTextArea label="Observações" placeholder="Restrições alimentares, dúvidas, avisos, etc." />
           <div className="flex justify-between mt-8 gap-4">
-            <Button variant='outlined' widthFull>Recusar educadamente</Button>
+            <Button variant='outlined-danger' widthFull>Recusar educadamente</Button>
             <Button widthFull>Confirmar presença</Button>
           </div>
         </form>

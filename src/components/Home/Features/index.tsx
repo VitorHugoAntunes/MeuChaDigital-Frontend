@@ -17,7 +17,7 @@ export default function Features() {
         <FeatureItem
           title="Envie convites digitais"
           description="Personalize seus convites e envie para seus convidados por e-mail."
-          icon="guests"
+          icon="invitees"
         />
 
         <FeatureItem

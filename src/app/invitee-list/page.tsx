@@ -6,11 +6,11 @@ import Tag from "@/components/Tag";
 import InputField from "@/components/InputField";
 import InputSelect from "@/components/InputSelect";
 
-const guests = [
-  { name: "João Silva", phone: "(11) 99999-1234", email: "teste@gmail.com", status: "Aceito", additionalGuests: 2, notes: "" },
-  { name: "Maria Souza", phone: "(21) 98888-5678", email: "teste@gmail.com", status: "Recusado", additionalGuests: 0, notes: "Tenho alergia a camarão" },
-  { name: "Carlos Lima", phone: "(31) 97777-4321", email: "teste@gmail.com", status: "Aceito", additionalGuests: 1, notes: "Chegará mais tarde" },
-  { name: "Ana Oliveira", phone: "(41) 96666-8765", email: "teste@gmail.com", status: "Aceito", additionalGuests: 0, notes: "" },
+const invitees = [
+  { name: "João Silva", phone: "(11) 99999-1234", email: "teste@gmail.com", status: "Aceito", additionalInvitees: 2, notes: "" },
+  { name: "Maria Souza", phone: "(21) 98888-5678", email: "teste@gmail.com", status: "Recusado", additionalInvitees: 0, notes: "Tenho alergia a camarão" },
+  { name: "Carlos Lima", phone: "(31) 97777-4321", email: "teste@gmail.com", status: "Aceito", additionalInvitees: 1, notes: "Chegará mais tarde" },
+  { name: "Ana Oliveira", phone: "(41) 96666-8765", email: "teste@gmail.com", status: "Aceito", additionalInvitees: 0, notes: "" },
 ];
 
 export default function GuestListPage() {
@@ -74,28 +74,28 @@ export default function GuestListPage() {
               </tr>
             </thead>
             <tbody>
-              {guests.map((guest, index) => (
+              {invitees.map((invitee, index) => (
                 <tr
                   key={index}
-                  className={`border-b border-gray-300 hover:bg-gray-50 transition ${index === guests.length - 1 ? "border-b-0" : ""
+                  className={`border-b border-gray-300 hover:bg-gray-50 transition ${index === invitees.length - 1 ? "border-b-0" : ""
                     }`}
                 >
-                  <td className="p-3 text-text-primary whitespace-nowrap">{guest.name}</td>
-                  <td className="p-3 text-text-secondary whitespace-nowrap">{guest.phone}</td>
-                  <td className="p-3 text-text-secondary whitespace-nowrap">{guest.email}</td>
+                  <td className="p-3 text-text-primary whitespace-nowrap">{invitee.name}</td>
+                  <td className="p-3 text-text-secondary whitespace-nowrap">{invitee.phone}</td>
+                  <td className="p-3 text-text-secondary whitespace-nowrap">{invitee.email}</td>
                   <td className="p-3 font-semibold">
                     <Tag
-                      label={guest.status}
+                      label={invitee.status}
                       color={
-                        guest.status === "Aceito"
+                        invitee.status === "Aceito"
                           ? "bg-success-extraLight text-success-extraDark"
                           : "bg-danger-extraLight text-danger-extraDark"
                       }
                     />
                   </td>
-                  <td className="p-3 text text-text-secondary">{guest.additionalGuests}</td>
+                  <td className="p-3 text text-text-secondary">{invitee.additionalInvitees}</td>
                   <td className="p-3 text-text-secondary max-w-[180px] whitespace-normal">
-                    {guest.notes || "-"}
+                    {invitee.notes || "-"}
                   </td>
                   <td className="p-3 flex justify-center gap-2">
                     <button className="text-danger hover:text-danger-dark transition">

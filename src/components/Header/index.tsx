@@ -57,7 +57,7 @@ export default function Header() {
               </li>
 
               <li>
-                <NavLink href="/guest-list">Convidar amigos</NavLink>
+                <NavLink href="/invitee-list">Convidar amigos</NavLink>
               </li>
             </>
           )}
