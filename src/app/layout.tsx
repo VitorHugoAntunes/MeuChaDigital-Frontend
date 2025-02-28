@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../styles/global.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter(
   {
@@ -25,11 +26,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.className}`}>
       <body className="flex flex-col min-h-screen bg-background">
-        <Header />
-        <div className="flex flex-1 w-full max-w-screen-xl mx-auto px-8">
-          {children}
-        </div>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <div className="flex flex-1 w-full max-w-screen-xl mx-auto px-8">
+            {children}
+          </div>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

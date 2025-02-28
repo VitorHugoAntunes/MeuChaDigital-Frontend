@@ -1,9 +1,19 @@
+"use client"
+import { getGiftLists } from "@/api/giftLists";
 import Button from "@/components/Button";
 import ListCard from "@/components/ListCard";
 import { Plus } from 'lucide-react';
 import Link from "next/link";
 
+import { useEffect, useState } from "react";
+
 export default function ListsPage() {
+  const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    getGiftLists().then(data => setLists(data));
+  }, []);
+
   return (
     <main className="flex flex-col flex-1 w-screen my-8">
       <h1 className="text-2xl font-semibold text-text-primary">
@@ -25,38 +35,17 @@ export default function ListsPage() {
       </div>
 
       <section className="mt-8 pb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <ListCard
-          title="Casamento de Ana e Vitor"
-          date="10/10/2021"
-          totalGifts={10}
-          totalContributors={5}
-          totalRaised={5000}
-          totalGoal={10000}
-        />
-        <ListCard
-          title="Aniversário da Ana"
-          date="10/10/2021"
-          totalGifts={10}
-          totalContributors={5}
-          totalRaised={6000}
-          totalGoal={9000}
-        />
-        <ListCard
-          title="Aniversário da Ana"
-          date="10/10/2021"
-          totalGifts={10}
-          totalContributors={5}
-          totalRaised={7000}
-          totalGoal={8000}
-        />
-        <ListCard
-          title="Aniversário da Ana"
-          date="10/10/2021"
-          totalGifts={10}
-          totalContributors={5}
-          totalRaised={8000}
-          totalGoal={10000}
-        />
+        {lists.map((list) => (
+          <ListCard
+            key={list.id}
+            title={list.name}
+            date="10/10/2021"
+            totalGifts={10}
+            totalContributors={5}
+            totalRaised={5000}
+            totalGoal={10000}
+          />
+        ))}
       </section>
     </main>
   )

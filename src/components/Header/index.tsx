@@ -6,24 +6,24 @@ import logo from '@/assets/logo.png';
 
 import NavLink from '@/components/NavLink';
 import Button from '@/components/Button';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { redirect, usePathname } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Header() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const { isAuthenticated, user, logoutUser } = useAuth();
   const pathName = usePathname();
   const currentUrl = pathName.split('?')[0];
 
-  const handleLogin = () => {
-    setIsUserLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsUserLoggedIn(false);
-  };
-
   if (currentUrl === '/sign-in' || currentUrl === '/invitation') {
     return null;
+  }
+
+  function handleLogin() {
+    redirect('/sign-in');
+  }
+
+  function handleLogout() {
+    logoutUser();
   }
 
   return (
@@ -50,7 +50,7 @@ export default function Header() {
             <NavLink href="/">Ajuda</NavLink>
           </li>
 
-          {isUserLoggedIn && (
+          {isAuthenticated && (
             <>
               <li>
                 <NavLink href="/lists">Minhas listas de presentes</NavLink>
@@ -65,9 +65,9 @@ export default function Header() {
       </nav>
 
       <div className="flex space-x-6 items-center">
-        {isUserLoggedIn ? (
+        {isAuthenticated ? (
           <>
-            <span className="text-text-primary">Olá, Usuário!</span>
+            <span className="text-text-primary">Olá, {user?.name}</span>
             <Link href="/profile">
               <Button>Ver perfil</Button>
             </Link>
@@ -80,9 +80,7 @@ export default function Header() {
             <Button variant="outlined" onClick={handleLogin}>
               Entrar
             </Button>
-            <Link href="/sign-in">
-              <Button>Criar conta</Button>
-            </Link>
+            <Button onClick={handleLogin}>Criar conta</Button>
           </>
         )}
       </div>

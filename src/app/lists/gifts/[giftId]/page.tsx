@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function GiftPage() {
-  const [isUserOwner, setIsUserOwner] = useState(true);
+  const [isUserOwner, setIsUserOwner] = useState(false);
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">

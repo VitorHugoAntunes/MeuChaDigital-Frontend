@@ -8,9 +8,11 @@ import KeyInfo from "@/components/Profile/KeyInfo";
 import TipCard from "@/components/Profile/TipCard";
 import { useState } from "react";
 import Modal from "@/components/Modal";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProfilePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">
@@ -19,15 +21,15 @@ export default function ProfilePage() {
           <header className="flex items-center gap-4">
             <picture className="w-16 h-16 bg-gray-500 rounded-full overflow-hidden">
               <Image
-                src="/images/profile/avatar.jpg"
-                alt="Foto de perfil do usuário"
+                src={user?.photo.url || "/avatar-placeholder.png"}
+                alt={user?.name || "Avatar"}
                 width={64}
                 height={64}
               />
             </picture>
             <div>
-              <h1 className="text-2xl font-bold text-text-primary">Vitor Hugo</h1>
-              <p className="text-md text-text-secondary">E-mail: vitor@gmail.com</p>
+              <h1 className="text-2xl font-bold text-text-primary">{user?.name || "Vitor Hugo"}</h1>
+              <p className="text-md text-text-secondary">{user?.email || "email@gmail.com"}</p>
             </div>
           </header>
         </Card>

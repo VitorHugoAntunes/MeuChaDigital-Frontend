@@ -9,7 +9,7 @@ import Modal from "@/components/Modal";
 import StatCard from "@/components/StatCard";
 
 export default function GiftsPage() {
-  const [isUserOwner, setIsUserOwner] = useState(true);
+  const [isUserOwner, setIsUserOwner] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

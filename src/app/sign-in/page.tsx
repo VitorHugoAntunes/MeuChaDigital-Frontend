@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import hero from '@/assets/hero.png';
 import googleIcon from '@/assets/google-icon.svg';
-import Link from 'next/link';
+import { login } from '@/api/auth';
 
 export default function SignInPage() {
   useEffect(() => {
@@ -14,6 +14,7 @@ export default function SignInPage() {
       document.body.classList.remove('bg-gradient-to-b', 'from-[#FDF2F8]', 'to-white');
     };
   }, []);
+
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-3 w-screen relative left-1/2 right-1/2 -mx-[50vw]">
@@ -38,16 +39,12 @@ export default function SignInPage() {
         </p>
 
         <form>
-          <Link href="/lists">
-            <Button variant="google">
-              <Image src={googleIcon} alt="Google" width={20} height={20} />
-              Continuar com o Google
-            </Button>
-          </Link>
+          <Button variant="google" onClick={login}>
+            <Image src={googleIcon} alt="Google" width={20} height={20} />
+            Continuar com o Google
+          </Button>
         </form>
       </section>
     </main>
-
-
   );
 }
