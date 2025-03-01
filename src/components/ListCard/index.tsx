@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Button from "../Button";
 import ProgressBar from "../ProgressBar";
@@ -16,15 +17,24 @@ interface ListCardProps {
 }
 
 export default function ListCard({ photo, title, date, totalGifts, totalContributors, totalRaised, totalGoal }: ListCardProps) {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <article className="bg-white rounded-lg shadow-md flex flex-col flex-1 w-full">
-      {/* Imagem do Banner */}
       <figure className="w-full h-48 relative rounded-t-lg overflow-hidden bg-gray-300">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse">
+            <span className="text-gray-500">Carregando...</span>
+          </div>
+        )}
         <Image
-          src={photo || "/list-placeholder.jpg"}
+          src={photo || "/images/banner-placeholder.png"}
           alt={`Imagem da lista ${title}`}
           layout="fill"
           objectFit="cover"
+          loading="lazy"
+          onLoad={() => setIsLoading(false)}
+          onError={() => setIsLoading(false)}
         />
       </figure>
 

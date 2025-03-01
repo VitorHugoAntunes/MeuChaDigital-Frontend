@@ -3,7 +3,8 @@ interface ButtonProps {
   onClick?: () => void;
   variant?: 'default' | 'outlined' | 'google' | 'outlined-danger' | 'outlined-warning';
   borderStyle?: 'rounded' | 'rounded-full';
-  widthFull?: boolean; // Nova propriedade para controlar a largura
+  widthFull?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export default function Button({
@@ -12,6 +13,7 @@ export default function Button({
   variant = 'default',
   widthFull = false,
   borderStyle = 'rounded',
+  type = 'button',
 }: ButtonProps) {
   const variantStyles = {
     default: 'bg-primary-light text-white px-8 py-2 rounded-full hover:bg-primary-dark',
@@ -25,6 +27,7 @@ export default function Button({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={
         `${buttonStyles} transition-colors duration-300

@@ -1,18 +1,37 @@
 "use client"
-import { getGiftLists } from "@/api/giftLists";
+import { getAllGiftByUser } from "@/api/giftLists";
 import Button from "@/components/Button";
 import ListCard from "@/components/ListCard";
+import { useAuth } from "@/contexts/AuthContext";
+import { formatDateToBR } from "@/utils/formatDate";
 import { Plus } from 'lucide-react';
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
 
+interface GiftList {
+  id: string;
+  name: string;
+  banner: {
+    url: string;
+  }
+  eventDate: string;
+  _count: {
+    gifts: number;
+  }
+}
+
 export default function ListsPage() {
-  const [lists, setLists] = useState([]);
+  const { user } = useAuth();
+  const [lists, setLists] = useState<GiftList[]>([]);
 
   useEffect(() => {
-    getGiftLists().then(data => setLists(data));
-  }, []);
+    if (!user?.id) return;
+
+    getAllGiftByUser(user.id)
+      .then(data => setLists(data))
+      .catch(error => console.error("Erro ao buscar listas:", error));
+  }, [user?.id]);
 
   return (
     <main className="flex flex-col flex-1 w-screen my-8">
@@ -38,9 +57,10 @@ export default function ListsPage() {
         {lists.map((list) => (
           <ListCard
             key={list.id}
+            photo={list.banner.url}
             title={list.name}
-            date="10/10/2021"
-            totalGifts={10}
+            date={formatDateToBR(list.eventDate)}
+            totalGifts={list._count.gifts}
             totalContributors={5}
             totalRaised={5000}
             totalGoal={10000}
