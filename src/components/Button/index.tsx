@@ -1,3 +1,5 @@
+import { LoaderCircle } from "lucide-react";
+
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
@@ -5,6 +7,8 @@ interface ButtonProps {
   borderStyle?: 'rounded' | 'rounded-full';
   widthFull?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  loading?: boolean;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -14,6 +18,8 @@ export default function Button({
   widthFull = false,
   borderStyle = 'rounded',
   type = 'button',
+  loading = false,
+  disabled = false,
 }: ButtonProps) {
   const variantStyles = {
     default: 'bg-primary-light text-white px-8 py-2 rounded-full hover:bg-primary-dark',
@@ -29,13 +35,22 @@ export default function Button({
     <button
       type={type}
       onClick={onClick}
+      disabled={loading || disabled}
       className={
         `${buttonStyles} transition-colors duration-300
          ${widthFull ? 'w-full flex items-center justify-center gap-4' : 'w-fit flex items-center justify-center gap-4'}
          ${borderStyle === 'rounded' ? 'rounded-md' : 'rounded-full'}
+         ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
       `}
     >
-      {children}
+      {
+        loading ? (
+          <>
+            <LoaderCircle size={20} className="animate-spin" />
+            Carregando...
+          </>
+        ) : children
+      }
     </button>
   );
 }

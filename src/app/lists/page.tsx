@@ -1,50 +1,38 @@
-"use client"
-import { getAllGiftByUser } from "@/api/giftLists";
+"use client";
+import React from "react";
 import Button from "@/components/Button";
 import ListCard from "@/components/ListCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGiftListsByUser } from "@/hooks/giftLists";
 import { formatDateToBR } from "@/utils/formatDate";
-import { Plus } from 'lucide-react';
+import { Plus } from "lucide-react";
 import Link from "next/link";
-
-import { useEffect, useState } from "react";
 
 interface GiftList {
   id: string;
   name: string;
   banner: {
     url: string;
-  }
+  };
   eventDate: string;
   _count: {
     gifts: number;
-  }
+  };
 }
 
-export default function ListsPage() {
+const ListsPage = () => {
   const { user } = useAuth();
-  const [lists, setLists] = useState<GiftList[]>([]);
 
-  useEffect(() => {
-    if (!user?.id) return;
+  const { data: giftLists, isLoading, isError } = useGiftListsByUser(user?.id ?? "");
 
-    getAllGiftByUser(user.id)
-      .then(data => setLists(data))
-      .catch(error => console.error("Erro ao buscar listas:", error));
-  }, [user?.id]);
+  if (!user) return null;
 
   return (
     <main className="flex flex-col flex-1 w-screen my-8">
-      <h1 className="text-2xl font-semibold text-text-primary">
-        Minhas Listas de Presentes
-      </h1>
-
-      <p className="text-md mt-2 text-text-secondary">
-        Gerencie suas listas de presentes de forma fácil e prática.
-      </p>
+      <h1 className="text-2xl font-semibold text-text-primary">Minhas Listas de Presentes</h1>
+      <p className="text-md mt-2 text-text-secondary">Gerencie suas listas de presentes de forma fácil e prática.</p>
 
       <div className="flex mt-8 justify-end">
-
         <Link href="/create-gift-list">
           <Button variant="default">
             Criar nova lista
@@ -53,11 +41,18 @@ export default function ListsPage() {
         </Link>
       </div>
 
+      {isLoading && <p className="text-center mt-8">Carregando listas...</p>}
+      {isError && <p className="text-center mt-8 text-red-500">Erro ao carregar as listas.</p>}
+
+      {!isLoading && !isError && giftLists?.length === 0 && (
+        <p className="text-center mt-8 text-text-secondary">Nenhuma lista encontrada.</p>
+      )}
+
       <section className="mt-8 pb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {lists.map((list) => (
+        {giftLists?.map((list: GiftList) => (
           <ListCard
             key={list.id}
-            photo={list.banner.url}
+            photo={list.banner?.url}
             title={list.name}
             date={formatDateToBR(list.eventDate)}
             totalGifts={list._count.gifts}
@@ -68,5 +63,7 @@ export default function ListsPage() {
         ))}
       </section>
     </main>
-  )
-}
+  );
+};
+
+export default React.memo(ListsPage);

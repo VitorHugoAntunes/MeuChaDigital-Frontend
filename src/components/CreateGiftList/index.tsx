@@ -7,15 +7,28 @@ import Step1 from './Step_1';
 import Step2 from './Step_2';
 import Button from '../Button';
 import { eventSchema, EventFormData } from '../../schemas/createGiftListValidator';
-import { createGiftList } from '@/api/giftLists';
 import { useAuth } from '@/contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import { useCreateGiftList, useGiftListsByUser } from '@/hooks/giftLists';
 
 export default function CreateGiftList() {
   const { user } = useAuth();
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const step = Number(searchParams.get('step')) || 1;
+
+  const [isLoading, setIsLoading] = useState(false); // Estado geral de carregamento
+  const [isSubmitting, setIsSubmitting] = useState(false); // Estado específico para o envio do formulário
+
+  const userId = user?.id ?? "";
+  const { refetch } = useGiftListsByUser(userId);
+  const { mutate: createGiftListMutation, isSuccess: isCreateSuccess, isLoading: isMutationLoading } = useCreateGiftList();
+
+  useEffect(() => {
+    if (isCreateSuccess) {
+      router.push('/lists');
+    }
+  }, [isCreateSuccess, router]);
 
   const totalSteps = 2;
 
@@ -62,20 +75,22 @@ export default function CreateGiftList() {
       return;
     }
 
+    setIsSubmitting(true);
+
     const dataToSend = {
       userId: user.id,
       ...data,
       status: "ACTIVE",
       gifts: [],
     };
-    console.log("Erros antes de submeter:", errors);
-    console.log("Dados enviados:", dataToSend);
-    const formData = await createGiftList(dataToSend);
 
-    console.log("Lista de presentes criada com sucesso:", formData);
-    router.push('/lists/gifts');
-
-    return formData;
+    try {
+      createGiftListMutation(dataToSend);
+    } catch (error) {
+      console.error("Erro ao criar lista de presentes:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const stepTitles: { [key: number]: string } = {
@@ -113,6 +128,7 @@ export default function CreateGiftList() {
               <Button
                 variant="outlined-danger"
                 onClick={() => router.push('/lists')}
+                disabled={isSubmitting || isMutationLoading} // Desabilita o botão durante o envio
               >
                 Cancelar
               </Button>
@@ -122,20 +138,27 @@ export default function CreateGiftList() {
               <Button
                 variant="outlined"
                 onClick={() => goToStep(step - 1, true)}
+                disabled={isSubmitting || isMutationLoading} // Desabilita o botão durante o envio
               >
                 Voltar
               </Button>
             )}
 
             {step === totalSteps && (
-              <Button type="submit">
-                Finalizar
+              <Button
+                type="submit"
+                loading={isSubmitting || isMutationLoading} // Exibe o estado de carregamento no botão
+                disabled={isSubmitting || isMutationLoading} // Desabilita o botão durante o envio
+              >
+                {isSubmitting || isMutationLoading ? "Finalizando..." : "Finalizar"}
               </Button>
             )}
 
             {step < totalSteps && (
               <Button
                 onClick={() => goToStep(step + 1)}
+                loading={isLoading} // Exibe o estado de carregamento no botão
+                disabled={isLoading || isSubmitting || isMutationLoading} // Desabilita o botão durante o carregamento ou envio
               >
                 Prosseguir
               </Button>
