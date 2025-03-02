@@ -1,10 +1,10 @@
-import { createGiftList, getAllGiftByUser } from '@/api/giftLists';
+import { createGiftList, getAllGiftListsByUser } from '@/api/giftLists';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useGiftListsByUser = (userId: string) => {
   return useQuery({
     queryKey: ['giftLists', userId],
-    queryFn: () => getAllGiftByUser(userId),
+    queryFn: () => getAllGiftListsByUser(userId),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!userId, // Só executa a query se `userId` estiver disponível

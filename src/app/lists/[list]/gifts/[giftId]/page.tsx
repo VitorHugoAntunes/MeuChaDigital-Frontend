@@ -18,7 +18,7 @@ export default function GiftPage() {
         <header>
           <div className="flex items-center gap-2">
             <Tag label="Eletrônicos" color="bg-green-100 text-green-800" />
-            <PriorityTag priority="alta" />
+            <PriorityTag priority="HIGH" />
           </div>
 
           <h1 className="text-2xl font-bold text-text-primary mt-2">iPhone 13</h1>

@@ -9,7 +9,7 @@ interface GiftCardProps {
   category: string;
   price: number;
   description: string;
-  priority: "baixa" | "média" | "alta";
+  priority: "LOW" | "MEDIUM" | "HIGH";
   isUserOwner?: boolean;
 }
 

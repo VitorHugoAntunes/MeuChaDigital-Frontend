@@ -6,13 +6,11 @@ import Footer from "@/components/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
-const inter = Inter(
-  {
-    subsets: ["latin"],
-    weight: ['400', '500', '600', '700'],
-    variable: "--font-inter"
-  }
-);
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Meu Chá Digital",

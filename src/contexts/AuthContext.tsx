@@ -1,5 +1,6 @@
 "use client";
-import { createContext, useContext, ReactNode } from "react";
+
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { userAuthenticated, getUser } from "@/api/user";
 import { logout } from "@/api/auth";
@@ -17,6 +18,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   logoutUser: () => void;
 }
 
@@ -29,29 +31,51 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: AuthProviderProps) {
   const queryClient = useQueryClient();
 
-  // Verifica se o usuário está autenticado
-  const { data: authData } = useQuery({
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const {
+    data: authData,
+    isLoading: isAuthLoading,
+    refetch: refetchAuth
+  } = useQuery({
     queryKey: ["auth"],
     queryFn: userAuthenticated,
-    retry: false, // Não tenta refazer a requisição em caso de erro
-    staleTime: 1000 * 60 * 30, // 30 minutos de stale time
+    retry: false,
+    staleTime: 1000 * 60 * 30,
+    enabled: false,
+    onSuccess: (data) => {
+      setIsAuthenticated(!!data?.id);
+    },
+    onError: () => {
+      setIsAuthenticated(false);
+    },
   });
 
-  // Busca os dados do usuário se estiver autenticado
-  const { data: user } = useQuery({
+  const { data: user, isLoading: isUserLoading } = useQuery({
     queryKey: ["user", authData?.id],
     queryFn: () => getUser(authData?.id),
-    enabled: !!authData?.id, // Só executa se authData.id existir
-    staleTime: 1000 * 60 * 30, // 30 minutos de stale time
+    enabled: !!authData?.id,
+    staleTime: 1000 * 60 * 30,
   });
 
-  // Mutation para logout
+  useEffect(() => {
+    setIsLoading(isAuthLoading || isUserLoading);
+  }, [isAuthLoading, isUserLoading]);
+
+  useEffect(() => {
+    refetchAuth();
+  }, []);
+
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      // Limpa o cache do React Query ao fazer logout
       queryClient.removeQueries({ queryKey: ["auth"] });
       queryClient.removeQueries({ queryKey: ["user"] });
+      queryClient.setQueryData(["auth"], null);
+      queryClient.setQueryData(["user"], null);
+      setIsAuthenticated(false);
+      setIsLoading(false); // Garante que o loading seja false após logout
     },
   });
 
@@ -63,7 +87,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         user: user || null,
-        isAuthenticated: !!user,
+        isAuthenticated,
+        isLoading,
         logoutUser,
       }}
     >

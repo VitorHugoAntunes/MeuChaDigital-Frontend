@@ -13,7 +13,7 @@ interface GiftListCreateData {
   moments_images: File[];
 }
 
-export const getAllGiftByUser = async (userId: string) => {
+export const getAllGiftListsByUser = async (userId: string) => {
   const response = await api.get(`/lists/user/${userId}`);
   console.log('isso foi chamado');
   return response.data;

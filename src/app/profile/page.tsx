@@ -9,10 +9,16 @@ import TipCard from "@/components/Profile/TipCard";
 import { useState } from "react";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/AuthContext";
+import { redirect } from "next/navigation";
 
 export default function ProfilePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, logoutUser } = useAuth();
+
+  function handleLogout() {
+    logoutUser();
+    redirect("/");
+  }
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">
@@ -36,7 +42,7 @@ export default function ProfilePage() {
 
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-text-primary">Chaves PIX</h2>
+            <h2 className="text-xl font-semibold text-text-primary">Chaves PIX</h2>
             <Button onClick={() => setIsModalOpen(true)}>
               Adicionar chave
               <Plus size={20} />
@@ -49,7 +55,44 @@ export default function ProfilePage() {
             <KeyInfo title="Telefone" value="(11) 99999-9999" />
           </div>
         </Card>
-      </section>
+
+        <Card>
+          <h3 className="text-xl font-semibold text-text-primary mb-4">Histórico de Transações</h3>
+          <p className="text-md text-text-secondary">Você ainda não realizou nenhuma transação.</p>
+        </Card>
+
+        <Card>
+          <h3 className="text-xl font-semibold text-text-primary pb-2">Conta</h3>
+
+          <div className="flex flex-col gap-4">
+            <Card className="py-4 flex items-center justify-between gap-4">
+              <div className="flex-1">
+                <h4 className="text-lg font-semibold text-text-primary">Sair da conta</h4>
+                <p className="text-md text-text-secondary">Saia da sua conta a qualquer momento.</p>
+              </div>
+              <Button variant="outlined-danger" onClick={handleLogout}>
+                Sair da conta
+              </Button>
+            </Card>
+
+            <Card className="py-4 flex items-center justify-between gap-4">
+              <div className="flex-1">
+                <h4 className="text-lg font-semibold text-text-primary">Excluir conta</h4>
+                <p className="text-md text-text-secondary">
+                  Para excluir sua conta, todas as suas listas devem estar com o status &quot;<strong>INATIVA</strong>&quot;.
+                </p>
+              </div>
+              <Button variant="danger">
+                Excluir conta
+              </Button>
+            </Card>
+          </div>
+        </Card>
+
+
+
+
+      </section >
 
       <aside className="flex flex-col gap-6">
         <Card>
@@ -73,9 +116,11 @@ export default function ProfilePage() {
       </aside>
 
 
-      {isModalOpen && (
-        <Modal modalType="pix" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      )}
-    </main>
+      {
+        isModalOpen && (
+          <Modal modalType="pix" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        )
+      }
+    </main >
   );
 }

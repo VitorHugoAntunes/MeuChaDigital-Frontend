@@ -11,6 +11,7 @@ import Link from "next/link";
 interface GiftList {
   id: string;
   name: string;
+  slug: string;
   banner: {
     url: string;
   };
@@ -21,11 +22,25 @@ interface GiftList {
 }
 
 const ListsPage = () => {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const { data: giftLists, isLoading, isError } = useGiftListsByUser(user?.id ?? "");
 
-  if (!user) return null;
+  if (!isAuthenticated) {
+    return (
+      <main className="flex flex-col flex-1 w-screen my-8 justify-center items-center">
+        <h1 className="text-2xl font-semibold text-text-primary">Você não está logado ainda.</h1>
+
+        <div className="flex mt-8">
+          <Link href="/sign-in">
+            <Button variant="default">
+              Faça login para ver suas listas
+            </Button>
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-col flex-1 w-screen my-8">
@@ -50,16 +65,18 @@ const ListsPage = () => {
 
       <section className="mt-8 pb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {giftLists?.map((list: GiftList) => (
-          <ListCard
-            key={list.id}
-            photo={list.banner?.url}
-            title={list.name}
-            date={formatDateToBR(list.eventDate)}
-            totalGifts={list._count.gifts}
-            totalContributors={5}
-            totalRaised={5000}
-            totalGoal={10000}
-          />
+          <Link key={list.id} href={`/lists/${list.slug}/gifts`} className="cursor-pointer hover:shadow-lg">
+            <ListCard
+              key={list.id}
+              photo={list.banner?.url}
+              title={list.name}
+              date={formatDateToBR(list.eventDate)}
+              totalGifts={list._count.gifts}
+              totalContributors={5}
+              totalRaised={5000}
+              totalGoal={10000}
+            />
+          </Link>
         ))}
       </section>
     </main>
