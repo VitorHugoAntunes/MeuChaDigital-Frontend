@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Step1 from './Step_1';
 import Step2 from './Step_2';
 import Button from '../Button';
-import { eventSchema, EventFormData } from '../../schemas/createGiftListValidator';
+import { eventSchema, EventFormData } from '../../schemas/createGiftListSchema';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useCreateGiftList, useGiftListsByUser } from '@/hooks/giftLists';
