@@ -1,6 +1,6 @@
-import Banner from "@/components/Home/Banner";
-import Features from "@/components/Home/Features";
-import GetStarted from "@/components/Home/GetStarted";
+import Banner from "@/components/HomePage/Banner";
+import Features from "@/components/HomePage/Features";
+import GetStarted from "@/components/HomePage/GetStarted";
 
 export default function HomePage() {
   return (

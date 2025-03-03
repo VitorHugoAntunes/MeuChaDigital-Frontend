@@ -1,11 +1,11 @@
 "use client";
 
 import Card from "@/components/Card";
-import BankSlipPayment from "@/components/Checkout/BankSlipPayment";
-import CreditCardPayment from "@/components/Checkout/CreditCardPayment";
-import InfoBox from "@/components/Checkout/InfoBox";
-import OrderSummary from "@/components/Checkout/OrderSummary";
-import PixPayment from "@/components/Checkout/PixPayment";
+import BankSlipPayment from "@/components/CheckoutPage/BankSlipPayment";
+import CreditCardPayment from "@/components/CheckoutPage/CreditCardPayment";
+import InfoBox from "@/components/CheckoutPage/InfoBox";
+import OrderSummary from "@/components/CheckoutPage/OrderSummary";
+import PixPayment from "@/components/CheckoutPage/PixPayment";
 import CheckoutPaymentType from "@/components/CheckoutPaymentType";
 import Divider from "@/components/Divider";
 import { ShieldCheck, ReceiptText } from "lucide-react";

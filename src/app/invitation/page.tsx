@@ -1,12 +1,12 @@
 "use client";
 
-import InvitationCalendarInfo from '@/components/Invitation/InvitationCalendarInfo';
-import InvitationFooter from '@/components/Invitation/InvitationFooter';
-import InvitationHeader from '@/components/Invitation/InvitationHeader';
-import InvitationHeroSection from '@/components/Invitation/InvitationHeroSection';
-import InvitationLocationSection from '@/components/Invitation/InvitationLocationSection';
-import InvitationMomentsSection from '@/components/Invitation/InvitationMomentsSection';
-import InvitationRSVPSection from '@/components/Invitation/InvitationRSVPSection';
+import InvitationCalendarInfo from '@/components/InvitationPage/InvitationCalendarInfo';
+import InvitationFooter from '@/components/InvitationPage/InvitationFooter';
+import InvitationHeader from '@/components/InvitationPage/InvitationHeader';
+import InvitationHeroSection from '@/components/InvitationPage/InvitationHeroSection';
+import InvitationLocationSection from '@/components/InvitationPage/InvitationLocationSection';
+import InvitationMomentsSection from '@/components/InvitationPage/InvitationMomentsSection';
+import InvitationRSVPSection from '@/components/InvitationPage/InvitationRSVPSection';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useEffect, useRef, useState } from 'react';
 
