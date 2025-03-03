@@ -105,10 +105,10 @@ export default function ProfilePage() {
         <Card>
           <h3 className="text-lg font-semibold text-text-primary mb-4">Dicas de Segurança</h3>
           <div className="space-y-4">
-            <TipCard icon={<ShieldCheck size={20} className="text-success flex-shrink-0 mt-1" />}>
+            <TipCard icon={<ShieldCheck size={20} className="text-success" />}>
               Não compartilhe suas chaves PIX com ninguém.
             </TipCard>
-            <TipCard icon={<TriangleAlert size={20} className="text-warning flex-shrink-0 mt-1" />}>
+            <TipCard icon={<TriangleAlert size={20} className="text-warning" />}>
               Mantenha seus dados cadastrais sempre atualizados.
             </TipCard>
           </div>

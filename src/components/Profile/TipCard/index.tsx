@@ -8,7 +8,7 @@ interface TipCardProps {
 export default function TipCard({ icon, children }: TipCardProps) {
   return (
     <div className="flex items-start gap-3">
-      {icon}
+      <div className="flex-shrink-0 mt-1">{icon}</div>
       <p className="text-md text-text-secondary leading-relaxed">{children}</p>
     </div>
   );
