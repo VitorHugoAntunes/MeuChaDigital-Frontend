@@ -18,7 +18,7 @@ export default function InvitationHeroSection({ headerHeight }: { headerHeight: 
         className="max-w-screen-lg mx-auto px-8 text-center relative z-10"
       >
         <h1 className="text-5xl text-white mb-6 drop-shadow-lg tracking-wide">Você está convidado!</h1>
-        <p className="text-6xl font-extrabold text-white mt-2 drop-shadow-lg">Ana & Vitor</p>
+        <p className="text-6xl font-extrabold text-white mt-2 drop-shadow-lg">Seu nome</p>
         <time dateTime="2030-12-20" className="text-2xl text-white mt-4 block drop-shadow-lg italic">Segunda-feira, 20 de Outubro de 2030</time>
       </motion.article>
     </section>

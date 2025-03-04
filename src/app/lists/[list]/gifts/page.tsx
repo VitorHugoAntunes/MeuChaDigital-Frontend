@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import GiftCard from "@/components/GiftCard";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@/components/Modal";
 import StatCard from "@/components/StatCard";
 import { useAuth } from "@/contexts/AuthContext";
@@ -14,18 +14,21 @@ import { useParams } from "next/navigation";
 interface Gift {
   id: string;
   name: string;
-  photo?: { url: string }; // Agora opcional
-  category?: { name: string }; // Agora opcional
-  list?: { userId: string }; // Agora opcional
+  photo: { url: string };
+  category: { name: string };
+  list: {
+    id: string;
+    userId: string
+  };
   totalValue: number;
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
 }
 
-export default function GiftsPage() {
+function GiftsPage() {
   const { user, isAuthenticated } = useAuth();
   const slug = useParams().list as string;
-  const { data, isLoading, error } = useGiftsBySlug(slug);
+  const { data, isLoading, error, refetch } = useGiftsBySlug(slug); // Adicionamos refetch
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUserOwner, setIsUserOwner] = useState(false);
 
@@ -36,7 +39,6 @@ export default function GiftsPage() {
       setIsUserOwner(data.giftList.userId === user.id);
     }
   }, [data, user]);
-
 
   if (isLoading) {
     return (
@@ -121,8 +123,17 @@ export default function GiftsPage() {
       </section>
 
       {isModalOpen && (
-        <Modal modalType="present" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <Modal
+          giftListId={data?.giftList?.id}
+          userId={user?.id || ""}
+          modalType="present"
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          onSuccess={() => refetch()}
+        />
       )}
     </main>
   );
 }
+
+export default React.memo(GiftsPage);

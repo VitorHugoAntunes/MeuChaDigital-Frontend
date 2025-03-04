@@ -1,5 +1,16 @@
 import api from '../config/axios';
 
+export interface GiftCreateData {
+  name: string;
+  priority: string;
+  description: string;
+  totalValue: number;
+  categoryId: string;
+  userId: string;
+  giftListId: string;
+  giftPhoto: File | null;
+}
+
 export const getAllGiftsBySlug = async (slug: string) => {
   const response = await api.get(`/lists/slug/${slug}/gifts`);
   return response.data;
@@ -10,3 +21,24 @@ export const getGiftBySlug = async (slug: string, giftId: string) => {
   return response.data;
 };
 
+export const createGift = async (giftListId: string, data: GiftCreateData) => {
+  const formData = new FormData();
+
+  formData.append('name', data.name);
+  formData.append('priority', data.priority);
+  formData.append('description', data.description);
+  formData.append('totalValue', String(data.totalValue));
+  formData.append('categoryId', data.categoryId);
+  formData.append('userId', data.userId);
+  formData.append('giftListId', giftListId);
+
+  if (data.giftPhoto) {
+    formData.append('giftPhoto', data.giftPhoto);
+  }
+
+  const response = await api.post(`/lists/${giftListId}/gifts`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+  return response.data;
+};
