@@ -2,6 +2,7 @@ import { Trash, Edit } from "lucide-react";
 import Image from "next/image";
 import Tag from "../Tag";
 import PriorityTag from "../Tag/PriorityTag";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 interface GiftCardProps {
   photo: string;
@@ -29,7 +30,7 @@ const GiftCard = ({ photo, title, category, price, description, priority, isUser
       <section className="p-4 space-y-4">
         <header className="flex items-center justify-between">
           <Tag label={category} color="bg-primary text-white" />
-          <span className="text-lg font-bold text-success-dark">${price.toFixed(2)}</span>
+          <span className="text-lg font-bold text-success-dark">{formatCurrency(price)}</span>
         </header>
 
         <h3 className="text-lg font-semibold text-text-primary">{title}</h3>

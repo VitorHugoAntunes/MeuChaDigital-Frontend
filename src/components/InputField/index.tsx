@@ -5,12 +5,14 @@ type InputFieldProps = {
   description?: string;
   type?: string;
   placeholder?: string;
+  min?: number;
+  max?: number;
   readonly?: boolean;
   error?: string;
   register: UseFormRegisterReturn;
 };
 
-export default function InputField({ label, description, type = "text", placeholder, readonly = false, error, register }: InputFieldProps) {
+export default function InputField({ label, description, type = "text", placeholder, min, max, readonly = false, error, register }: InputFieldProps) {
   return (
     <div className="mb-6">
       <label className="block text-sm font-bold text-gray-700">{label}</label>
@@ -18,12 +20,15 @@ export default function InputField({ label, description, type = "text", placehol
       <input
         type={type}
         placeholder={placeholder}
+        min={min}
+        max={max}
+        step={type === "number" ? 0.01 : undefined}
         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:outline-none transition-colors appearance-none text-gray-900 h-[42px]"
         style={{ fontFamily: 'inherit' }}
         readOnly={readonly}
         {...register}
       />
-      {error && <span className="text-red-500 text-sm">{error}</span>}
+      {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import StatCard from "@/components/StatCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGiftsBySlug } from "@/hooks/gifts";
 import { useParams } from "next/navigation";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 interface Gift {
   id: string;
@@ -84,7 +85,7 @@ function GiftsPage() {
               value={data?.gifts?.length.toString() || "0"}
               color="blue"
             />
-            <StatCard title="Valor arrecadado" value="R$ 0,00" color="success" />
+            <StatCard title="Valor arrecadado" value={formatCurrency(0)} color="success" />
             <StatCard title="Presentes comprados" value="0" color="purple" />
             <StatCard title="Contribuições" value="0" color="warning" />
           </section>
@@ -126,7 +127,7 @@ function GiftsPage() {
         <Modal
           giftListId={data?.giftList?.id}
           userId={user?.id || ""}
-          modalType="present"
+          modalType="gift"
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           onSuccess={() => refetch()}

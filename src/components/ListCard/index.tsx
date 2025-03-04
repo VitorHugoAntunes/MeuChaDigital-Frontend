@@ -38,7 +38,6 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
         />
       </figure>
 
-      {/* Conteúdo */}
       <section className="flex flex-col gap-6 p-6">
         <header>
           <h2 className="text-lg font-semibold text-text-primary">{title}</h2>

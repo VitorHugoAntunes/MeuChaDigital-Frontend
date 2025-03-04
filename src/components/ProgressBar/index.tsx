@@ -1,3 +1,5 @@
+import { formatCurrency } from "@/utils/formatCurrency";
+
 interface ProgressBarProps {
   initialValue: number;
   goalValue: number;
@@ -10,7 +12,7 @@ export default function ProgressBar({ initialValue, goalValue }: ProgressBarProp
   return (
     <section>
       <div className="flex justify-between text-sm text-text-secondary mb-1">
-        <span>Valor arrecadado: R$ {initialValue} de R$ {goalValue}</span>
+        <span>Valor arrecadado: {formatCurrency(initialValue)} de {formatCurrency(goalValue)}</span>
 
         <span>{progressRounded}%</span>
       </div>

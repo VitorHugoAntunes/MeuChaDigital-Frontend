@@ -5,6 +5,7 @@ import PriorityTag from "@/components/Tag/PriorityTag";
 import ProgressBar from "@/components/ProgressBar";
 import { Edit, Trash } from 'lucide-react';
 import Button from "@/components/Button";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 interface GiftHeaderProps {
   category?: { name: string };
@@ -27,7 +28,7 @@ export default function GiftHeader({ category, priority, name, description, tota
       <p className="text-md mt-2 text-text-secondary font-medium">{description}</p>
 
       <p className="text-2xl text-success-dark font-bold mt-2">
-        R$ {totalValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+        {formatCurrency(totalValue)}
       </p>
 
       <div className="mt-4">

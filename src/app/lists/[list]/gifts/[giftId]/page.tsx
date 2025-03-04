@@ -66,7 +66,7 @@ export default function GiftPage() {
         <GiftDetails photo={gift.photo} name={gift.name} description={gift.description} />
       </section>
 
-      <PaymentAside isUserOwner={isUserOwner} slug={slug} giftId={giftId} giftName={gift.name} />
+      <PaymentAside isUserOwner={isUserOwner} slug={slug} giftId={giftId} giftName={gift.name} maxAmount={gift.totalValue} />
     </main>
   );
 }
