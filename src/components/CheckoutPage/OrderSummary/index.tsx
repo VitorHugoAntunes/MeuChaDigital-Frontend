@@ -6,7 +6,7 @@ export default function OrderSummary() {
   const searchParams = useSearchParams();
   const amount = Number(searchParams.get("amount")) || 0;
 
-  const feePercentage = 0.02;
+  const feePercentage = 0.05;
   let fee = amount * feePercentage;
 
   if (fee < 0.02) {
