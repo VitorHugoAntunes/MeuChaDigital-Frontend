@@ -22,9 +22,17 @@ interface GiftList {
 }
 
 const ListsPage = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
 
-  const { data: giftLists, isLoading, isError } = useGiftListsByUser(user?.id ?? "");
+  const { data: giftLists, isLoading: isGiftListsLoading, isError } = useGiftListsByUser(user?.id ?? "");
+
+  if (isLoading) {
+    return (
+      <main className="flex flex-col flex-1 w-screen my-8 justify-center items-center">
+        <p className="text-center">Carregando...</p>
+      </main>
+    );
+  }
 
   if (!isAuthenticated) {
     return (
@@ -56,10 +64,10 @@ const ListsPage = () => {
         </Link>
       </div>
 
-      {isLoading && <p className="text-center mt-8">Carregando listas...</p>}
+      {isGiftListsLoading && <p className="text-center mt-8">Carregando listas...</p>}
       {isError && <p className="text-center mt-8 text-red-500">Erro ao carregar as listas.</p>}
 
-      {!isLoading && !isError && giftLists?.length === 0 && (
+      {!isGiftListsLoading && !isError && giftLists?.length === 0 && (
         <p className="text-center mt-8 text-text-secondary">Nenhuma lista encontrada.</p>
       )}
 
@@ -73,8 +81,8 @@ const ListsPage = () => {
               date={formatDateToBR(list.eventDate)}
               totalGifts={list._count.gifts}
               totalContributors={5}
-              totalRaised={5000}
-              totalGoal={10000}
+              totalRaised={40}
+              totalGoal={100}
             />
           </Link>
         ))}

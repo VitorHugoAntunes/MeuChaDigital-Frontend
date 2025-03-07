@@ -43,7 +43,7 @@ export default function Header() {
           <div className="w-20 h-4 bg-gray-200 rounded-md animate-pulse"></div>
         </nav>
 
-        <div className="flex space-x-6 items-center">
+        <div className="flex space-x-6 items-center justify-end">
           <div className="w-24 h-4 bg-gray-200 rounded-md animate-pulse"></div>
           <div className="w-20 h-[42.3px] bg-gray-200 rounded-md animate-pulse"></div>
           <div className="w-20 h-[42.3px] bg-gray-200 rounded-md animate-pulse"></div>
