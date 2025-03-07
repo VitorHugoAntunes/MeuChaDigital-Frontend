@@ -26,7 +26,6 @@ export const useCreateDefaultCharge = () => {
     mutationFn: (data: ChargeDefaultUserData) => createDefaultCharge(data),
     onSuccess: (response) => {
 
-      // Força atualização da query
       queryClient.invalidateQueries({ queryKey: ['charge', response.localId, response.giftId] });
     }
   });
@@ -39,8 +38,6 @@ export const useCreateGuestCharge = () => {
     mutationFn: (data: ChargeGuestUserData) => createGuestCharge(data),
     onSuccess: (response) => {
 
-
-      // Força atualização da query
       queryClient.invalidateQueries({ queryKey: ['charge', response.localId, response.giftId] });
     }
   });

@@ -1,4 +1,9 @@
-export default function BankSlipPayment() {
+interface BankSlipPaymentProps {
+  total: number;
+}
+
+export default function BankSlipPayment({ total }: BankSlipPaymentProps) {
+  console.log(total);
   return (
     <div className="text-center">
       <h2 className="text-lg font-bold text-text-primary">Boleto Bancário</h2>

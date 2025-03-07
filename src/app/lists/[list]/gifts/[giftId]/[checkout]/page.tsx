@@ -10,6 +10,7 @@ import CheckoutPaymentType from "@/components/CheckoutPaymentType";
 import Divider from "@/components/Divider";
 import { ShieldCheck, ReceiptText } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 export default function CheckoutPage() {
@@ -26,7 +27,26 @@ export default function CheckoutPage() {
 
 function Checkout() {
   const { watch } = useFormContext();
-  const selectedPaymentType = watch("type");
+  const selectedPaymentType = watch("type") as "PIX" | "CREDIT_CARD" | "BANK_SLIP" | undefined;
+
+  const searchParams = useSearchParams();
+  const amount = Number(searchParams.get("amount")) || 0;
+
+  const feePercentage = selectedPaymentType
+    ? {
+      PIX: 0.05,
+      CREDIT_CARD: 0.07,
+      BANK_SLIP: 0.03,
+    }[selectedPaymentType] || 0
+    : 0; // Se nenhum tipo de pagamento estiver selecionado, a taxa é 0
+
+  let fee = amount * feePercentage;
+
+  if (selectedPaymentType && fee < 0.02) {
+    fee = 0.02;
+  }
+
+  const total = amount + fee;
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 py-6 px-4 md:px-8 w-full">
@@ -36,7 +56,7 @@ function Checkout() {
             <h1 className="text-2xl font-bold text-text-primary">Finalizar pagamento</h1>
           </header>
 
-          <OrderSummary />
+          <OrderSummary amount={amount} fee={fee} total={total} />
 
           <Divider />
 
@@ -59,16 +79,15 @@ function Checkout() {
             icon={<ReceiptText size={20} className="text-warning" />}
             text="As taxas de serviço estão inclusas no pagamento. Essas taxas são referentes ao processamento do pagamento e não são reembolsáveis."
           />
-
         </Card>
       </section>
 
       {selectedPaymentType && (
         <aside className="sticky top-6 h-fit">
           <Card>
-            {selectedPaymentType === "PIX" && <PixPayment />}
-            {selectedPaymentType === "CREDIT_CARD" && <CreditCardPayment />}
-            {selectedPaymentType === "BANK_SLIP" && <BankSlipPayment />}
+            {selectedPaymentType === "PIX" && <PixPayment total={total} />}
+            {selectedPaymentType === "CREDIT_CARD" && <CreditCardPayment total={total} />}
+            {selectedPaymentType === "BANK_SLIP" && <BankSlipPayment total={total} />}
           </Card>
         </aside>
       )}

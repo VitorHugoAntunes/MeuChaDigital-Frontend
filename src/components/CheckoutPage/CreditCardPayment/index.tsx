@@ -1,4 +1,9 @@
-export default function CreditCardPayment() {
+interface CreditCardPaymentProps {
+  total: number;
+}
+
+export default function CreditCardPayment({ total }: CreditCardPaymentProps) {
+  console.log(total);
   return (
     <div className="text-center">
       <h2 className="text-lg font-bold text-text-primary">Pagamento com Cartão de Crédito</h2>
