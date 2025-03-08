@@ -19,7 +19,9 @@ export default function PixPayment({ total }: PixPaymentProps) {
   const [timeRemaining, setTimeRemaining] = useState<string>("00:00:00");
   const params = useParams();
 
-  const paramsGiftId = params.giftId as string;
+  const paramsGiftId = params.giftId as string || params.gift as string || params.id as string;
+
+  console.log(paramsGiftId);
 
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -60,7 +62,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     setIsGenerating(true);
 
     const chargeData = {
-      expiration: 60, // 2 minutos
+      expiration: 3600, // 1 hora
       value: total.toString(),
       pixKey: "03f46041-ace4-4ade-b074-faf9d0b78e5f",
       requestPayer: "Descrição do pagamento",

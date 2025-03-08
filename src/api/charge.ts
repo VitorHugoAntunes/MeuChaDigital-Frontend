@@ -1,5 +1,9 @@
-import api from '../config/axios';
+// import api from '../config/axios';
+import axios from 'axios';
 
+const api = axios.create({
+  baseURL: 'http://localhost:8000/api/v1',
+});
 export interface ChargeDefaultUserData {
   expiration: number;
   value: string;
@@ -31,7 +35,13 @@ export const createDefaultCharge = async (data: ChargeDefaultUserData) => {
     payerId: data.payerId,
   };
 
-  const response = await api.post('/payments/charges', dataToSend);
+  console.log('dataToSend', dataToSend);
+
+  const response = await api.post('/payments/charges', JSON.stringify(dataToSend), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   const chargeLocalStorageInfo = {
     localId: response.data.loc.id,
@@ -58,7 +68,11 @@ export const createGuestCharge = async (data: ChargeGuestUserData) => {
 
   console.log('dataToSend', dataToSend);
 
-  const response = await api.post('/payments/charges', dataToSend);
+  const response = await api.post('/payments/charges', JSON.stringify(dataToSend), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   const chargeLocalStorageInfo = {
     localId: response.data.loc.id,

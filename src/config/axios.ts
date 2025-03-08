@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-// Captura o subdomínio a partir do hostname no navegador
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname; // Exemplo: teste.localhost

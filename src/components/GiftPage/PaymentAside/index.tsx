@@ -15,9 +15,11 @@ interface PaymentAsideProps {
   giftId: string;
   giftName: string;
   maxAmount: number;
+  isInvitationPage?: boolean;
 }
 
-export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxAmount }: PaymentAsideProps) {
+export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxAmount, isInvitationPage }: PaymentAsideProps) {
+  console.log("IS INVITATION PAGE:", isInvitationPage);
   console.log("maxAmount:", maxAmount);
   const router = useRouter();
   const {
@@ -28,8 +30,15 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
 
   const onSubmit = (data: { amount: number }) => {
     console.log("Pagamento enviado:", data);
-    alert("Pagamento processado com sucesso!");
-    router.push(`/lists/${slug}/gifts/${giftId}/checkout-${giftName}?amount=${data.amount}`);
+    console.log("isso e uma isInvitationPage?", isInvitationPage);
+
+    if (isInvitationPage === true) {
+      console.log("vai redirecionar para invitation");
+      router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}/checkout-${giftName}?amount=${data.amount}`);
+    } else {
+      console.log("vai redirecionar para lists");
+      router.push(`/lists/${slug}/gifts/${giftId}/checkout-${giftName}?amount=${data.amount}`);
+    }
   };
 
   return (
@@ -62,15 +71,13 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
           />
         </div>
 
-        {!isUserOwner ? (
+        {isUserOwner ? (
           <>
             <div className="mt-6">
-              <Link href={`/lists/${slug}/gifts/${giftId}/checkout-${giftName}`}>
-                <Button widthFull>
-                  <Share2 size={20} />
-                  Compartilhar link
-                </Button>
-              </Link>
+              <Button widthFull type="submit">
+                <Share2 size={20} />
+                Compartilhar link
+              </Button>
             </div>
 
             <div className="mt-6 flex items-start gap-3">

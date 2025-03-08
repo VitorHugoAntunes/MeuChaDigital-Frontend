@@ -13,7 +13,7 @@ export default function Header() {
   const pathName = usePathname();
   const currentUrl = pathName.split("?")[0];
 
-  if (currentUrl === "/sign-in" || currentUrl === "/invitation") {
+  if (currentUrl === "/sign-in" || currentUrl.startsWith("/invitation")) {
     return null;
   }
 
@@ -70,7 +70,7 @@ export default function Header() {
       {isAuthenticated && user ? (
         <>
           <nav className="flex justify-center space-x-10 items-center">
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-10">
               <li className="display-block">
                 <NavLink href="/">Como funciona?</NavLink>
               </li>
@@ -79,9 +79,6 @@ export default function Header() {
               </li>
               <li className="display-block">
                 <NavLink href="/lists">Minhas listas de presentes</NavLink>
-              </li>
-              <li className="display-block">
-                <NavLink href="/invitee-list">Convidar amigos</NavLink>
               </li>
             </ul>
           </nav>

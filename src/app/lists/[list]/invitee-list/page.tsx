@@ -1,3 +1,5 @@
+"use client";
+
 import { ClipboardCopy, Trash, Edit, FileDown } from "lucide-react";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
@@ -5,6 +7,10 @@ import StatCard from "@/components/StatCard";
 import Tag from "@/components/Tag";
 import InputField from "@/components/InputField";
 import InputSelect from "@/components/InputSelect";
+import { useParams } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const invitees = [
   { name: "João Silva", phone: "(11) 99999-1234", email: "teste@gmail.com", status: "Aceito", additionalInvitees: 2, notes: "" },
@@ -14,8 +20,30 @@ const invitees = [
 ];
 
 export default function GuestListPage() {
+  const slug = useParams().list as string;
+
+  // Função para copiar o link e exibir o toast
+  const handleCopyLink = () => {
+    const link = `http://${slug}.localhost:3000/invitation`;
+    navigator.clipboard.writeText(link);
+    toast.success("Link copiado para a área de transferência!");
+  };
+
   return (
     <main className="flex flex-col flex-1 w-full max-w-7xl mx-auto my-8 px-4">
+      {/* ToastContainer para exibir os toasts */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <h1 className="text-2xl font-semibold text-text-primary text-center md:text-left">Lista de Convidados</h1>
       <p className="text-md mt-2 text-text-secondary text-center md:text-left">
         Adicione e organize convidados para sua celebração
@@ -41,13 +69,21 @@ export default function GuestListPage() {
             type="text"
             className="flex-1 px-4 py-2 text-text-primary bg-gray-100 border border-gray-300 rounded-lg md:rounded-l-lg focus:outline-none w-full"
             readOnly
-            value={`https://meu-evento.com.br/confirmar-presenca/123456`}
+            value={`http://${slug}.localhost:3000/invitation`}
           />
-          <Button>
+          <Button onClick={handleCopyLink}>
             <ClipboardCopy size={20} />
             Copiar link
           </Button>
         </div>
+
+        <Link
+          href={`http://${slug}.localhost:3000/invitation`}
+          className="w-fit mt-4 text-center md:text-left text-primary hover:text-primary-light underline hover:no-underline transition-colors duration-300"
+        >
+          Ver link de convite
+        </Link>
+
       </Card>
 
       <Card className="w-full mt-8 p-6">
