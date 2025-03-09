@@ -68,7 +68,7 @@ export default function InvitationPage() {
             eventDate={invitation?.eventDate || ''}
           />
           <InvitationCalendarInfo eventDate={invitation?.eventDate || ''} />
-          <InvitationRSVPSection />
+          <InvitationRSVPSection giftListId={invitation?.id || ''} />
           <InvitationMomentsSection momentsImages={invitation?.momentsImages || []} />
           <InvitationLocationSection />
         </main>
