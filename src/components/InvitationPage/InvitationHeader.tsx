@@ -5,6 +5,8 @@ import NavLink from '@/components/NavLink';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Button from '@/components/Button';
+import { Gift } from 'lucide-react';
 
 interface InvitationHeaderProps {
   ref?: React.RefObject<HTMLHeadElement | null>;
@@ -33,10 +35,8 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
   if (title === undefined) {
     return (
       <header className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-8 bg-background text-text-primary border-b-2 border-b-gray-200 animate-pulse">
-        {/* Título */}
         <div className="h-8 w-48 bg-gray-300 rounded"></div>
 
-        {/* Navegação */}
         <nav className="flex space-x-6">
           <div className="h-6 w-32 bg-gray-300 rounded"></div>
           <div className="h-6 w-32 bg-gray-300 rounded"></div>
@@ -60,12 +60,17 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
           {title}
         </h2>
       </Link>
-      {/* Navegação */}
+
       <nav className="flex space-x-6">
         <NavLink href={`http://${subdomain}.localhost:3000/invitation/#rsvp`}>Confirme sua presença</NavLink>
-        <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`}>Lista de presentes</NavLink>
         <NavLink href={`http://${subdomain}.localhost:3000/invitation/#moments`}>Nossos momentos</NavLink>
         <NavLink href={`http://${subdomain}.localhost:3000/invitation/#location`}>Localização</NavLink>
+        <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`}>
+          <Button borderStyle="rounded">
+            Lista de presentes
+            <Gift size={20} />
+          </Button>
+        </NavLink>
       </nav>
     </header>
   );
