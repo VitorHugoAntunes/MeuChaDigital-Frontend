@@ -22,15 +22,24 @@ export default function Button({
   disabled = false,
 }: ButtonProps) {
   const variantStyles = {
-    default: 'bg-primary-light text-white px-8 py-2 rounded-full hover:bg-primary-dark border-2 border-primary-light hover:border-primary-dark',
-    danger: 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200 hover:border-danger-dark hover:text-white hover:bg-danger',
-    outlined: 'bg-transparent text-primary-light px-8 py-2 rounded-full border-2 border-primary-light hover:border-primary-dark hover:text-primary-dark',
-    "outlined-danger": 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200 hover:border-danger-dark hover:text-danger-dark',
-    "outlined-warning": 'bg-transparent text-warning px-8 py-2 rounded-full border-2 border-gray-200 hover:border-warning-dark hover:text-warning-dark',
-    google: 'bg-white text-gray-700 px-8 py-2 rounded-full border border-gray-300 hover:bg-gray-50',
+    default: 'bg-primary-light text-white px-8 py-2 rounded-full border-2 border-primary-light',
+    danger: 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200',
+    outlined: 'bg-transparent text-primary-light px-8 py-2 rounded-full border-2 border-primary-light',
+    "outlined-danger": 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200',
+    "outlined-warning": 'bg-transparent text-warning px-8 py-2 rounded-full border-2 border-gray-200',
+    google: 'bg-white text-gray-700 px-8 py-2 rounded-full border border-gray-300',
   };
 
-  const buttonStyles = variantStyles[variant];
+  const hoverStyles = {
+    default: 'hover:bg-primary-dark hover:border-primary-dark',
+    danger: 'hover:border-danger-dark hover:text-white hover:bg-danger',
+    outlined: 'hover:border-primary-dark hover:text-primary-dark',
+    "outlined-danger": 'hover:border-danger-dark hover:text-danger-dark',
+    "outlined-warning": 'hover:border-warning-dark hover:text-warning-dark',
+    google: 'hover:bg-gray-50',
+  };
+
+  const buttonStyles = `${variantStyles[variant]} ${!disabled ? hoverStyles[variant] : ''}`;
 
   return (
     <button
@@ -41,8 +50,8 @@ export default function Button({
         `${buttonStyles} transition-colors duration-300
          ${widthFull ? 'w-full flex items-center justify-center gap-4' : 'w-fit flex items-center justify-center gap-4'}
          ${borderStyle === 'rounded' ? 'rounded-md' : 'rounded-full'}
-         ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
-      `}
+         ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`
+      }
     >
       {
         loading ? (

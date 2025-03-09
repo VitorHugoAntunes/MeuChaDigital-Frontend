@@ -55,6 +55,7 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
             label="Valor"
             type="number"
             placeholder="R$ 0,00"
+            step={0.01}
             min={0.01}
             max={maxAmount}
             register={
