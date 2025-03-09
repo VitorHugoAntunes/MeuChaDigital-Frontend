@@ -1,4 +1,5 @@
-import axios from 'axios';
+import api from "@/config/axios";
+import axios from "axios";
 
 export interface InviteeData {
   name: string;
@@ -12,4 +13,10 @@ export interface InviteeData {
 
 export const createInvitee = async (data: InviteeData) => {
   return axios.post('http://localhost:8000/api/v1/invitees', data);
+}
+
+export const getAllInviteesByGiftListSlug = async (slug: string) => {
+  const response = await api.get(`/invitees/${slug}`);
+
+  return response.data;
 }

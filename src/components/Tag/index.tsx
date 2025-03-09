@@ -9,8 +9,9 @@ export default function Tag({ label, color }: TagProps) {
       className={`text-xs font-semibold px-4 py-1 rounded-full ${color} first-letter:uppercase`}
       role="tag"
       aria-label={`Categoria: ${label}`}
+      title={label}
     >
-      {label}
+      {label.toUpperCase()}
     </span>
   )
 }
