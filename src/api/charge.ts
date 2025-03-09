@@ -89,6 +89,8 @@ export const getCharge = async (localId?: string, giftId?: string) => {
   const savedCharge = giftId ? localStorage.getItem(`charge.${giftId}`) : null;
   const parsedCharge = savedCharge ? JSON.parse(savedCharge) : null;
 
+  console.log('a cobranca que foi resgatada', parsedCharge);
+
   if (parsedCharge && parsedCharge.expirationDate) {
     const currentTime = Date.now();
     const expirationTime = parsedCharge.expirationDate;
@@ -97,7 +99,7 @@ export const getCharge = async (localId?: string, giftId?: string) => {
       console.log('currentTime e expirationTime', currentTime, expirationTime);
 
       localStorage.removeItem(`charge.${giftId}`);
-      throw new Error("Os dados de cobrança expiraram.");
+      return;
     }
   }
 
@@ -105,7 +107,7 @@ export const getCharge = async (localId?: string, giftId?: string) => {
   const finalGiftId = giftId || parsedCharge?.giftId;
 
   if (!finalLocalId || !finalGiftId) {
-    throw new Error('LocalId e GiftId são obrigatórios para buscar a cobrança.');
+    return;
   }
 
   const response = await api.get(`/payments/charges/${finalLocalId}?giftId=${finalGiftId}`);

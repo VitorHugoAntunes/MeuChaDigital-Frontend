@@ -3,13 +3,15 @@ import { createDefaultCharge, createGuestCharge, ChargeDefaultUserData, ChargeGu
 
 export const useGetCharge = (localId?: string, giftId?: string) => {
   return useQuery({
-    queryKey: ['charge', localId, giftId],
     queryFn: async () => {
       if (!localId || !giftId) {
-        throw new Error("LocalId e GiftId são obrigatórios para buscar a cobrança.");
+        return null;
       }
-      return getCharge(localId, giftId);
+
+      const charge = await getCharge(localId, giftId);
+      return charge || null;
     },
+    queryKey: ['charge', localId, giftId],
     enabled: !!localId && !!giftId, // Só executa se localId e giftId estiverem disponíveis
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,

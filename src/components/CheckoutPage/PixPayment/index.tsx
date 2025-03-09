@@ -32,7 +32,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     return savedCharge ? JSON.parse(savedCharge).localId : null;
   });
 
-  const { data: charge, isLoading } = useGetCharge(localId, paramsGiftId);
+  const { data: charge, isLoading, isError } = useGetCharge(localId, paramsGiftId);
 
   const createDefaultChargeMutation = useCreateDefaultCharge();
   const createGuestChargeMutation = useCreateGuestCharge();
@@ -58,11 +58,20 @@ export default function PixPayment({ total }: PixPaymentProps) {
     prevTimeRemainingRef.current = timeRemaining;
   }, [timeRemaining, localId, paramsGiftId]);
 
+  useEffect(() => {
+    if (isError || (charge && !charge.expirationDate)) {
+      console.log("Cobrança não encontrada ou expirada. Limpando localId...");
+
+      setLocalId(null);
+      localStorage.removeItem(`charge.${paramsGiftId}`);
+    }
+  }, [isError, charge, paramsGiftId]);
+
   const handleGenerateCharge = async () => {
     setIsGenerating(true);
 
     const chargeData = {
-      expiration: 3600, // 1 hora
+      expiration: 30, // 1 hora
       value: total.toString(),
       pixKey: "03f46041-ace4-4ade-b074-faf9d0b78e5f",
       requestPayer: "Descrição do pagamento",
@@ -97,7 +106,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     toast.success("Código copiado para a área de transferência.");
   }
 
-  if (!localId && timeRemaining === "00:00:00") {
+  if (!localId && timeRemaining === "00:00:00" || charge === null) {
     return (
       <div className="text-center">
         <h2 className="text-lg font-bold text-text-primary">Pagamento via Pix</h2>
@@ -109,7 +118,9 @@ export default function PixPayment({ total }: PixPaymentProps) {
           {isGenerating ? "Gerando..." : "Gerar QR Code"}
         </Button>
 
-        {createDefaultChargeMutation.isError || createGuestChargeMutation.isError && <p className="text-sm text-danger mt-4">Erro ao gerar cobrança. Tente novamente.</p>}
+        {(createDefaultChargeMutation.isError || createGuestChargeMutation.isError) && (
+          <p className="text-sm text-danger mt-4">Erro ao gerar cobrança. Tente novamente.</p>
+        )}
       </div>
     );
   }
