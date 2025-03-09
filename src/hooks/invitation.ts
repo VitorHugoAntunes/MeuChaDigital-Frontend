@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getInvitation, getInvitationGifts, getInvitationGift } from '@/api/invitation';
 
 interface Invitation {
+  id: string;
   name: string;
   slug: string;
   eventDate: string;
