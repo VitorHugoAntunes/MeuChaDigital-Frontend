@@ -8,9 +8,11 @@ import OrderSummary from "@/components/CheckoutPage/OrderSummary";
 import PixPayment from "@/components/CheckoutPage/PixPayment";
 import CheckoutPaymentType from "@/components/CheckoutPaymentType";
 import Divider from "@/components/Divider";
+import { usePayment } from "@/contexts/PaymentContext";
 import { ShieldCheck, ReceiptText } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 interface CheckoutContentProps {
@@ -18,23 +20,29 @@ interface CheckoutContentProps {
 }
 
 export default function CheckoutContent({ isInvitationPage }: CheckoutContentProps) {
+  const { amount, maxAmount } = usePayment();
+  const router = useRouter();
+
   const methods = useForm<{ type: string }>({
     defaultValues: { type: "" },
   });
 
+  if (amount <= 0 || amount > maxAmount) {
+    router.push('/pagina-anterior');
+    return null;
+  }
+
+
   return (
     <FormProvider {...methods}>
-      <Checkout isInvitationPage={isInvitationPage} />
+      <Checkout isInvitationPage={isInvitationPage} amount={amount} />
     </FormProvider>
   );
 }
 
-function Checkout({ isInvitationPage }: { isInvitationPage?: boolean }) {
+function Checkout({ isInvitationPage, amount }: { isInvitationPage?: boolean; amount: number }) {
   const { watch } = useFormContext();
   const selectedPaymentType = watch("type") as "PIX" | "CREDIT_CARD" | "BANK_SLIP" | undefined;
-
-  const searchParams = useSearchParams();
-  const amount = Number(searchParams.get("amount")) || 0;
 
   const feePercentage = selectedPaymentType
     ? {
@@ -42,7 +50,7 @@ function Checkout({ isInvitationPage }: { isInvitationPage?: boolean }) {
       CREDIT_CARD: 0.07,
       BANK_SLIP: 0.03,
     }[selectedPaymentType] || 0
-    : 0; // Se nenhum tipo de pagamento estiver selecionado, a taxa é 0
+    : 0;
 
   let fee = amount * feePercentage;
 

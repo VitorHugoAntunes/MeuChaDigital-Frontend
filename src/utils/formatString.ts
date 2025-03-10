@@ -5,3 +5,10 @@ export const formatCPF = (cpf: string) => {
 export const formatPhone = (phone: string) => {
   return phone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
 };
+
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+};

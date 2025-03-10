@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import Modal from "@/components/Modal";
 import StatCard from "@/components/StatCard";
 import { useAuth } from "@/contexts/AuthContext";
-import { formatCurrency } from "@/utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatString";
 import GiftCardSkeleton from "../Skeleton/giftCardSkeleton";
 
 interface Gift {

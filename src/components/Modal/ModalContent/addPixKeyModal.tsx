@@ -9,6 +9,7 @@ import { useCreatePixKey } from "@/hooks/pixKey";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Importe o CSS do react-toastify
+import { CPFMask, PhoneMask } from "@/utils/masks";
 
 interface AddPixModalProps {
   onClose: () => void;
@@ -42,9 +43,9 @@ export const AddPixKeyModal = ({ onClose }: AddPixModalProps) => {
   const getMask = (type: string) => {
     switch (type) {
       case "CPF":
-        return (value: string) => value.replace(/\D/g, '').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})/, '$1-$2').replace(/(-\d{2})\d+?$/, '$1');
+        return CPFMask;
       case "PHONE":
-        return (value: string) => value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2').replace(/(-\d{4})\d+?$/, '$1');
+        return PhoneMask;
       case "EMAIL":
       case "RANDOM":
       default:

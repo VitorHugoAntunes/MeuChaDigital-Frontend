@@ -5,7 +5,7 @@ import PriorityTag from "@/components/Tag/PriorityTag";
 import ProgressBar from "@/components/ProgressBar";
 import { Edit, Trash } from 'lucide-react';
 import Button from "@/components/Button";
-import { formatCurrency } from "@/utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatString";
 
 interface GiftHeaderProps {
   category?: { name: string };

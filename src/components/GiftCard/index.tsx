@@ -2,7 +2,7 @@ import { Trash, Edit } from "lucide-react";
 import Image from "next/image";
 import Tag from "../Tag";
 import PriorityTag from "../Tag/PriorityTag";
-import { formatCurrency } from "@/utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatString";
 
 interface GiftCardProps {
   photo: string;

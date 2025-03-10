@@ -1,5 +1,5 @@
 import SummaryItem from "../SummaryItem";
-import { formatCurrency } from "@/utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatString";
 
 interface OrderSummaryProps {
   amount: number;

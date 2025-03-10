@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { PaymentProvider } from "@/contexts/PaymentContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,11 +28,13 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen bg-background">
         <ReactQueryProvider>
           <AuthProvider>
-            <Header />
-            <div className="flex flex-1 w-full max-w-screen-xl mx-auto px-8">
-              {children}
-            </div>
-            <Footer />
+            <PaymentProvider>
+              <Header />
+              <div className="flex flex-1 w-full max-w-screen-xl mx-auto px-8">
+                {children}
+              </div>
+              <Footer />
+            </PaymentProvider>
           </AuthProvider>
         </ReactQueryProvider>
       </body>

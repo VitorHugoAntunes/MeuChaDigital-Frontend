@@ -14,7 +14,7 @@ type InputFieldProps = {
   register?: UseFormRegisterReturn;
   mask?: (value: string) => string;
   disabled?: boolean;
-  name?: string; // name é opcional
+  name?: string;
 };
 
 function InputFieldWithWatch({ name, mask, value, setValue }: {
@@ -39,15 +39,18 @@ export default function InputField({ label, description, type = "text", placehol
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;
+
     if (mask) {
       newValue = mask(newValue);
     }
+
     setValue(newValue);
 
     if (register) {
+      const numericValue = parseFloat(newValue.replace(/[^0-9,-]/g, '').replace(',', '.'));
       register.onChange({
         target: {
-          value: newValue,
+          value: numericValue,
           name: register.name,
         },
       });
@@ -63,9 +66,6 @@ export default function InputField({ label, description, type = "text", placehol
       <input
         type={type}
         placeholder={placeholder}
-        min={min}
-        max={max}
-        step={type === "number" ? step : undefined}
         className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:outline-none 
         transition-colors appearance-none text-gray-900 h-[42px] ${disabled ? 'bg-gray-100' : 'bg-white'}`}
         style={{ fontFamily: 'inherit' }}

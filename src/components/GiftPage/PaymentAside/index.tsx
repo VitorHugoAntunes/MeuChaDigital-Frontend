@@ -1,13 +1,15 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
-import InputField from "@/components/InputField";
-import { Info, Share2 } from "lucide-react";
-import Link from "next/link";
-import { paymentAmountSchema } from "@/schemas/paymentAmountSchema";
+import { usePayment } from '@/contexts/PaymentContext';
+import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/Button';
+import InputField from '@/components/InputField';
+import { Info, Share2 } from 'lucide-react';
+import Link from 'next/link';
+import { paymentAmountSchema } from '@/schemas/paymentAmountSchema';
+import { CurrencyMask } from '@/utils/masks';
 
 interface PaymentAsideProps {
   isUserOwner: boolean;
@@ -19,100 +21,102 @@ interface PaymentAsideProps {
 }
 
 export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxAmount, isInvitationPage }: PaymentAsideProps) {
-  console.log("IS INVITATION PAGE:", isInvitationPage);
-  console.log("maxAmount:", maxAmount);
   const router = useRouter();
+  const { setAmount, setMaxAmount } = usePayment();
+
+  const methods = useForm({
+    resolver: zodResolver(paymentAmountSchema(maxAmount)),
+    defaultValues: { amount: undefined },
+  });
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(paymentAmountSchema(maxAmount)), defaultValues: { amount: 0 } });
+    formState: { errors, isSubmitted },
+  } = methods;
 
   const onSubmit = (data: { amount: number }) => {
-    console.log("Pagamento enviado:", data);
-    console.log("isso e uma isInvitationPage?", isInvitationPage);
+    setAmount(data.amount); // Armazena o valor no contexto
+    setMaxAmount(maxAmount); // Armazena o valor máximo no contexto
 
     if (isInvitationPage === true) {
-      console.log("vai redirecionar para invitation");
-      router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}/checkout-${giftName}?amount=${data.amount}`);
+      router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}/checkout-${giftName}`);
     } else {
-      console.log("vai redirecionar para lists");
-      router.push(`/lists/${slug}/gifts/${giftId}/checkout-${giftName}?amount=${data.amount}`);
+      router.push(`/lists/${slug}/gifts/${giftId}/checkout-${giftName}`);
     }
   };
 
   return (
-    <aside className="sticky top-6 h-fit bg-white rounded-lg p-6 border border-gray-200">
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
-        <h2 className="text-lg font-semibold text-text-primary mb-4">Pagamento</h2>
+    <FormProvider {...methods}>
+      <aside className="sticky top-6 h-fit bg-white rounded-lg p-6 border border-gray-200">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+          <h2 className="text-lg font-semibold text-text-primary mb-4">Pagamento</h2>
 
-        <div>
-          <p className="text-md text-text-secondary mb-4">
-            Contribua com o valor que deseja pagar, você pode pagar o valor total ou parcial.
-          </p>
+          <div>
+            <p className="text-md text-text-secondary mb-4">
+              Contribua com o valor que deseja pagar, você pode pagar o valor total ou parcial.
+            </p>
 
-          <InputField
-            label="Valor"
-            type="number"
-            placeholder="R$ 0,00"
-            step={0.01}
-            min={0.01}
-            max={maxAmount}
-            register={
-              {
-                ...register("amount",
-                  {
-                    valueAsNumber: true,
-                    required: "O valor é obrigatório",
-                    max:
-                      { value: maxAmount, message: "O valor não pode ser maior que o valor total do presente" }
-                  })
-              }}
-            error={errors.amount?.message}
-          />
-        </div>
+            <InputField
+              label="Valor"
+              type="text"
+              placeholder="R$ 0,00"
+              register={register("amount", {
+                required: "O valor é obrigatório",
+                setValueAs: (value) => {
+                  const numericValue = Number(value.replace(/\D/g, "")) / 100;
+                  return isNaN(numericValue) || numericValue === 0 ? undefined : numericValue;
+                },
+              })}
+              error={isSubmitted ? errors.amount?.message : undefined}
+              mask={CurrencyMask}
+              min={0.01}
+              max={maxAmount}
+            />
+          </div>
 
-        {isUserOwner ? (
-          <>
-            <div className="mt-6">
-              <Button widthFull type="submit">
-                <Share2 size={20} />
-                Compartilhar link
-              </Button>
-            </div>
-
-            <div className="mt-6 flex items-start gap-3">
-              <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="text-sm text-gray-600">
-                  Compartilhe o link para que outras pessoas possam contribuir com o presente.
-                </p>
+          {isUserOwner ? (
+            <>
+              <div className="mt-6">
+                <Button widthFull type="submit">
+                  <Share2 size={20} />
+                  Compartilhar link
+                </Button>
               </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="mt-6">
-              <Button widthFull type="submit">Pagar</Button>
-            </div>
 
-            <div className="mt-6 flex items-start gap-3">
-              <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="text-sm text-gray-600">
-                  Pagamento seguro garantido pelo Efi Bank
-                </p>
-                <p className="text-sm text-gray-600">
-                  Ao clicar em &quot;Pagar&quot;, você concorda com os{" "}
-                  <Link href="#" className="text-primary hover:underline">
-                    Termos de Uso.
-                  </Link>
-                </p>
+              <div className="mt-6 flex items-start gap-3">
+                <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-sm text-gray-600">
+                    Compartilhe o link para que outras pessoas possam contribuir com o presente.
+                  </p>
+                </div>
               </div>
-            </div>
-          </>
-        )}
-      </form>
-    </aside>
+            </>
+          ) : (
+            <>
+              <div className="mt-6">
+                <Button widthFull type="submit">Pagar</Button>
+              </div>
+
+              <div className="mt-6 flex items-start gap-3">
+                <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-sm text-gray-600">
+                    Pagamento seguro garantido pelo Efi Bank
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Ao clicar em &quot;Pagar&quot;, você concorda com os{" "}
+                    <Link href="#" className="text-primary hover:underline">
+                      Termos de Uso.
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+        </form>
+      </aside>
+    </FormProvider>
   );
 }
