@@ -9,7 +9,7 @@ export default function KeyInfo({ title, value }: KeyInfoProps) {
   return (
     <article className="flex justify-between items-center rounded-lg p-4 border border-gray-200">
       <div className="flex flex-col">
-        <h3 className="text-sm font-semibold text-gray-400">{title}</h3>
+        <h3 className="text-sm font-semibold text-gray-400 uppercase">{title}</h3>
         <p className="text-lg font-bold text-text-secondary">{value}</p>
       </div>
 
