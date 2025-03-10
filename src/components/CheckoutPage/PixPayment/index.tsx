@@ -71,7 +71,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     setIsGenerating(true);
 
     const chargeData = {
-      expiration: 30, // 1 hora
+      expiration: 3600, // 1 hora
       value: total.toString(),
       pixKey: "03f46041-ace4-4ade-b074-faf9d0b78e5f",
       requestPayer: "Descrição do pagamento",

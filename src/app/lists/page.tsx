@@ -71,9 +71,9 @@ const ListsPage = () => {
         <p className="text-center mt-8 text-text-secondary">Nenhuma lista encontrada.</p>
       )}
 
-      <section className="mt-8 pb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mt-8 pb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
         {giftLists?.map((list: GiftList) => (
-          <Link key={list.id} href={`/lists/${list.slug}/gifts`} className="cursor-pointer hover:shadow-lg">
+          <Link key={list.id} href={`/lists/${list.slug}/gifts`} className="cursor-pointer">
             <ListCard
               key={list.id}
               photo={list.banner?.url}
