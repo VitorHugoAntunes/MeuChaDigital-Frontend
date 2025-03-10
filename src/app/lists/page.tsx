@@ -24,7 +24,11 @@ interface GiftList {
 const ListsPage = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
 
-  const { data: giftLists, isLoading: isGiftListsLoading, isError } = useGiftListsByUser(user?.id ?? "");
+  const {
+    data: giftLists,
+    isLoading: isGiftListsLoading,
+    isError,
+  } = useGiftListsByUser(user?.id ?? "");
 
   if (isLoading) {
     return (
@@ -41,9 +45,7 @@ const ListsPage = () => {
 
         <div className="flex mt-8">
           <Link href="/sign-in">
-            <Button variant="default">
-              Faça login para ver suas listas
-            </Button>
+            <Button variant="default">Faça login para ver suas listas</Button>
           </Link>
         </div>
       </main>

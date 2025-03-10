@@ -31,39 +31,40 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: AuthProviderProps) {
   const queryClient = useQueryClient();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const {
     data: authData,
-    isLoading: isAuthLoading,
-    refetch: refetchAuth
+    // isLoading: isAuthLoading,
+    refetch: refetchAuth,
   } = useQuery({
     queryKey: ["auth"],
     queryFn: userAuthenticated,
     retry: false,
     staleTime: 1000 * 60 * 30,
-    enabled: false,
+    enabled: false, // A consulta não é executada automaticamente
     onSuccess: (data) => {
-      setIsAuthenticated(!!data?.id);
+      setIsAuthenticated(!!data?.id); // Define isAuthenticated com base no resultado
+      setIsLoading(false); // Finaliza o carregamento
     },
     onError: () => {
-      setIsAuthenticated(false);
+      setIsAuthenticated(false); // Usuário não autenticado
+      setIsLoading(false); // Finaliza o carregamento
     },
   });
 
-  const { data: user, isLoading: isUserLoading } = useQuery({
+  // const { data: user, isLoading: isUserLoading } = useQuery({
+  const { data: user } = useQuery({
     queryKey: ["user", authData?.id],
     queryFn: () => getUser(authData?.id),
-    enabled: !!authData?.id,
+    enabled: !!authData?.id, // Executa apenas se authData.id existir
     staleTime: 1000 * 60 * 30,
   });
 
-  useEffect(() => {
-    setIsLoading(isAuthLoading || isUserLoading);
-  }, [isAuthLoading, isUserLoading]);
 
   useEffect(() => {
+    // Executa a verificação de autenticação ao montar o componente
     refetchAuth();
   }, []);
 
@@ -75,7 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       queryClient.setQueryData(["auth"], null);
       queryClient.setQueryData(["user"], null);
       setIsAuthenticated(false);
-      setIsLoading(false); // Garante que o loading seja false após logout
+      setIsLoading(false);
     },
   });
 
