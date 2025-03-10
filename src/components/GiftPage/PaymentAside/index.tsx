@@ -69,6 +69,7 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
                 },
               })}
               error={isSubmitted ? errors.amount?.message : undefined}
+              isNumeric={true}
               mask={CurrencyMask}
               min={0.01}
               max={maxAmount}

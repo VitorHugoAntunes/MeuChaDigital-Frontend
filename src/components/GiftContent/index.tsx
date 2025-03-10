@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/contexts/AuthContext";
 import GiftHeader from "@/components/GiftPage/GiftHeader";
 import GiftDetails from "@/components/GiftPage/GiftDetails";
 import PaymentAside from "@/components/GiftPage/PaymentAside";

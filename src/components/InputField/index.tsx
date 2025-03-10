@@ -15,6 +15,7 @@ type InputFieldProps = {
   mask?: (value: string) => string;
   disabled?: boolean;
   name?: string;
+  isNumeric?: boolean;
 };
 
 function InputFieldWithWatch({ name, mask, value, setValue }: {
@@ -34,7 +35,7 @@ function InputFieldWithWatch({ name, mask, value, setValue }: {
   return null; // Este componente não renderiza nada, apenas atualiza o valor
 }
 
-export default function InputField({ label, description, type = "text", placeholder, min, max, step, readonly = false, error, register, mask, disabled, name }: InputFieldProps) {
+export default function InputField({ label, description, type = "text", placeholder, min, max, step, readonly = false, error, register, mask, disabled, name, isNumeric = false }: InputFieldProps) {
   const [value, setValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +48,16 @@ export default function InputField({ label, description, type = "text", placehol
     setValue(newValue);
 
     if (register) {
-      const numericValue = parseFloat(newValue.replace(/[^0-9,-]/g, '').replace(',', '.'));
+      let finalValue: string | number = newValue;
+
+      if (isNumeric) {
+        const numericValue = parseFloat(newValue.replace(/[^0-9,-]/g, '').replace(',', '.'));
+        finalValue = isNaN(numericValue) ? '' : numericValue;
+      }
+
       register.onChange({
         target: {
-          value: numericValue,
+          value: finalValue,
           name: register.name,
         },
       });

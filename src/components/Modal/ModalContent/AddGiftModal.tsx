@@ -11,6 +11,9 @@ import InputSelect from "@/components/InputSelect";
 import InputFileUpload from "@/components/InputFileUpload";
 import Button from "@/components/Button";
 
+import { CurrencyMask } from "@/utils/masks";
+import InputTextArea from "@/components/InputTextArea";
+
 const CATEGORIES = [
   { id: "d85d70fa-c52f-4e88-9200-8d15b146adbe", text: "Eletrônico" },
   { id: "d85d70fa-c52f-4e88-9200-8d15b146adbe", text: "Casa" },
@@ -39,7 +42,7 @@ export const AddGiftModal = ({ giftListId, userId, onSuccess, onClose }: AddGift
     resolver: zodResolver(giftSchema),
     defaultValues: {
       name: "",
-      totalValue: 0,
+      totalValue: undefined,
       categoryId: "",
       priority: "MEDIUM",
       description: "",
@@ -53,7 +56,7 @@ export const AddGiftModal = ({ giftListId, userId, onSuccess, onClose }: AddGift
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitted },
   } = methods;
 
   const { mutate: createGiftMutation, isLoading } = useCreateGift();
@@ -121,36 +124,46 @@ export const AddGiftModal = ({ giftListId, userId, onSuccess, onClose }: AddGift
 
         <InputField
           label="Preço estimado"
-          type="number"
-          placeholder="Digite o preço estimado"
-          register={{
-            ...register("totalValue", {
-              required: "Preço estimado é obrigatório",
-              valueAsNumber: true,
-            })
-          }}
-          error={errors.totalValue?.message}
+          type="text"
+          placeholder="R$ 0,00"
+          register={register("totalValue", {
+            required: "O valor é obrigatório",
+            setValueAs: (value) => {
+              const numericValue = Number(value.replace(/\D/g, "")) / 100;
+              return isNaN(numericValue) || numericValue === 0 ? undefined : numericValue;
+            },
+          })}
+          error={isSubmitted ? errors.totalValue?.message : undefined}
+          isNumeric={true}
+          mask={CurrencyMask}
+          min={0.01}
         />
 
-        <InputSelect
-          label="Categoria"
-          options={CATEGORIES.map((cat) => cat.text)}
-          values={CATEGORIES.map((cat) => cat.id)}
-          register={{ ...register("categoryId", { required: "Categoria é obrigatória" }) }}
-          error={errors.categoryId?.message}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <InputSelect
+            label="Categoria"
+            options={CATEGORIES.map((cat) => cat.text)}
+            values={CATEGORIES.map((cat) => cat.id)}
+            register={{
+              ...register("categoryId", {
+                required: "Categoria é obrigatória",
 
-        <InputSelect
-          label="Prioridade"
-          options={PRIORITIES.map((p) => p.text)}
-          values={PRIORITIES.map((p) => p.value)}
-          register={{ ...register("priority", { required: "Prioridade é obrigatória" }) }}
-          error={errors.priority?.message}
-        />
+              })
+            }}
+            error={errors.categoryId?.message}
+          />
 
-        <InputField
+          <InputSelect
+            label="Prioridade"
+            options={PRIORITIES.map((p) => p.text)}
+            values={PRIORITIES.map((p) => p.value)}
+            register={{ ...register("priority", { required: "Prioridade é obrigatória" }) }}
+            error={errors.priority?.message}
+          />
+        </div>
+
+        <InputTextArea
           label="Descrição"
-          type="textarea"
           placeholder="Descreva o presente"
           register={{ ...register("description", { required: "Descrição é obrigatória" }) }}
           error={errors.description?.message}

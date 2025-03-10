@@ -6,7 +6,11 @@ export const giftSchema = z.object({
     errorMap: () => ({ message: "Selecione uma prioridade válida" }),
   }),
   description: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres"),
-  totalValue: z.number({ invalid_type_error: "O preço deve ser um número válido" }).min(1, "O valor total deve ser maior que 0").positive("O valor total deve ser maior que 0"),
+  totalValue: z
+    .number({ required_error: "O valor é obrigatório" })
+    .positive("O valor deve ser maior que zero")
+    .min(0.01, "O valor deve ser maior que zero")
+    .max(10000, "O valor não pode ser maior que o limite de R$ 10.000,00"),
   categoryId: z.string().min(1, "Selecione uma categoria"),
   userId: z.string().min(1, "O usuário é obrigatório"),
   giftListId: z.string().min(1, "A lista de presentes é obrigatória"),

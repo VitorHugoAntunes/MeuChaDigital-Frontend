@@ -11,7 +11,6 @@ import Divider from "@/components/Divider";
 import { usePayment } from "@/contexts/PaymentContext";
 import { ShieldCheck, ReceiptText } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
