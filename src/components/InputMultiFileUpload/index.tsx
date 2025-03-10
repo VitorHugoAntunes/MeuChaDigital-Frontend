@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ImageIcon, Trash2 } from "lucide-react";
 
@@ -13,11 +11,10 @@ interface MultiFileUploadProps {
 
 export default function MultiFileUpload({ label, description, onFilesSelect, maxFiles = 5 }: MultiFileUploadProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (selectedFiles.length > 0) {
-      onFilesSelect(selectedFiles);
-    }
+    onFilesSelect(selectedFiles);
   }, [selectedFiles, onFilesSelect]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +32,10 @@ export default function MultiFileUpload({ label, description, onFilesSelect, max
       const newFiles = prevFiles.filter((_, i) => i !== index);
       return newFiles;
     });
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -48,7 +49,7 @@ export default function MultiFileUpload({ label, description, onFilesSelect, max
               <div key={index} className="relative group">
                 <Image
                   src={URL.createObjectURL(file)}
-                  alt={`Imagem selecionada ${index + 1}`}
+                  alt={`Imagem ${index + 1}`}
                   className="h-32 w-full object-cover rounded-md"
                   width={300}
                   height={128}
@@ -77,8 +78,9 @@ export default function MultiFileUpload({ label, description, onFilesSelect, max
           id="moments-upload"
           className="sr-only"
           onChange={handleFileChange}
-          multiple // Permite seleção de múltiplos arquivos
-          disabled={selectedFiles.length >= maxFiles} // Desabilita o input quando o limite é atingido
+          multiple
+          disabled={selectedFiles.length >= maxFiles}
+          ref={fileInputRef}
         />
         <label
           htmlFor="moments-upload"

@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { ImageIcon, Trash2 } from "lucide-react";
 
@@ -11,6 +9,7 @@ interface FileUploadProps {
 
 export default function InputFileUpload({ label, onFileSelect }: FileUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -21,6 +20,10 @@ export default function InputFileUpload({ label, onFileSelect }: FileUploadProps
   const handleRemoveFile = () => {
     setSelectedFile(null);
     onFileSelect(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -58,6 +61,7 @@ export default function InputFileUpload({ label, onFileSelect }: FileUploadProps
           id="banner-upload"
           className="sr-only"
           onChange={handleFileChange}
+          ref={fileInputRef}
         />
         <label
           htmlFor="banner-upload"

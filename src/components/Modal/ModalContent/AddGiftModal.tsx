@@ -1,5 +1,3 @@
-"use client";
-
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { giftSchema, GiftFormData } from "@/schemas/createGiftSchema";
@@ -56,17 +54,23 @@ export const AddGiftModal = ({ giftListId, userId, onSuccess, onClose }: AddGift
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors, isSubmitted },
   } = methods;
 
   const { mutate: createGiftMutation, isLoading } = useCreateGift();
 
   const handleGiftPhotoChange = useCallback((file: File | null) => {
-    if (!file) return;
-    setGiftPhoto(file);
-    setValue("giftPhoto", file);
-    console.log("Arquivo selecionado:", file);
-  }, [setValue]);
+    if (file) {
+      setGiftPhoto(file);
+      setValue("giftPhoto", file);
+      clearErrors("giftPhoto");
+    } else {
+      setGiftPhoto(null);
+      setValue("giftPhoto", undefined);
+    }
+  }, [setValue, clearErrors]);
+
 
   const onSubmit: SubmitHandler<GiftFormData> = async (data) => {
     console.log("onSubmit foi chamado!");
@@ -93,7 +97,7 @@ export const AddGiftModal = ({ giftListId, userId, onSuccess, onClose }: AddGift
         onSuccess: () => {
           console.log("Presente criado com sucesso!");
           onSuccess?.();
-          onClose(); // Fecha o modal apenas após o sucesso
+          onClose();
         },
         onError: (error) => {
           console.error("Erro ao adicionar presente:", error);

@@ -17,8 +17,8 @@ export default function CreateGiftList() {
   const searchParams = useSearchParams();
   const step = Number(searchParams.get('step')) || 1;
 
-  const [isLoading, setIsLoading] = useState(false); // Estado geral de carregamento
-  const [isSubmitting, setIsSubmitting] = useState(false); // Estado específico para o envio do formulário
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const userId = user?.id ?? "";
   const { refetch } = useGiftListsByUser(userId);
@@ -35,6 +35,7 @@ export default function CreateGiftList() {
   const methods = useForm<EventFormData>({
     resolver: zodResolver(eventSchema),
     mode: "onChange",
+    shouldUnregister: false,
     defaultValues: {
       type: '',
       name: '',
