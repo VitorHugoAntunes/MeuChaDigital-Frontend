@@ -10,10 +10,21 @@ import { useState } from "react";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/AuthContext";
 import { redirect } from "next/navigation";
+import { useGetAllPixKeysByUser } from "@/hooks/pixKey";
+import { PixKeyCreateData } from "@/api/pixKey";
+import { translateString } from "@/utils/translateString";
+import { formatCPF, formatPhone } from "@/utils/formatString";
+import { ToastContainer } from "react-toastify";
+
+interface PixKey extends PixKeyCreateData {
+  id: string;
+}
 
 export default function ProfilePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, logoutUser } = useAuth();
+
+  const { data: pixKeys, isLoading } = useGetAllPixKeysByUser(user?.id || "");
 
   function handleLogout() {
     logoutUser();
@@ -50,9 +61,23 @@ export default function ProfilePage() {
           </div>
 
           <div className="mt-6 space-y-4">
-            <KeyInfo title="CPF" value="123.456.789-00" />
-            <KeyInfo title="E-mail" value="vitor@gmail.com" />
-            <KeyInfo title="Telefone" value="(11) 99999-9999" />
+            {isLoading ? (
+              <div className="flex justify-center items-center py-4">
+                <span className="text-text-secondary">Carregando...</span>
+              </div>
+            ) : pixKeys && pixKeys.length > 0 ? (
+
+              pixKeys.map((key: PixKey) => (
+                <KeyInfo
+                  key={key.id}
+                  title={translateString(key.type)}
+                  value={key.type === "CPF" ? formatCPF(key.key) : key.type === "PHONE" ? formatPhone(key.key) : key.key}
+                />
+              ))
+            ) : (
+              // Exibe uma mensagem se não houver chaves PIX cadastradas
+              <p className="text-md text-text-secondary">Nenhuma chave PIX cadastrada.</p>
+            )}
           </div>
         </Card>
 
@@ -88,11 +113,7 @@ export default function ProfilePage() {
             </Card>
           </div>
         </Card>
-
-
-
-
-      </section >
+      </section>
 
       <aside className="flex flex-col gap-6">
         <Card>
@@ -115,12 +136,11 @@ export default function ProfilePage() {
         </Card>
       </aside>
 
+      {isModalOpen && (
+        <Modal modalType="pix" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      )}
 
-      {
-        isModalOpen && (
-          <Modal modalType="pix" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-        )
-      }
-    </main >
+      <ToastContainer /> {/* Adicione o ToastContainer aqui */}
+    </main>
   );
 }

@@ -10,8 +10,8 @@ interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   modalType: "gift" | "pix";
-  giftListId: string;
-  userId: string;
+  giftListId?: string;
+  userId?: string;
   onSuccess?: () => void;
 }
 
@@ -19,7 +19,9 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, userId, onS
   const closeModal = () => setIsModalOpen(false);
 
   const modalComponents: Record<string, ReactNode | null> = {
-    gift: <AddGiftModal giftListId={giftListId} userId={userId} onClose={closeModal} onSuccess={onSuccess} />,
+    gift: giftListId && userId ? (
+      <AddGiftModal giftListId={giftListId} userId={userId} onClose={closeModal} onSuccess={onSuccess} />
+    ) : null,
     pix: <AddPixKeyModal onClose={closeModal} />,
   };
 

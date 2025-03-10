@@ -5,7 +5,7 @@ interface InputSelectProps {
   options: string[];
   values?: (string | number)[];
   error?: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
 }
 
 export default function InputSelect({ label, options, values, error, register }: InputSelectProps) {
