@@ -10,7 +10,7 @@ import { useState } from "react";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/AuthContext";
 import { redirect } from "next/navigation";
-import { useGetAllPixKeysByUser } from "@/hooks/pixKey";
+import { useGetAllPixKeysByUser, useDeletePixKey } from "@/hooks/pixKey";
 import { PixKeyCreateData } from "@/api/pixKey";
 import { translateString } from "@/utils/translateString";
 import { formatCPF, formatPhone } from "@/utils/formatString";
@@ -22,14 +22,49 @@ interface PixKey extends PixKeyCreateData {
 
 export default function ProfilePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"pix" | "deletePixKey" | "logout" | "deleteAccount" | null>(null);
+  const [selectedPixKeyId, setSelectedPixKeyId] = useState<string | null>(null);
+
   const { user, logoutUser } = useAuth();
 
-  const { data: pixKeys, isLoading } = useGetAllPixKeysByUser(user?.id || "");
+  const { data: pixKeys, isLoading: isGettingAllPixKeysLoading } = useGetAllPixKeysByUser(user?.id || "");
+  const { mutate: deletePixKey, isLoading: isDeletingPixKey } = useDeletePixKey();
 
-  function handleLogout() {
-    logoutUser();
+  const openPixModal = () => {
+    setModalType("pix");
+    setIsModalOpen(true);
+  };
+
+  const openDeletePixKeyModal = (pixKeyId: string) => {
+    setModalType("deletePixKey");
+    setIsModalOpen(true);
+    setSelectedPixKeyId(pixKeyId);
+  };
+
+
+  const openLogoutModal = () => {
+    setModalType("logout");
+    setIsModalOpen(true);
+  };
+
+  const openDeleteAccountModal = () => {
+    setModalType("deleteAccount");
+    setIsModalOpen(true);
+  };
+
+  async function handleLogout() {
+    await logoutUser();
     redirect("/");
   }
+
+  async function handleDeletePixKey(pixKeyId: string) {
+    try {
+      await deletePixKey(pixKeyId);
+    } catch (error) {
+      console.error("Erro ao excluir a chave PIX", error);
+    }
+  }
+
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">
@@ -54,14 +89,14 @@ export default function ProfilePage() {
         <Card>
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-text-primary">Chaves PIX</h2>
-            <Button onClick={() => setIsModalOpen(true)}>
+            <Button onClick={openPixModal}>
               Adicionar chave
               <Plus size={20} />
             </Button>
           </div>
 
           <div className="mt-6 space-y-4">
-            {isLoading ? (
+            {isGettingAllPixKeysLoading ? (
               <div className="flex justify-center items-center py-4">
                 <span className="text-text-secondary">Carregando...</span>
               </div>
@@ -72,10 +107,10 @@ export default function ProfilePage() {
                   key={key.id}
                   title={translateString(key.type)}
                   value={key.type === "CPF" ? formatCPF(key.key) : key.type === "PHONE" ? formatPhone(key.key) : key.key}
+                  action={() => openDeletePixKeyModal(key.id)}
                 />
               ))
             ) : (
-              // Exibe uma mensagem se não houver chaves PIX cadastradas
               <p className="text-md text-text-secondary">Nenhuma chave PIX cadastrada.</p>
             )}
           </div>
@@ -95,7 +130,7 @@ export default function ProfilePage() {
                 <h4 className="text-lg font-semibold text-text-primary">Sair da conta</h4>
                 <p className="text-md text-text-secondary">Saia da sua conta a qualquer momento.</p>
               </div>
-              <Button variant="outlined-danger" onClick={handleLogout}>
+              <Button variant="outlined-danger" onClick={openLogoutModal}>
                 Sair da conta
               </Button>
             </Card>
@@ -107,7 +142,7 @@ export default function ProfilePage() {
                   Para excluir sua conta, todas as suas listas devem estar com o status &quot;<strong>INATIVA</strong>&quot;.
                 </p>
               </div>
-              <Button variant="danger">
+              <Button variant="danger" onClick={openDeleteAccountModal}>
                 Excluir conta
               </Button>
             </Card>
@@ -137,10 +172,55 @@ export default function ProfilePage() {
       </aside>
 
       {isModalOpen && (
-        <Modal modalType="pix" isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <>
+          {modalType === "pix" && (
+            <Modal
+              modalType="pix"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            />
+          )}
+          {modalType === "deletePixKey" && (
+            <Modal
+              action="Excluir"
+              actionTitle="Excluir chave PIX"
+              actionDescription="Tem certeza que deseja excluir esta chave PIX?"
+              modalType="action"
+              isLoading={isDeletingPixKey}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              onSuccess={async () => {
+                if (selectedPixKeyId) {
+                  await handleDeletePixKey(selectedPixKeyId);
+                }
+              }}
+            />
+          )}
+          {modalType === "logout" && (
+            <Modal
+              action="Sair"
+              actionTitle="Sair da conta"
+              actionDescription="Tem certeza que deseja sair da sua conta?"
+              modalType="action"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              onSuccess={handleLogout}
+            />
+          )}
+          {modalType === "deleteAccount" && (
+            <Modal
+              action="Excluir"
+              actionTitle="Excluir conta"
+              actionDescription="Tem certeza que deseja excluir sua conta?"
+              modalType="action"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            />
+          )}
+        </>
       )}
 
-      <ToastContainer /> {/* Adicione o ToastContainer aqui */}
+      <ToastContainer />
     </main>
   );
 }

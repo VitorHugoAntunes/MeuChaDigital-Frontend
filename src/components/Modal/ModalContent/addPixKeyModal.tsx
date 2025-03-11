@@ -1,6 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { pixFormSchema, PixFormData } from "@/schemas/pixKeySchema"; // Importe o schema e o tipo
+import { pixFormSchema, PixFormData } from "@/schemas/pixKeySchema";
 import InputField from "@/components/InputField";
 import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useCreatePixKey } from "@/hooks/pixKey";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Importe o CSS do react-toastify
+import "react-toastify/dist/ReactToastify.css";
 import { CPFMask, PhoneMask } from "@/utils/masks";
 
 interface AddPixModalProps {
@@ -61,14 +61,12 @@ export const AddPixKeyModal = ({ onClose }: AddPixModalProps) => {
     return value.replace(/\D/g, '');
   }
 
-  const onSubmit: SubmitHandler<PixFormData> = (data) => {
+  const onSubmit: SubmitHandler<PixFormData> = async (data) => {
     const dataToSend = {
       key: removeMask(data.keyValue, data.keyType),
       type: data.keyType,
       userId: user?.id ?? '',
     };
-
-    console.log(dataToSend);
 
     mutate(dataToSend, {
       onSuccess: () => {
@@ -82,8 +80,8 @@ export const AddPixKeyModal = ({ onClose }: AddPixModalProps) => {
         });
         onClose();
       },
-      onError: (error) => {
-        toast.error("Erro ao salvar a chave PIX!", {
+      onError: (error: any) => {
+        toast.error(error.message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -123,6 +121,7 @@ export const AddPixKeyModal = ({ onClose }: AddPixModalProps) => {
             widthFull
             onClick={onClose}
             aria-label="Cancelar"
+            disabled={isLoading}
           >
             Cancelar
           </Button>

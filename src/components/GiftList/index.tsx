@@ -1,9 +1,8 @@
-// components/GiftList.tsx
 "use client";
 
 import Button from "@/components/Button";
 import GiftCard from "@/components/GiftCard";
-import { Plus, Users } from "lucide-react";
+import { Plus, Users, Settings2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import Modal from "@/components/Modal";
@@ -27,6 +26,7 @@ interface GiftListProps {
   gifts: Gift[];
   giftList: {
     id: string;
+    description: string;
     name: string;
   };
   slug?: string;
@@ -34,7 +34,7 @@ interface GiftListProps {
   isLoading: boolean;
   error: any;
   isUserOwner: boolean;
-  onAddGiftSuccess?: () => void; // Callback para quando um presente é adicionado com sucesso
+  onAddGiftSuccess?: () => void;
 }
 
 export default function GiftList({
@@ -65,7 +65,6 @@ export default function GiftList({
           </p>
         </header>
 
-        {/* Exibir Skeletons enquanto carrega */}
         <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, index) => (
             <GiftCardSkeleton key={index} />
@@ -87,6 +86,9 @@ export default function GiftList({
     <main className="flex flex-col flex-1 w-full my-8 px-4">
       <header>
         <h1 className="text-4xl font-bold text-text-primary">{giftList?.name}</h1>
+        <p className="text-md text-text-secondary">
+          {giftList?.description || "Sem descrição."}
+        </p>
         <h2 className="text-2xl font-semibold text-text-primary mt-2">
           {isUserOwner ? "Meus Presentes" : "Presentes"}
         </h2>
@@ -117,9 +119,16 @@ export default function GiftList({
               </Button>
             </Link>
 
+            <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`}>
+              <Button variant="outlined">
+                Editar lista <Settings2 size={20} />
+              </Button>
+            </Link>
+
             <Button onClick={() => setIsModalOpen(true)}>
               Adicionar Presente <Plus />
             </Button>
+
           </div>
         </>
       )}
@@ -161,7 +170,7 @@ export default function GiftList({
           modalType="gift"
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          onSuccess={onAddGiftSuccess} // Atualiza a lista após adicionar um presente
+          onSuccess={onAddGiftSuccess}
         />
       )}
     </main>

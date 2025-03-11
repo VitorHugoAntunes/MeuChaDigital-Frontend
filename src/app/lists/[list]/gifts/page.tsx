@@ -1,4 +1,3 @@
-// app/lists/[list]/gifts/page.tsx
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -10,7 +9,7 @@ export default function GiftsPage() {
   const { user } = useAuth();
   const slug = useParams().list as string;
   const { data, isLoading, error, refetch } = useGiftsBySlug(slug);
-  const isUserOwner = true; // O dono da lista sempre tem permissão de edição
+  const isUserOwner = true;
 
   return (
     <GiftList
@@ -20,7 +19,7 @@ export default function GiftsPage() {
       isLoading={isLoading}
       error={error}
       isUserOwner={isUserOwner}
-      onAddGiftSuccess={refetch} // Atualiza a lista após adicionar um presente
+      onAddGiftSuccess={refetch}
     />
   );
 }

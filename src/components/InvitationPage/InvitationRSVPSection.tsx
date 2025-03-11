@@ -117,6 +117,7 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
               placeholder="Quantas pessoas você levará?"
               register={{ ...register("additionalInvitees", { required: "Número de convidados é obrigatório", valueAsNumber: true }) }}
               error={errors.additionalInvitees?.message}
+              isNumeric
             />
 
             <InputTextArea

@@ -191,6 +191,7 @@ export const AddGiftModal = ({ giftListId, userId, onSuccess, onClose }: AddGift
             widthFull
             onClick={onClose}
             aria-label="Cancelar"
+            disabled={isLoading}
           >
             Cancelar
           </Button>
