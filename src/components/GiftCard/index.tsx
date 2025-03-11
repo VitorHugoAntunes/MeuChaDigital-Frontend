@@ -12,9 +12,21 @@ interface GiftCardProps {
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
   isUserOwner?: boolean;
+  actionEditFn?: () => void;
+  actionDeleteFn?: (event: any) => void;
 }
 
-const GiftCard = ({ photo, title, category, price, description, priority, isUserOwner }: GiftCardProps) => {
+const GiftCard = ({
+  photo,
+  title,
+  category,
+  price,
+  description,
+  priority,
+  isUserOwner,
+  actionEditFn,
+  actionDeleteFn,
+}: GiftCardProps) => {
   return (
     <article className="w-full max-w-sm border border-gray-200 rounded-lg bg-white overflow-hidden shadow-md hover:shadow-lg flex flex-col h-full">
       <div className="relative w-full h-40 bg-gray-500">
@@ -30,7 +42,9 @@ const GiftCard = ({ photo, title, category, price, description, priority, isUser
       <section className="p-4 space-y-4 flex flex-col flex-1">
         <header className="flex items-center justify-between">
           <Tag label={category} color="bg-primary text-white" />
-          <span className="text-lg font-bold text-success-dark">{formatCurrency(price)}</span>
+          <span className="text-lg font-bold text-success-dark">
+            {formatCurrency(price)}
+          </span>
         </header>
 
         <h3 className="text-lg font-semibold text-text-primary line-clamp-2">
@@ -45,15 +59,26 @@ const GiftCard = ({ photo, title, category, price, description, priority, isUser
           <PriorityTag priority={priority} />
           {isUserOwner && (
             <div className="flex gap-4">
+
               <button
                 className="text-warning hover:text-warning-dark transition-colors duration-200"
                 aria-label={`Editar ${title}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  actionEditFn?.();
+                }}
               >
                 <Edit size={20} />
               </button>
+
               <button
                 className="text-danger hover:text-danger-dark transition-colors duration-200"
                 aria-label={`Excluir ${title}`}
+                onClick={(event) => {
+                  event.preventDefault();
+
+                  actionDeleteFn?.(event);
+                }}
               >
                 <Trash size={20} />
               </button>

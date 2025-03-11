@@ -10,6 +10,9 @@ import StatCard from "@/components/StatCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { formatCurrency } from "@/utils/formatString";
 import GiftCardSkeleton from "../Skeleton/giftCardSkeleton";
+import { useDeleteGift } from "@/hooks/gifts";
+
+import { ToastContainer } from "react-toastify";
 
 interface Gift {
   id: string;
@@ -49,6 +52,34 @@ export default function GiftList({
 }: GiftListProps) {
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"addGift" | "deleteGift" | null>(null);
+  const [selectedGiftId, setSelectedGiftId] = useState<string | null>(null);
+
+  const { isLoading: isDeletingGift, mutateAsync: deleteGift } = useDeleteGift(slug || "");
+
+  const openAddGiftModal = () => {
+    setModalType("addGift");
+    setIsModalOpen(true);
+  };
+
+  const confirmDeleteGift = async () => {
+    if (selectedGiftId) {
+      try {
+        await deleteGift({ giftListId: giftList.id, giftId: selectedGiftId });
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error("Erro ao excluir presente:", error);
+      }
+    }
+  };
+
+  const openDeleteGiftModal = (giftId: string, event: React.MouseEvent) => {
+    event.preventDefault();
+
+    setModalType("deleteGift");
+    setIsModalOpen(true);
+    setSelectedGiftId(giftId);
+  };
 
   if (isLoading) {
     return (
@@ -125,7 +156,7 @@ export default function GiftList({
               </Button>
             </Link>
 
-            <Button onClick={() => setIsModalOpen(true)}>
+            <Button onClick={openAddGiftModal}>
               Adicionar Presente <Plus />
             </Button>
 
@@ -150,6 +181,7 @@ export default function GiftList({
                 description={gift.description}
                 priority={gift.priority}
                 isUserOwner={isUserOwner}
+                actionDeleteFn={(event) => openDeleteGiftModal(gift.id, event)}
               />
             </Link>
           ))
@@ -164,15 +196,34 @@ export default function GiftList({
       </section>
 
       {isModalOpen && (
-        <Modal
-          giftListId={giftList.id}
-          userId={user?.id || ""}
-          modalType="gift"
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          onSuccess={onAddGiftSuccess}
-        />
+        <>
+          {modalType === "addGift" && (
+            <Modal
+              giftListId={giftList.id}
+              userId={user?.id || ""}
+              modalType="gift"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              onSuccess={onAddGiftSuccess}
+            />
+          )}
+          {modalType === "deleteGift" && (
+            <Modal
+              giftListId={giftList.id}
+              userId={user?.id || ""}
+              modalType="action"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              action="Excluir"
+              actionTitle="Excluir Presente"
+              actionDescription="Tem certeza que deseja excluir este presente?"
+              isLoading={isDeletingGift}
+              onSuccess={confirmDeleteGift}
+            />
+          )}
+        </>
       )}
+      <ToastContainer />
     </main>
   );
 }

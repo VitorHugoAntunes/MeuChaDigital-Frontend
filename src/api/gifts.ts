@@ -42,3 +42,12 @@ export const createGift = async (giftListId: string, data: GiftCreateData) => {
 
   return response.data;
 };
+
+export const deleteGift = async (giftListId: string, giftId: string) => {
+  try {
+    const response = await api.delete(`/lists/${giftListId}/gifts/${giftId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao excluir presente', error);
+  }
+}

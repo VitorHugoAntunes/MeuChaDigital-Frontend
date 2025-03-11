@@ -11,25 +11,13 @@ interface ActionModalProps {
 }
 
 export const ActionModal = ({ description, action, isLoading, onSuccess, onClose }: ActionModalProps) => {
-  console.log("Executando ActionModal");
-  console.log("está carregando?", isLoading);
-
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log("Executando handleSubmit");
-    console.log("está carregando?", isLoading);
 
     if (onSuccess) {
       await onSuccess();
     }
-
-    if (!isLoading) {
-      setTimeout(() => {
-        onClose();
-      }, 200);
-    }
-  }
+  };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit} noValidate>

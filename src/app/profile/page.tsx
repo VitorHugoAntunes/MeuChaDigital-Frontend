@@ -28,9 +28,9 @@ export default function ProfilePage() {
   const { user, logoutUser } = useAuth();
 
   const { data: pixKeys, isLoading: isGettingAllPixKeysLoading } = useGetAllPixKeysByUser(user?.id || "");
-  const { mutate: deletePixKey, isLoading: isDeletingPixKey } = useDeletePixKey();
+  const { mutateAsync: deletePixKey, isLoading: isDeletingPixKey } = useDeletePixKey();
 
-  const openPixModal = () => {
+  const openAddPixKeyModal = () => {
     setModalType("pix");
     setIsModalOpen(true);
   };
@@ -40,7 +40,6 @@ export default function ProfilePage() {
     setIsModalOpen(true);
     setSelectedPixKeyId(pixKeyId);
   };
-
 
   const openLogoutModal = () => {
     setModalType("logout");
@@ -60,11 +59,11 @@ export default function ProfilePage() {
   async function handleDeletePixKey(pixKeyId: string) {
     try {
       await deletePixKey(pixKeyId);
+      setIsModalOpen(false); // Fecha o modal apenas após a mutação ser concluída
     } catch (error) {
       console.error("Erro ao excluir a chave PIX", error);
     }
   }
-
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 px-4 md:px-8 h-fit">
@@ -89,7 +88,7 @@ export default function ProfilePage() {
         <Card>
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-text-primary">Chaves PIX</h2>
-            <Button onClick={openPixModal}>
+            <Button onClick={openAddPixKeyModal}>
               Adicionar chave
               <Plus size={20} />
             </Button>
@@ -186,12 +185,12 @@ export default function ProfilePage() {
               actionTitle="Excluir chave PIX"
               actionDescription="Tem certeza que deseja excluir esta chave PIX?"
               modalType="action"
-              isLoading={isDeletingPixKey}
+              isLoading={isDeletingPixKey} // Passa o estado de carregamento
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
-              onSuccess={async () => {
+              onSuccess={() => {
                 if (selectedPixKeyId) {
-                  await handleDeletePixKey(selectedPixKeyId);
+                  handleDeletePixKey(selectedPixKeyId);
                 }
               }}
             />
