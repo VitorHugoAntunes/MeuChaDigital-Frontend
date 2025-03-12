@@ -5,19 +5,36 @@ import { ImageIcon, Trash2 } from "lucide-react";
 interface MultiFileUploadProps {
   label: string;
   description?: string;
+  initialFiles?: File[];
   onFilesSelect: (files: File[]) => void;
   maxFiles?: number;
 }
 
-export default function MultiFileUpload({ label, description, onFilesSelect, maxFiles = 5 }: MultiFileUploadProps) {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+export default function MultiFileUpload({
+  label,
+  description,
+  initialFiles = [],
+  onFilesSelect,
+  maxFiles = 5,
+}: MultiFileUploadProps) {
+  const [selectedFiles, setSelectedFiles] = useState<File[]>(initialFiles);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  if (initialFiles.length > 0 && selectedFiles.length === 0) {
+    setSelectedFiles(initialFiles);
+  }
+
+  console.log("selectedFiles", selectedFiles);
+
+  // Notifica o componente pai apenas se os arquivos mudarem
   useEffect(() => {
-    onFilesSelect(selectedFiles);
-  }, [selectedFiles, onFilesSelect]);
+    if (selectedFiles !== initialFiles) {
+      onFilesSelect(selectedFiles);
+    }
+  }, [selectedFiles]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("event.target.files", event.target.files);
     if (!event.target.files) return;
 
     const newFiles = Array.from(event.target.files);
@@ -29,8 +46,8 @@ export default function MultiFileUpload({ label, description, onFilesSelect, max
 
   const handleRemoveFile = (index: number) => {
     setSelectedFiles((prevFiles) => {
-      const newFiles = prevFiles.filter((_, i) => i !== index);
-      return newFiles;
+      const updatedFiles = prevFiles.filter((_, i) => i !== index);
+      return updatedFiles;
     });
 
     if (fileInputRef.current) {

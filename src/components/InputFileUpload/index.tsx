@@ -1,26 +1,34 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ImageIcon, Trash2 } from "lucide-react";
 
 interface FileUploadProps {
   label: string;
+  initialFile?: File | null;
   onFileSelect: (file: File | null) => void;
 }
 
-export default function InputFileUpload({ label, onFileSelect }: FileUploadProps) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+export default function InputFileUpload({ label, initialFile, onFileSelect }: FileUploadProps) {
+  const [selectedFile, setSelectedFile] = useState<File | null>(initialFile || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  if (initialFile && !selectedFile) {
+    setSelectedFile(initialFile);
+  }
+
+  // Notifica o componente pai quando `selectedFile` muda
+  useEffect(() => {
+    onFileSelect(selectedFile);
+  }, [selectedFile, onFileSelect]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
+    console.log("event.target.files", event);
     setSelectedFile(file);
-    onFileSelect(file);
   };
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
-    onFileSelect(null);
-
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }

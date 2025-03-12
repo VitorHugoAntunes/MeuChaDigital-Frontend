@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 type InputFieldProps = {
   label: string;
   description?: string;
+  inputValue?: string;
   type?: string;
   placeholder?: string;
   min?: number;
@@ -35,7 +36,7 @@ function InputFieldWithWatch({ name, mask, value, setValue }: {
   return null; // Este componente não renderiza nada, apenas atualiza o valor
 }
 
-export default function InputField({ label, description, type = "text", placeholder, min, max, step, readonly = false, error, register, mask, disabled, name, isNumeric = false }: InputFieldProps) {
+export default function InputField({ label, description, inputValue, type = "text", placeholder, min, max, step, readonly = false, error, register, mask, disabled, name, isNumeric = false }: InputFieldProps) {
   const [value, setValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +78,7 @@ export default function InputField({ label, description, type = "text", placehol
         transition-colors appearance-none text-gray-900 h-[42px] ${disabled ? 'bg-gray-100' : 'bg-white'}`}
         style={{ fontFamily: 'inherit' }}
         readOnly={readonly}
-        value={value}
+        value={value || inputValue}
         onChange={handleChange}
         ref={register ? register.ref : undefined}
         disabled={disabled}

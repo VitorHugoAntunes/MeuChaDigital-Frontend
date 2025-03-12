@@ -152,7 +152,7 @@ export default function GiftList({
 
             <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`}>
               <Button variant="outlined">
-                Editar lista <Settings2 size={20} />
+                Configurações <Settings2 size={20} />
               </Button>
             </Link>
 
