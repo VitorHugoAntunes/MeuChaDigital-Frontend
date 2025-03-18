@@ -22,7 +22,7 @@ interface PaymentAsideProps {
 
 export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxAmount, isInvitationPage }: PaymentAsideProps) {
   const router = useRouter();
-  const { setAmount, setMaxAmount } = usePayment();
+  const { setAmount, setMaxAmount, setCheckoutItem } = usePayment();
 
   const methods = useForm({
     resolver: zodResolver(paymentAmountSchema(maxAmount)),
@@ -36,8 +36,9 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
   } = methods;
 
   const onSubmit = (data: { amount: number }) => {
-    setAmount(data.amount); // Armazena o valor no contexto
-    setMaxAmount(maxAmount); // Armazena o valor máximo no contexto
+    setAmount(data.amount);
+    setMaxAmount(maxAmount);
+    setCheckoutItem(giftName);
 
     if (isInvitationPage === true) {
       router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}/checkout-${giftName}`);

@@ -19,7 +19,7 @@ interface CheckoutContentProps {
 }
 
 export default function CheckoutContent({ isInvitationPage }: CheckoutContentProps) {
-  const { amount, maxAmount } = usePayment();
+  const { amount, maxAmount, checkoutItem } = usePayment();
   const router = useRouter();
 
   const methods = useForm<{ type: string }>({
@@ -27,19 +27,24 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
   });
 
   if (amount <= 0 || amount > maxAmount) {
-    router.push('/pagina-anterior');
+    router.back();
     return null;
   }
 
-
   return (
     <FormProvider {...methods}>
-      <Checkout isInvitationPage={isInvitationPage} amount={amount} />
+      <Checkout checkoutItem={checkoutItem} isInvitationPage={isInvitationPage} amount={amount} />
     </FormProvider>
   );
 }
 
-function Checkout({ isInvitationPage, amount }: { isInvitationPage?: boolean; amount: number }) {
+interface CheckoutProps {
+  isInvitationPage?: boolean;
+  checkoutItem: string;
+  amount: number;
+}
+
+function Checkout({ isInvitationPage, checkoutItem, amount }: CheckoutProps) {
   const { watch } = useFormContext();
   const selectedPaymentType = watch("type") as "PIX" | "CREDIT_CARD" | "BANK_SLIP" | undefined;
 
@@ -72,7 +77,7 @@ function Checkout({ isInvitationPage, amount }: { isInvitationPage?: boolean; am
             )}
           </header>
 
-          <OrderSummary amount={amount} fee={fee} total={total} />
+          <OrderSummary checkoutItem={checkoutItem} amount={amount} fee={fee} total={total} />
 
           <Divider />
 
