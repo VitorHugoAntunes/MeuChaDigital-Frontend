@@ -11,6 +11,17 @@ export interface GiftCreateData {
   giftPhoto: File | null;
 }
 
+export interface GiftUpdateData {
+  name?: string;
+  priority?: string;
+  description?: string;
+  totalValue?: number;
+  categoryId?: string;
+  userId?: string;
+  giftListId?: string;
+  giftPhoto?: File | null;
+}
+
 export const getAllGiftsBySlug = async (slug: string) => {
   const response = await api.get(`/lists/slug/${slug}/gifts`);
   return response.data;
@@ -37,6 +48,27 @@ export const createGift = async (giftListId: string, data: GiftCreateData) => {
   }
 
   const response = await api.post(`/lists/${giftListId}/gifts`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+  return response.data;
+};
+
+export const updateGift = async (giftListId: string, giftId: string, data: GiftUpdateData) => {
+  const formData = new FormData();
+
+  if (data.name) formData.append('name', data.name);
+  if (data.priority) formData.append('priority', data.priority);
+  if (data.description) formData.append('description', data.description);
+  if (data.totalValue !== undefined) formData.append('totalValue', String(data.totalValue));
+  if (data.categoryId) formData.append('categoryId', data.categoryId);
+  if (data.userId) formData.append('userId', data.userId);
+
+  if (data.giftPhoto) {
+    formData.append('giftPhoto', data.giftPhoto);
+  }
+
+  const response = await api.put(`/lists/${giftListId}/gifts/${giftId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 

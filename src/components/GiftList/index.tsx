@@ -1,24 +1,21 @@
-"use client";
-
 import Button from "@/components/Button";
 import GiftCard from "@/components/GiftCard";
 import { Plus, Users, Settings2 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@/components/Modal";
-import StatCard from "@/components/StatCard";
 import { useAuth } from "@/contexts/AuthContext";
-import { formatCurrency } from "@/utils/formatString";
 import GiftCardSkeleton from "../Skeleton/giftCardSkeleton";
 import { useDeleteGift } from "@/hooks/gifts";
 
 import { ToastContainer } from "react-toastify";
+import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 
 interface Gift {
   id: string;
   name: string;
   photo?: { url: string };
-  category?: { name: string };
+  category?: { id: string, name: string };
   totalValue: number;
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
@@ -52,14 +49,16 @@ export default function GiftList({
 }: GiftListProps) {
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<"addGift" | "deleteGift" | null>(null);
+  const [modalType, setModalType] = useState<"addGift" | "deleteGift" | "editGift">("addGift");
   const [selectedGiftId, setSelectedGiftId] = useState<string | null>(null);
+  const [initialValues, setInitialValues] = useState<GiftUpdateFormData | undefined>(undefined);
 
   const { isLoading: isDeletingGift, mutateAsync: deleteGift } = useDeleteGift(slug || "");
 
   const openAddGiftModal = () => {
     setModalType("addGift");
     setIsModalOpen(true);
+    setInitialValues(undefined);
   };
 
   const confirmDeleteGift = async () => {
@@ -81,9 +80,50 @@ export default function GiftList({
     setSelectedGiftId(giftId);
   };
 
+  const openEditGiftModal = (giftId: string, event: React.MouseEvent) => {
+    event.preventDefault();
+
+    const giftToEdit = gifts.find((gift) => gift.id === giftId);
+    if (giftToEdit) {
+      setModalType("editGift");
+      setIsModalOpen(true);
+      setSelectedGiftId(giftId);
+
+      async function getGiftPhotoFile() {
+        if (giftToEdit && giftToEdit.photo?.url) {
+          const response = await fetch(giftToEdit.photo.url);
+          const blob = await response.blob();
+          const file = new File([blob], "giftPhoto", { type: "image/jpeg" });
+          return file;
+        }
+        return null;
+      }
+
+      getGiftPhotoFile().then((file) => {
+        setInitialValues({
+          id: giftToEdit.id,
+          name: giftToEdit.name,
+          totalValue: giftToEdit.totalValue,
+          categoryId: giftToEdit.category?.id || "",
+          priority: giftToEdit.priority,
+          description: giftToEdit.description,
+          giftPhoto: file || new File([], "default"),
+          userId: user?.id || "",
+          giftListId: giftList.id,
+        });
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setInitialValues(undefined);
+    }
+  }, [isModalOpen]);
+
   if (isLoading) {
     return (
-      <main className="flex flex-col flex-1 w-full my-8 px-4">
+      <main className="flex flex-col flex-1 w-full">
         <header>
           <h1 className="text-4xl font-bold text-text-primary">{giftList?.name}</h1>
           <h2 className="text-2xl font-semibold text-text-primary mt-2">
@@ -114,55 +154,40 @@ export default function GiftList({
   }
 
   return (
-    <main className="flex flex-col flex-1 w-full my-8 px-4">
-      <header>
-        <h1 className="text-4xl font-bold text-text-primary">{giftList?.name}</h1>
-        <p className="text-md text-text-secondary">
-          {giftList?.description || "Sem descrição."}
-        </p>
-        <h2 className="text-2xl font-semibold text-text-primary mt-2">
-          {isUserOwner ? "Meus Presentes" : "Presentes"}
-        </h2>
-        <p className="text-md mt-2 text-text-secondary">
-          {isUserOwner
-            ? "Gerencie seus presentes de forma fácil e prática."
-            : "Veja os presentes disponíveis para contribuição."}
-        </p>
-      </header>
+    <main className="flex flex-col flex-1 w-full">
+      <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
+        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-8">
+          <div className="max-w-7xl mx-auto px-8"> {/* Contêiner interno para centralizar o conteúdo */}
+            <h1 className="text-4xl font-bold text-text-primary mb-3">{giftList?.name}</h1>
+            <p className="text-lg text-text-secondary mb-6">
+              {giftList?.description || "Adicione uma descrição para sua lista de presentes."}
+            </p>
+            <div className="flex items-center justify-between">
 
-      {isUserOwner && (
-        <>
-          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-            <StatCard
-              title="Total de Presentes"
-              value={gifts?.length.toString() || "0"}
-              color="blue"
-            />
-            <StatCard title="Valor arrecadado" value={formatCurrency(0)} color="success" />
-            <StatCard title="Presentes comprados" value="0" color="purple" />
-            <StatCard title="Contribuições" value="0" color="warning" />
-          </section>
-          <div className="mt-8 flex justify-end gap-4">
-            <Link href="/lists/[slug]/invitee-list" as={`/lists/${slug}/invitee-list`}>
-              <Button variant="outlined">
-                Ver lista de convidados
-                <Users size={20} />
-              </Button>
-            </Link>
-
-            <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`}>
-              <Button variant="outlined">
-                Configurações <Settings2 size={20} />
-              </Button>
-            </Link>
-
-            <Button onClick={openAddGiftModal}>
-              Adicionar Presente <Plus />
-            </Button>
-
+              {isUserOwner && (
+                <div className="flex gap-4">
+                  <Link href="/lists/[slug]/invitee-list" as={`/lists/${slug}/invitee-list`}>
+                    <Button variant="outlined">
+                      <Users size={20} />
+                      Convidados
+                    </Button>
+                  </Link>
+                  <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`}>
+                    <Button variant="outlined">
+                      <Settings2 size={20} />
+                      Configurações
+                    </Button>
+                  </Link>
+                  <Button onClick={openAddGiftModal}>
+                    <Plus size={20} />
+                    Adicionar Presente
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
-        </>
-      )}
+        </div>
+      </header>
 
       <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {gifts && gifts.length > 0 ? (
@@ -181,6 +206,7 @@ export default function GiftList({
                 description={gift.description}
                 priority={gift.priority}
                 isUserOwner={isUserOwner}
+                actionEditFn={(event) => openEditGiftModal(gift.id, event)}
                 actionDeleteFn={(event) => openDeleteGiftModal(gift.id, event)}
               />
             </Link>
@@ -207,6 +233,18 @@ export default function GiftList({
               onSuccess={onAddGiftSuccess}
             />
           )}
+          {modalType === "editGift" && (
+            <Modal
+              giftListId={giftList.id}
+              userId={user?.id || ""}
+              modalType="gift"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              initialValues={initialValues}
+              isEdit
+              onSuccess={onAddGiftSuccess}
+            />
+          )}
           {modalType === "deleteGift" && (
             <Modal
               giftListId={giftList.id}
@@ -217,6 +255,7 @@ export default function GiftList({
               action="Excluir"
               actionTitle="Excluir Presente"
               actionDescription="Tem certeza que deseja excluir este presente?"
+              initialValues={initialValues}
               isLoading={isDeletingGift}
               onSuccess={confirmDeleteGift}
             />

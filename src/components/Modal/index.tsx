@@ -6,6 +6,7 @@ import { ModalHeader } from "./ModalHeader";
 import { AddGiftModal } from "./ModalContent/AddGiftModal";
 import { AddPixKeyModal } from "./ModalContent/addPixKeyModal";
 import { ActionModal } from "./ModalContent/actionModal";
+import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 
 interface ModalProps {
   isModalOpen: boolean;
@@ -13,6 +14,8 @@ interface ModalProps {
   modalType: "gift" | "pix" | "action";
   action?: "Sair" | "Excluir";
   actionTitle?: string;
+  isEdit?: boolean;
+  initialValues?: GiftUpdateFormData;
   actionDescription?: string;
   isLoading?: boolean;
   giftListId?: string;
@@ -20,12 +23,12 @@ interface ModalProps {
   onSuccess?: () => void;
 }
 
-const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isLoading, action, actionTitle, actionDescription, userId, onSuccess }: ModalProps) => {
+const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isEdit, initialValues, isLoading, action, actionTitle, actionDescription, userId, onSuccess }: ModalProps) => {
   const closeModal = () => setIsModalOpen(false);
 
   const modalComponents: Record<string, ReactNode | null> = {
     gift: giftListId && userId ? (
-      <AddGiftModal giftListId={giftListId} userId={userId} onClose={closeModal} onSuccess={onSuccess} />
+      <AddGiftModal giftListId={giftListId} userId={userId} isEdit={isEdit} initialValues={initialValues} onClose={closeModal} onSuccess={onSuccess} />
     ) : null,
     pix: <AddPixKeyModal onClose={closeModal} />,
     action: <ActionModal action={action || ""} description={actionDescription || ""} isLoading={isLoading} onSuccess={onSuccess} onClose={closeModal} />,
@@ -35,7 +38,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isLoading, 
     <ModalWrapper isOpen={isModalOpen} onClose={closeModal}>
       <ModalHeader
         title={{
-          gift: "Adicionar presente",
+          gift: { add: "Adicionar presente", edit: "Editar presente" }[isEdit ? "edit" : "add"],
           pix: "Adicionar chave Pix",
           action: actionTitle,
         }[modalType] || "Modal"}

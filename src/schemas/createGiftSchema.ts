@@ -19,4 +19,9 @@ export const giftSchema = z.object({
     .refine((file) => file.size > 0, "A foto do presente é obrigatória"),
 });
 
+export const giftUpdateSchema = giftSchema.extend({
+  id: z.string().min(1, "O ID do presente é obrigatório"),
+});
+
 export type GiftFormData = z.infer<typeof giftSchema>;
+export type GiftUpdateFormData = z.infer<typeof giftUpdateSchema>;

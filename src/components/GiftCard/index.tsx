@@ -12,7 +12,7 @@ interface GiftCardProps {
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
   isUserOwner?: boolean;
-  actionEditFn?: () => void;
+  actionEditFn?: (event: any) => void;
   actionDeleteFn?: (event: any) => void;
 }
 
@@ -65,7 +65,7 @@ const GiftCard = ({
                 aria-label={`Editar ${title}`}
                 onClick={(event) => {
                   event.preventDefault();
-                  actionEditFn?.();
+                  actionEditFn?.(event);
                 }}
               >
                 <Edit size={20} />

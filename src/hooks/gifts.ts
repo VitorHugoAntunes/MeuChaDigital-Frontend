@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createGift, getAllGiftsBySlug, getGiftBySlug, deleteGift, GiftCreateData } from '@/api/gifts';
+import { createGift, updateGift, getAllGiftsBySlug, getGiftBySlug, deleteGift, GiftCreateData, GiftUpdateData } from '@/api/gifts';
 import { toast } from 'react-toastify';
 
 interface Gift {
@@ -47,6 +47,19 @@ export const useCreateGift = () => {
       createGift(data.giftListId, data.data),
     onSuccess: (_, variables) => {
       // Invalida a query de presentes para atualizar a lista após a criação
+      queryClient.invalidateQueries({ queryKey: ['gifts', variables.giftListId] });
+    },
+  });
+};
+
+export const useUpdateGift = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { giftListId: string; giftId: string; data: GiftUpdateData }) =>
+      updateGift(data.giftListId, data.giftId, data.data),
+    onSuccess: (_, variables) => {
+      // Invalida a query de presentes para atualizar a lista após a atualização
       queryClient.invalidateQueries({ queryKey: ['gifts', variables.giftListId] });
     },
   });
