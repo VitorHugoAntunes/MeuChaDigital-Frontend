@@ -27,7 +27,7 @@ export default function GiftPage() {
 
   if (!isAuthenticated) {
     return (
-      <main className="flex flex-col flex-1 w-screen my-8 justify-center items-center">
+      <main className="flex flex-col flex-1 w-screen justify-center items-center">
         <h1 className="text-2xl font-semibold text-text-primary">Você não está logado</h1>
         <p className="text-md mt-2 text-text-secondary">
           Faça login para acessar suas listas de presentes.

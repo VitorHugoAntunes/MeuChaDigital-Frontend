@@ -24,7 +24,7 @@ export default function Button({
   const variantStyles = {
     default: 'bg-primary-light text-white px-8 py-2 rounded-full border-2 border-primary-light',
     danger: 'bg-danger text-white px-8 py-2 rounded-full border-2 border-gray-200',
-    outlined: 'bg-transparent text-primary-light px-8 py-2 rounded-full border-2 border-primary-light',
+    outlined: 'bg-white text-primary-light px-8 py-2 rounded-full border-2 border-primary-light',
     "outlined-danger": 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200',
     "outlined-warning": 'bg-transparent text-warning px-8 py-2 rounded-full border-2 border-gray-200',
     google: 'bg-white text-gray-700 px-8 py-2 rounded-full border border-gray-300',

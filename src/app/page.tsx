@@ -4,7 +4,7 @@ import GetStarted from "@/components/HomePage/GetStarted";
 
 export default function HomePage() {
   return (
-    <main className="px-8">
+    <main>
       <Banner />
       <Features />
       <GetStarted />
