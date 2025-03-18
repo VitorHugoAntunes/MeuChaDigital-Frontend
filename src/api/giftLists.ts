@@ -14,16 +14,17 @@ interface GiftListCreateData {
 }
 
 interface GiftListUpdateData {
+  userId: string;
   giftListId: string;
-  type: string;
-  name: string;
-  slug: string;
-  description: string;
-  eventDate: string;
-  eventType: string;
-  status: string;
-  banner: File;
-  moments_images: File[];
+  type?: string;
+  name?: string;
+  slug?: string;
+  description?: string;
+  eventDate?: string;
+  eventType?: string;
+  status?: string;
+  banner?: File;
+  moments_images?: File[];
 }
 
 export const getAllGiftListsByUser = async (userId: string) => {
@@ -40,7 +41,9 @@ export const createGiftList = async (data: GiftListCreateData) => {
   const formData = new FormData();
 
   formData.append('userId', data.userId);
+
   formData.append('type', data.type);
+
   formData.append('name', data.name);
   formData.append('slug', data.slug);
   formData.append('eventDate', data.date);
@@ -67,24 +70,21 @@ export const createGiftList = async (data: GiftListCreateData) => {
 
 export const updateGiftList = async (data: GiftListUpdateData) => {
   const formData = new FormData();
+  console.log('DATA', data);
 
-  formData.append('type', data.type);
-  formData.append('name', data.name);
-  formData.append('slug', data.slug);
-  formData.append('eventDate', data.eventDate);
-  formData.append('description', data.description);
-  formData.append('eventType', data.eventType);
-  formData.append('status', data.status);
+  Object.entries(data).forEach(([key, value]) => {
+    if (value !== undefined) {
+      if (Array.isArray(value)) {
+        value.forEach((file) => {
+          formData.append(key, file);
+        });
+      } else {
+        formData.append(key, value);
+      }
+    }
+  });
 
-  if (data.banner) {
-    formData.append('banner', data.banner);
-  }
-
-  if (data.moments_images?.length) {
-    data.moments_images.forEach((file) => {
-      formData.append('moments_images', file);
-    });
-  }
+  console.log('FORM DATA', formData);
 
   const response = await api.put(`/lists/${data.giftListId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -92,6 +92,7 @@ export const updateGiftList = async (data: GiftListUpdateData) => {
 
   return response.data;
 };
+
 
 export const deleteGiftList = async (id: string) => {
   try {

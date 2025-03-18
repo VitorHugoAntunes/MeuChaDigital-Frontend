@@ -6,10 +6,10 @@ export const listSettingsSchema = z.object({
   listSlug: z.string().min(3, "O slug deve ter pelo menos 3 caracteres"),
   eventDate: z.string().min(1, "Escolha uma data válida"),
   listDescription: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres"),
-  listStatus: z.enum(["ACTIVE", "INACTIVE"]).refine(
-    (status) => status === "ACTIVE" || status === "INACTIVE",
-    "Selecione um status válido"
-  ),
+  listStatus: z.enum(["ACTIVE", "INACTIVE"], {
+    errorMap: () => ({ message: "Selecione um status entre ativa e inativa" }),
+  }),
+
   banner: z
     .instanceof(File, { message: "A foto da capa é obrigatória" })
     .refine((file) => file.size > 0, "A foto da capa é obrigatória"),

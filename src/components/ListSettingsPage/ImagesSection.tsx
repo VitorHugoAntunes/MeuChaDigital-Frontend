@@ -11,7 +11,7 @@ interface ImagesSectionProps {
 }
 
 export default function ImagesSection({ initialBanner, initialMomentImages, errors }: ImagesSectionProps) {
-  const { setValue } = useFormContext<ListSettingsFormData>();
+  const { setValue, trigger } = useFormContext<ListSettingsFormData>();
 
   return (
     <section id="imagens">
@@ -22,7 +22,8 @@ export default function ImagesSection({ initialBanner, initialMomentImages, erro
             <InputFileUpload
               label="Capa da Lista"
               onFileSelect={(file) => setValue("banner", file)}
-              initialFile={initialBanner}
+              trigger={trigger}
+              initialFile={initialBanner || null}
             />
             {errors.banner && <span className="text-danger text-sm mt-1">{errors.banner.message}</span>}
           </div>
@@ -30,7 +31,8 @@ export default function ImagesSection({ initialBanner, initialMomentImages, erro
             <InputMultiFileUpload
               label="Imagens de Momentos"
               onFilesSelect={(files) => setValue("momentImages", files)}
-              initialFiles={initialMomentImages}
+              trigger={() => trigger("momentImages")}
+              initialFiles={initialMomentImages || []}
             />
             {errors.momentImages && <span className="text-danger text-sm mt-1">{errors.momentImages.message}</span>}
           </div>

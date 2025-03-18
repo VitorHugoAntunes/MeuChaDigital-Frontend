@@ -25,7 +25,7 @@ export default function MenuAside() {
           const rect = section.getBoundingClientRect();
           const distance = Math.abs(rect.top);
 
-          if (rect.top <= 100 && distance < closestDistance) {
+          if (rect.top <= 200 && distance < closestDistance) {
             closestDistance = distance;
             closestSectionId = item.id;
           }

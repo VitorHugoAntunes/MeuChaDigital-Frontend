@@ -2,29 +2,31 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createGiftList, getAllGiftListsByUser, getGiftListBySlug, updateGiftList, deleteGiftList } from '@/api/giftLists';
 import { toast } from 'react-toastify';
 
-export const useGiftListsByUser = (userId: string) => {
+export const useGiftListsByUser = (userId: string, options = {}) => {
   return useQuery({
     queryKey: ['giftLists', userId],
     queryFn: () => getAllGiftListsByUser(userId),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: !!userId, // Só executa a query se `userId` estiver disponível
+    enabled: !!userId || userId !== "" || userId !== null || userId !== undefined,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    ...options,
   });
 };
 
-export const useGiftListBySlug = (slug: string) => {
+export const useGiftListBySlug = (slug: string, options = {}) => {
   return useQuery({
     queryKey: ['giftLists', slug],
     queryFn: () => getGiftListBySlug(slug),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: !!slug, // Só executa a query se `slug` estiver disponível
+    enabled: !!slug || slug !== "" || slug !== null || slug !== undefined,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    ...options,
   });
 };
 
@@ -39,24 +41,55 @@ export const useCreateGiftList = () => {
   });
 };
 
-export const useUpdateGiftList = (giftListId: string) => {
+export const useUpdateGiftList = (slug: string) => {
   const queryClient = useQueryClient();
 
   return useMutation(updateGiftList, {
     onSuccess: async (_, variables) => {
-      await queryClient.invalidateQueries({ queryKey: ['giftLists', giftListId] });
+      await queryClient.invalidateQueries({ queryKey: ['giftLists', variables.slug] });
+
+      queryClient.refetchQueries({ queryKey: ['giftLists', slug] });
+
+      toast.success("Lista de presentes atualizada com sucesso!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
+
+    onError: () => {
+      toast.error("Erro ao atualizar lista de presentes!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     },
   });
 };
 
-export const useDeleteGiftList = (giftListId: string) => {
+export const useDeleteGiftList = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteGiftList,
-    onSuccess: async (_, variables) => {
-      await queryClient.invalidateQueries({ queryKey: ['giftLists', giftListId] });
-      toast.success("Presente excluído com sucesso!", {
+    mutationFn: ({ giftListId, slug }: { giftListId: string, slug: string }) =>
+      deleteGiftList(giftListId), // Aqui você passa apenas o giftListId para a API
+    onSuccess: async (_, { giftListId, slug }) => {
+      queryClient.removeQueries({ queryKey: ['giftLists', slug] });
+      queryClient.removeQueries({ queryKey: ['giftLists', giftListId] });
+
+      queryClient.invalidateQueries({ queryKey: ['giftLists', slug] });
+      queryClient.invalidateQueries({ queryKey: ['giftLists', giftListId] });
+      queryClient.invalidateQueries({ queryKey: ['giftLists'] });
+
+      toast.success("Lista de presentes excluída com sucesso!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -67,7 +100,7 @@ export const useDeleteGiftList = (giftListId: string) => {
       });
     },
     onError: () => {
-      toast.error("Erro ao excluir presente!", {
+      toast.error("Erro ao excluir lista de presentes!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

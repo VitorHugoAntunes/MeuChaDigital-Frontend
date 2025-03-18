@@ -6,11 +6,12 @@ import EventTypeOption from "@/components/EventTypeOption";
 import Card from "@/components/Card";
 
 interface BasicInfoSectionProps {
+  methods: any;
   errors: any;
   typeValue: string;
 }
 
-export default function BasicInfoSection({ errors, typeValue }: BasicInfoSectionProps) {
+export default function BasicInfoSection({ methods, errors, typeValue }: BasicInfoSectionProps) {
   const { register, setValue, watch } = useFormContext<ListSettingsFormData>();
 
   const selectedEventType = watch("eventType");
@@ -46,6 +47,7 @@ export default function BasicInfoSection({ errors, typeValue }: BasicInfoSection
           <InputField
             label="Nome da Lista"
             register={{ ...register("listName", { required: "Nome da lista é obrigatório" }) }}
+            inputValue={methods.getValues("listName")}
             error={errors.listName?.message}
           />
           <InputTextArea
@@ -56,6 +58,7 @@ export default function BasicInfoSection({ errors, typeValue }: BasicInfoSection
           <InputField
             label="Data do Evento"
             type="date"
+            inputValue={methods.getValues("eventDate")}
             register={{ ...register("eventDate", { required: "Data do evento é obrigatória" }) }}
             error={errors.eventDate?.message}
           />
