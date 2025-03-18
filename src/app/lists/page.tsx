@@ -7,6 +7,7 @@ import { useGiftListsByUser } from "@/hooks/giftLists";
 import { formatDateToBR } from "@/utils/formatDate";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface GiftList {
   id: string;
@@ -28,12 +29,15 @@ const ListsPage = () => {
     data: giftLists,
     isLoading: isGiftListsLoading,
     isError,
-  } = useGiftListsByUser(user?.id ?? "");
+  } = useGiftListsByUser(user?.id || "", {
+    enabled: !!user?.id,
+  });
+
 
   if (isLoading) {
     return (
       <main className="flex flex-col flex-1 w-screen my-8 justify-center items-center">
-        <p className="text-center">Carregando...</p>
+        <LoadingSpinner />
       </main>
     );
   }
