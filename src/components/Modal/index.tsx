@@ -11,7 +11,7 @@ import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
-  modalType: "gift" | "pix" | "action";
+  modalType: "gift" | "pix" | "invitee" | "action";
   action?: "Sair" | "Excluir";
   actionTitle?: string;
   isEdit?: boolean;
@@ -40,6 +40,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isEdit, ini
         title={{
           gift: { add: "Adicionar presente", edit: "Editar presente" }[isEdit ? "edit" : "add"],
           pix: "Adicionar chave Pix",
+          invitee: "Editar convidado",
           action: actionTitle,
         }[modalType] || "Modal"}
         onClose={closeModal}
