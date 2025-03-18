@@ -30,7 +30,7 @@ export default function RootLayout({
           <AuthProvider>
             <PaymentProvider>
               <Header />
-              <div className="flex flex-1 w-full max-w-screen-xl mx-auto px-8">
+              <div className="flex flex-1 w-full max-w-screen-2xl mx-auto px-8">
                 {children}
               </div>
               <Footer />
