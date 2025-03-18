@@ -5,26 +5,28 @@ import { ImageIcon, Trash2 } from "lucide-react";
 interface FileUploadProps {
   label: string;
   initialFile?: File | null;
+  trigger?: any;
   onFileSelect: (file: File | null) => void;
 }
 
-export default function InputFileUpload({ label, initialFile, onFileSelect }: FileUploadProps) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(initialFile || null);
+export default function InputFileUpload({ label, initialFile, trigger, onFileSelect }: FileUploadProps) {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  if (initialFile && !selectedFile) {
-    setSelectedFile(initialFile);
-  }
+  useEffect(() => {
+    if (initialFile) {
+      setSelectedFile(initialFile);
+    }
+  }, [initialFile]);
 
-  // Notifica o componente pai quando `selectedFile` muda
   useEffect(() => {
     onFileSelect(selectedFile);
   }, [selectedFile, onFileSelect]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
-    console.log("event.target.files", event);
     setSelectedFile(file);
+    trigger("banner");
   };
 
   const handleRemoveFile = () => {
@@ -32,6 +34,7 @@ export default function InputFileUpload({ label, initialFile, onFileSelect }: Fi
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+    trigger("banner");
   };
 
   return (

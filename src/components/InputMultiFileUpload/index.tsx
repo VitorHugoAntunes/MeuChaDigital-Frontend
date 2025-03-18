@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { ImageIcon, Trash2 } from "lucide-react";
 
@@ -6,6 +6,7 @@ interface MultiFileUploadProps {
   label: string;
   description?: string;
   initialFiles?: File[];
+  trigger?: (field: string) => void;
   onFilesSelect: (files: File[]) => void;
   maxFiles?: number;
 }
@@ -14,27 +15,29 @@ export default function MultiFileUpload({
   label,
   description,
   initialFiles = [],
+  trigger,
   onFilesSelect,
   maxFiles = 5,
 }: MultiFileUploadProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>(initialFiles);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  if (initialFiles.length > 0 && selectedFiles.length === 0) {
-    setSelectedFiles(initialFiles);
-  }
+  const memoizedOnFilesSelect = useCallback(
+    (files: File[]) => onFilesSelect(files),
+    [onFilesSelect]
+  );
 
-  console.log("selectedFiles", selectedFiles);
-
-  // Notifica o componente pai apenas se os arquivos mudarem
   useEffect(() => {
-    if (selectedFiles !== initialFiles) {
-      onFilesSelect(selectedFiles);
+    if (initialFiles.length > 0) {
+      setSelectedFiles(initialFiles);
     }
-  }, [selectedFiles]);
+  }, [initialFiles]);
+
+  useEffect(() => {
+    memoizedOnFilesSelect(selectedFiles);
+  }, [selectedFiles, memoizedOnFilesSelect]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("event.target.files", event.target.files);
     if (!event.target.files) return;
 
     const newFiles = Array.from(event.target.files);
@@ -42,16 +45,25 @@ export default function MultiFileUpload({
       const updatedFiles = [...prevFiles, ...newFiles].slice(0, maxFiles);
       return updatedFiles;
     });
+
+    if (trigger) {
+      trigger("momentImages");
+      console.log("executou o trigger após adicionar arquivos");
+    }
   };
 
   const handleRemoveFile = (index: number) => {
-    setSelectedFiles((prevFiles) => {
-      const updatedFiles = prevFiles.filter((_, i) => i !== index);
-      return updatedFiles;
-    });
+    setSelectedFiles((prevFiles) =>
+      prevFiles.filter((_, i) => i !== index)
+    );
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+
+    if (trigger) {
+      trigger("momentImages");
+      console.log("executou o trigger após remover arquivos");
     }
   };
 
