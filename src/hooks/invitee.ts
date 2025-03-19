@@ -3,18 +3,64 @@ import { createInvitee, getAllInviteesByGiftListSlug, updateInvitee, deleteInvit
 import { toast } from 'react-toastify';
 
 export const useCreateInvitee = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (data: InviteeData) => createInvitee(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['invitees']);
+
+      toast.success('Convidado adicionado com sucesso', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
+    onError: (error: any) => {
+      console.error('Erro ao adicionar convidado', error.message);
+      toast.error('Erro ao adicionar convidado', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
   });
 };
 
-export const useGetAllInviteesByGiftListSlug = (slug: string) => {
+export const useGetAllInviteesByGiftListSlug = (slug: string, page: number, limit: number) => {
   return useQuery({
-    queryKey: ['invitees', slug],
-    queryFn: () => getAllInviteesByGiftListSlug(slug),
+    queryKey: ['invitees', slug, page],
+    queryFn: () => getAllInviteesByGiftListSlug(slug, page, limit, '', ''),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: !!slug, // Só executa a query se `giftListId` estiver disponível
+    enabled: !!slug,
+    keepPreviousData: true,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+};
+
+export const useGetAllInviteesByGiftListSlugWithFilters = (
+  slug: string,
+  page: number,
+  limit: number,
+  search: string,
+  status: string
+) => {
+  return useQuery({
+    queryKey: ["invitees", slug, page, search, status],
+    queryFn: () => getAllInviteesByGiftListSlug(slug, page, limit, search, status),
+    staleTime: Infinity,
+    cacheTime: 1000 * 60 * 5,
+    enabled: !!slug,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -22,9 +68,36 @@ export const useGetAllInviteesByGiftListSlug = (slug: string) => {
 };
 
 export const useUpdateInvitee = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: ({ slug, data }: { slug: string; data: UpdateInviteeData }) =>
-      updateInvitee({ slug, data }),
+    mutationFn: ({ slug, id, data }: { slug: string; id: string; data: UpdateInviteeData }) =>
+      updateInvitee({ slug, id, data }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['invitees']);
+
+      toast.success('Convidado atualizado com sucesso', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
+    onError: (error: any) => {
+      console.error('Erro ao atualizar convidado', error.message);
+      toast.error('Erro ao atualizar convidado', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
   });
 };
 

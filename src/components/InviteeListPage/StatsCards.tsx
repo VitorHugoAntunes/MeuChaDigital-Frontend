@@ -1,31 +1,22 @@
 import StatCard from "@/components/StatCard";
-
-interface Invitee {
-  id: string;
-  name: string;
-  phone: string;
-  email: string;
-  additionalInvitees: number;
-  observation: string;
-  status: "ACCEPTED" | "REJECTED";
-}
-
 interface StatCardsProps {
-  invitees: Invitee[];
+  totalInvitees: number;
+  acceptedInvitees: number;
+  rejectedInvitees: number;
 }
 
-export const StatCards = ({ invitees }: StatCardsProps) => {
+export const StatCards = ({ totalInvitees, acceptedInvitees, rejectedInvitees }: StatCardsProps) => {
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-      <StatCard title="Total de Convidados" value={invitees.length.toString()} color="blue" />
+      <StatCard title="Total de Convidados" value={totalInvitees.toString()} color="blue" />
       <StatCard
         title="Confirmados"
-        value={invitees.filter((invitee) => invitee.status === "ACCEPTED").length.toString() || "0"}
+        value={acceptedInvitees.toString()}
         color="success"
       />
       <StatCard
         title="Recusados"
-        value={invitees.filter((invitee) => invitee.status === "REJECTED").length.toString() || "0"}
+        value={rejectedInvitees.toString()}
         color="danger"
       />
     </section>

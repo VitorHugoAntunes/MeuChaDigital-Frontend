@@ -6,8 +6,9 @@ import InputField from "@/components/InputField";
 import InputTextArea from "@/components/InputTextArea";
 import { InviteeFormData, inviteeSchema } from "@/schemas/createInviteeSchema";
 import { useCreateInvitee } from "@/hooks/invitee";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PhoneMask } from "@/utils/masks";
 
 interface InvitationRSVPSectionProps {
   giftListId: string;
@@ -40,37 +41,20 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
 
   const status = watch("status");
 
+  function removeMask(value: string) {
+    return value.replace(/\D/g, "");
+  }
+
   const onSubmit: SubmitHandler<InviteeFormData> = async (data) => {
     console.log("Dados enviados:", data);
 
     const dataToSend = {
       ...data,
+      phone: removeMask(data.phone),
       observation: data.observation || "-",
     };
 
-    mutate(dataToSend, {
-      onSuccess: () => {
-        toast.success("Resposta enviada com sucesso!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      },
-      onError: (error) => {
-        toast.error("Erro ao enviar resposta. Tente novamente.", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-        console.error("Erro ao enviar confirmação:", error);
-      },
-    });
+    mutate(dataToSend);
   };
 
   const setStatusAndSubmit = (status: "ACCEPTED" | "REJECTED") => {
@@ -105,6 +89,7 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
               label="Telefone"
               placeholder="Digite seu telefone"
               register={{ ...register("phone", { required: "Telefone é obrigatório" }) }}
+              mask={PhoneMask}
               error={errors.phone?.message}
             />
 

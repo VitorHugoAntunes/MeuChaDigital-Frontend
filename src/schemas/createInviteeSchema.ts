@@ -18,4 +18,10 @@ export const inviteeSchema = z.object({
   }),
 });
 
+export const updateInviteeSchema = inviteeSchema.extend({
+  id: z.string().min(1, "O id é obrigatório"),
+});
+
 export type InviteeFormData = z.infer<typeof inviteeSchema>;
+
+export type UpdateInviteeFormData = z.infer<typeof updateInviteeSchema>;

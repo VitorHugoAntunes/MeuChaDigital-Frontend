@@ -12,7 +12,6 @@ export interface InviteeData {
 }
 
 export interface UpdateInviteeData {
-  id: string;
   name?: string;
   phone?: string;
   email?: string;
@@ -25,14 +24,32 @@ export interface UpdateInviteeData {
 export const createInvitee = async (data: InviteeData) => {
   return axios.post('http://localhost:8000/api/v1/invitees', data);
 }
-export const getAllInviteesByGiftListSlug = async (slug: string) => {
-  const response = await api.get(`/invitees/${slug}`);
 
+export const getAllInviteesByGiftListSlug = async (slug: string, page: number, limit: number, search: string, status: string = '') => {
+  console.log("buscando invitees", slug, page, limit, search, status);
+  switch (status) {
+    case 'Todos':
+      status = '';
+      break;
+    case 'Aceito':
+      status = 'ACCEPTED';
+      break;
+    case 'Recusado':
+      status = 'REJECTED';
+      break;
+    default:
+      status = '';
+      break;
+  }
+
+  const response = await api.get(`/invitees/${slug}`, {
+    params: { page, limit, search, status }
+  });
   return response.data;
-}
+};
 
-export const updateInvitee = async ({ slug, data }: { slug: string; data: UpdateInviteeData }) => {
-  return api.put(`/invitees/${slug}/${data.id}`, data);
+export const updateInvitee = async ({ slug, id, data }: { slug: string; id: string; data: UpdateInviteeData }) => {
+  return api.put(`/invitees/${slug}/${id}`, data);
 };
 
 export const deleteInvitee = async ({ slug, id }: { slug: string; id: string }) => {
