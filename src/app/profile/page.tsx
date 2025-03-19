@@ -15,6 +15,7 @@ import { PixKeyCreateData } from "@/api/pixKey";
 import { translateString } from "@/utils/translateString";
 import { formatCPF, formatPhone } from "@/utils/formatString";
 import { ToastContainer } from "react-toastify";
+import { useDeleteUser } from "@/hooks/user";
 
 interface PixKey extends PixKeyCreateData {
   id: string;
@@ -29,6 +30,7 @@ export default function ProfilePage() {
 
   const { data: pixKeys, isLoading: isGettingAllPixKeysLoading } = useGetAllPixKeysByUser(user?.id || "");
   const { mutateAsync: deletePixKey, isLoading: isDeletingPixKey } = useDeletePixKey();
+  const { mutateAsync: deleteUser, isLoading: isDeletingUser } = useDeleteUser();
 
   const openAddPixKeyModal = () => {
     setModalType("pix");
@@ -63,6 +65,11 @@ export default function ProfilePage() {
     } catch (error) {
       console.error("Erro ao excluir a chave PIX", error);
     }
+  }
+
+  async function handleDeleteAccount() {
+    await deleteUser(user?.id || "");
+    redirect("/");
   }
 
   return (
@@ -215,6 +222,8 @@ export default function ProfilePage() {
               modalType="action"
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
+              isLoading={isDeletingUser || isLoggingOut}
+              onSuccess={handleDeleteAccount}
             />
           )}
         </>

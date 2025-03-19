@@ -17,3 +17,8 @@ export const getUser = async (id: string) => {
   const response = await axios.get(`http://localhost:8000/api/v1/users/id/${id}`, { withCredentials: true });
   return response.data;
 };
+
+export const deleteUser = async (id: string) => {
+  const response = await axios.delete(`http://localhost:8000/api/v1/users/${id}`, { withCredentials: true });
+  return response.data;
+}
