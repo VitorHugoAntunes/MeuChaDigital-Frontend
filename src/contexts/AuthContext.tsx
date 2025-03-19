@@ -20,6 +20,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   logoutUser: () => void;
+  isLoggingOut: boolean;
 }
 
 interface AuthProviderProps {
@@ -91,6 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isAuthenticated,
         isLoading,
         logoutUser,
+        isLoggingOut: logoutMutation.isLoading,
       }}
     >
       {children}

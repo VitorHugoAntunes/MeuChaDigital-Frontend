@@ -74,6 +74,9 @@ export default function InputField({ label, description, inputValue, type = "tex
       <input
         type={type}
         placeholder={placeholder}
+        min={min}
+        max={max}
+        step={step}
         className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:outline-none 
         transition-colors appearance-none text-gray-900 h-[42px] ${disabled ? 'bg-gray-100' : 'bg-white'}`}
         style={{ fontFamily: 'inherit' }}

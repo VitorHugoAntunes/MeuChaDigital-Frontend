@@ -25,7 +25,7 @@ export default function ProfilePage() {
   const [modalType, setModalType] = useState<"pix" | "deletePixKey" | "logout" | "deleteAccount" | null>(null);
   const [selectedPixKeyId, setSelectedPixKeyId] = useState<string | null>(null);
 
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser, isLoggingOut } = useAuth();
 
   const { data: pixKeys, isLoading: isGettingAllPixKeysLoading } = useGetAllPixKeysByUser(user?.id || "");
   const { mutateAsync: deletePixKey, isLoading: isDeletingPixKey } = useDeletePixKey();
@@ -203,6 +203,7 @@ export default function ProfilePage() {
               modalType="action"
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
+              isLoading={isLoggingOut}
               onSuccess={handleLogout}
             />
           )}
