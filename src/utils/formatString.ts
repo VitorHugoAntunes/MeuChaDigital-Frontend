@@ -12,3 +12,9 @@ export const formatCurrency = (value: number) => {
     currency: "BRL",
   }).format(value);
 };
+
+export const formatSlug = (slug: string) => {
+  return slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import inviteImage from '@/assets/invite.png';
 import { formatDateToFull } from '@/utils/formatDate';
+import { formatSlug } from '@/utils/formatString';
 
 interface InvitationHeroSectionProps {
   headerHeight: number;
@@ -25,9 +26,9 @@ export default function InvitationHeroSection({ headerHeight, bannerUrl, slug, e
         transition={{ duration: 0.8 }}
         className="max-w-screen-lg mx-auto px-8 text-center relative z-10"
       >
-        <h1 className="text-5xl text-white mb-6 drop-shadow-lg tracking-wide">Você está convidado!</h1>
-        <p className="text-6xl font-extrabold text-white mt-2 drop-shadow-lg">{slug}</p>
-        <time dateTime="2030-12-20" className="text-2xl text-white mt-4 block drop-shadow-lg italic">{formatDateToFull(eventDate)}</time>
+        <h1 className="text-5xl font-satisfy text-white mb-6 drop-shadow-lg tracking-wide">Você está convidado!</h1>
+        <p className="text-7xl font-satisfy font-black text-white mt-2 drop-shadow-lg">{formatSlug(slug)}</p>
+        <time dateTime="2030-12-20" className="text-2xl text-white mt-4 block drop-shadow-lg first-letter:uppercase italic">{formatDateToFull(eventDate)}</time>
       </motion.article>
     </section>
   );
