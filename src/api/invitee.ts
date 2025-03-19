@@ -25,7 +25,13 @@ export const createInvitee = async (data: InviteeData) => {
   return axios.post('http://localhost:8000/api/v1/invitees', data);
 }
 
-export const getAllInviteesByGiftListSlug = async (slug: string, page: number, limit: number, search: string, status: string = '') => {
+export const getAllInviteesByGiftListSlug = async (slug: string) => {
+  const response = await api.get(`/invitees/${slug}/all`);
+
+  return response.data;
+};
+
+export const getAllInviteesWithPaginationByGiftListSlug = async (slug: string, page: number, limit: number, search: string, status: string = '') => {
   console.log("buscando invitees", slug, page, limit, search, status);
   switch (status) {
     case 'Todos':

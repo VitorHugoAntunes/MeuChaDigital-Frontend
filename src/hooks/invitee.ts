@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createInvitee, getAllInviteesByGiftListSlug, updateInvitee, deleteInvitee, InviteeData, UpdateInviteeData } from '@/api/invitee';
+import { createInvitee, getAllInviteesByGiftListSlug, updateInvitee, deleteInvitee, InviteeData, UpdateInviteeData, getAllInviteesWithPaginationByGiftListSlug } from '@/api/invitee';
 import { toast } from 'react-toastify';
 
 export const useCreateInvitee = () => {
@@ -35,13 +35,13 @@ export const useCreateInvitee = () => {
   });
 };
 
-export const useGetAllInviteesByGiftListSlug = (slug: string, page: number, limit: number) => {
+export const useGetAllInviteesByGiftListSlug = (slug: string, enabled: false) => {
   return useQuery({
-    queryKey: ['invitees', slug, page],
-    queryFn: () => getAllInviteesByGiftListSlug(slug, page, limit, '', ''),
+    queryKey: ['invitees', slug],
+    queryFn: () => getAllInviteesByGiftListSlug(slug),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: !!slug,
+    enabled,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -57,7 +57,7 @@ export const useGetAllInviteesByGiftListSlugWithFilters = (
 ) => {
   return useQuery({
     queryKey: ["invitees", slug, page, search, status],
-    queryFn: () => getAllInviteesByGiftListSlug(slug, page, limit, search, status),
+    queryFn: () => getAllInviteesWithPaginationByGiftListSlug(slug, page, limit, search, status),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!slug,

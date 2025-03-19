@@ -10,6 +10,7 @@ import { ShareLinkCard } from "@/components/InviteeListPage/ShareLinkCard";
 import { InviteeTable } from "@/components/InviteeListPage/InviteesTable";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useState } from "react";
+import exportToExcel from "@/utils/exportToExcel";
 
 export default function InviteeListPage() {
   const { list: slug } = useParams();
@@ -26,10 +27,9 @@ export default function InviteeListPage() {
     status
   );
 
-  const { data: allInvitees, isLoading: isInviteesLoading } = useGetAllInviteesByGiftListSlug(
+  const { isFetching: isInviteesExporting, refetch: fetchAllInvitees } = useGetAllInviteesByGiftListSlug(
     slug as string,
-    currentPage,
-    limit
+    false
   );
 
   const handlePageChange = (page: number) => {
@@ -42,6 +42,16 @@ export default function InviteeListPage() {
     await deleteInvitee({ slug: slug as string, id });
   }
 
+  async function handleExportToExcel() {
+    try {
+      const { data: allInviteesData, } = await fetchAllInvitees();
+
+      exportToExcel(allInviteesData, "Lista de Convidados");
+    } catch (error) {
+      console.error("Erro ao buscar convidados para exportação:", error);
+    }
+  }
+
   return (
     <main className="flex flex-col flex-1 w-full max-w-7xl mx-auto my-8 px-4">
       <Header
@@ -49,16 +59,16 @@ export default function InviteeListPage() {
         description="Adicione e organize convidados para sua celebração"
       />
 
-      {isFilteredInviteesLoading || isInviteesLoading ? (
+      {isFilteredInviteesLoading ? (
         <div className="flex justify-center items-center p-6">
           <LoadingSpinner />
         </div>
       ) : (
         <>
           <StatCards
-            totalInvitees={allInvitees?.totalWithoutPagination}
-            acceptedInvitees={allInvitees?.totalAccepted}
-            rejectedInvitees={allInvitees?.totalRejected}
+            totalInvitees={filteredInvitees?.totalWithoutPagination}
+            acceptedInvitees={filteredInvitees?.totalAccepted}
+            rejectedInvitees={filteredInvitees?.totalRejected}
           />
           <ShareLinkCard slug={slug as string} />
           <InviteeTable
@@ -75,6 +85,8 @@ export default function InviteeListPage() {
             status={status}
             onStatusChange={setStatus}
             setCurrentPage={setCurrentPage}
+            exportToExcel={handleExportToExcel}
+            isExporting={isInviteesExporting}
             isLoading={isFilteredInviteesLoading || isFilteredInviteesFetching}
           />
         </>

@@ -39,6 +39,8 @@ interface InviteeTableProps {
   status: string;
   onStatusChange: (value: string) => void;
   setCurrentPage: (page: number) => void;
+  exportToExcel: () => void;
+  isExporting: boolean;
   isLoading: boolean;
 }
 
@@ -60,6 +62,8 @@ export const InviteeTable = ({
   status,
   onStatusChange,
   setCurrentPage,
+  exportToExcel,
+  isExporting,
   isLoading,
 }: InviteeTableProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -163,16 +167,16 @@ export const InviteeTable = ({
       </div>
 
       <div className="flex justify-end mt-4">
-        <Button>
+        <Button onClick={exportToExcel} loading={isExporting} disabled={isExporting}>
           <FileDown size={20} />
-          Exportar
+          Exportar para Excel
         </Button>
       </div>
 
       <div className="overflow-x-auto mt-4 rounded-md border border-gray-300">
         {isLoading ? (
           <div className="flex justify-center items-center p-6">
-            <Loader2 size={40} className="animate-spin" />
+            <Loader2 size={40} className="animate-spin text-primary-light" />
           </div>
         ) : filteredInvitees.length === 0 ? (
           <div className="flex justify-center items-center p-6">
@@ -244,7 +248,6 @@ export const InviteeTable = ({
         )}
       </div>
 
-      {/* Paginação */}
       <div className="mt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <p className="text-md text-text-secondary">
           Resultados: <span className="font-bold">{filteredInvitees.length}</span>
@@ -254,7 +257,6 @@ export const InviteeTable = ({
         </div>
       </div>
 
-      {/* Modais */}
       {isModalOpen && modalType === "deleteInvitee" && (
         <Modal
           action="Excluir"
