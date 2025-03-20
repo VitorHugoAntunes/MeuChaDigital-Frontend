@@ -5,11 +5,10 @@ import InputSelect from "@/components/InputSelect";
 import Card from "@/components/Card";
 
 interface PrivacySectionProps {
-  methods: any;
   errors: any;
 }
 
-export default function PrivacySection({ methods, errors }: PrivacySectionProps) {
+export default function PrivacySection({ errors }: PrivacySectionProps) {
   const { register } = useFormContext<ListSettingsFormData>();
 
   return (
@@ -19,8 +18,8 @@ export default function PrivacySection({ methods, errors }: PrivacySectionProps)
         <div className="space-y-4">
           <InputField
             label="Slug da Lista"
+            placeholder="exemplo: casamento-do-joao-e-maria"
             register={{ ...register("listSlug", { required: "Slug da lista é obrigatório" }) }}
-            inputValue={methods.getValues("listSlug")}
             error={errors.listSlug?.message}
           />
           <InputSelect

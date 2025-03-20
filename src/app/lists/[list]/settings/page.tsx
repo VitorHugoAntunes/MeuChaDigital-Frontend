@@ -228,7 +228,7 @@ export default function ListSettingsPage() {
 
           <BasicInfoSection methods={methods} errors={errors} typeValue={listData.data.eventType} />
           <ImagesSection initialBanner={initialBanner} initialMomentImages={initialMomentImages} errors={errors} />
-          <PrivacySection methods={methods} errors={errors} />
+          <PrivacySection errors={errors} />
           <DangerZoneSection listStatus={listData.data.status} isLoading={isUpdating} onDeleteList={handleOpenModal} />
 
           <footer className="flex justify-end gap-4">

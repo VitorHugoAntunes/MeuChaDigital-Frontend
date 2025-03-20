@@ -47,7 +47,6 @@ export default function BasicInfoSection({ methods, errors, typeValue }: BasicIn
           <InputField
             label="Nome da Lista"
             register={{ ...register("listName", { required: "Nome da lista é obrigatório" }) }}
-            inputValue={methods.getValues("listName")}
             error={errors.listName?.message}
           />
           <InputTextArea
