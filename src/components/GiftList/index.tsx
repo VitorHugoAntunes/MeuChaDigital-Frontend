@@ -157,10 +157,10 @@ export default function GiftList({
     <main className="flex flex-col flex-1 w-full">
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
         <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-8">
-          <div className="max-w-7xl mx-auto px-8">
+          <div className="max-w-screen-2xl mx-auto px-8">
             <h1 className="text-4xl font-bold text-text-primary mb-3">{giftList?.name}</h1>
             <p className="text-lg text-text-secondary mb-6">
-              {giftList?.description || "Adicione uma descrição para sua lista de presentes."}
+              {giftList?.description || ""}
             </p>
             <div className="flex items-center justify-between">
 

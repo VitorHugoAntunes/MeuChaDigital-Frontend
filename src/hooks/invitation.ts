@@ -22,7 +22,7 @@ interface InvitationGifts {
     id: string;
     name: string;
     photo?: { url: string };
-    category?: { name: string };
+    category?: { id: string, name: string };
     totalValue: number;
     description: string;
     priority: "LOW" | "MEDIUM" | "HIGH";
@@ -31,6 +31,7 @@ interface InvitationGifts {
   giftList: {
     id: string;
     name: string;
+    description: string;
     slug: string;
   };
 }

@@ -29,13 +29,16 @@ export default function InvitationLayout({ children, title }: InvitationLayoutPr
   }, []);
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="flex flex-col min-h-screen w-full">
       <InvitationHeader title={title} ref={headerRef} />
-      <main>
+      <main className="flex-1">
         {typeof children === 'function' ? children(headerHeight) : children}
       </main>
       <InvitationFooter slug={title} />
-      <ScrollToTopButton onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} showButton={showButton} />
+      <ScrollToTopButton
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        showButton={showButton}
+      />
     </div>
   );
 }

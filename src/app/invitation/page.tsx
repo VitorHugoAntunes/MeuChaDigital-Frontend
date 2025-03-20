@@ -17,13 +17,6 @@ export default function InvitationPage() {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    if (invitation?.redirect) {
-      console.log('Redirecionando para:', invitation.redirect);
-      window.location.href = `http://${invitation.redirect}.localhost:3000/invitation`;
-    }
-  }, [invitation]);
-
-  useEffect(() => {
     if (!isLoading && isError) {
       console.error('Erro detectado na requisição:', error);
       setHasError(true);

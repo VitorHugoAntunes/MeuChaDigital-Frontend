@@ -11,46 +11,40 @@ export const RedirectProvider = ({ children }: any) => {
   const [listData, setListData] = useState<{ redirect?: string } | null>(null);
   const slug = useParams().list as string;
 
-  // Captura o subdomínio no frontend
   const getSubdomain = () => {
     if (typeof window !== "undefined") {
-      const hostname = window.location.hostname; // Exemplo: "teste.localhost"
+      const hostname = window.location.hostname;
       const parts = hostname.split(".");
       if (parts.length >= 2 && parts[1] === "localhost") {
-        return parts[0]; // Retorna "teste" em "teste.localhost"
+        return parts[0];
       }
     }
     return null;
   };
 
   const subdomain = getSubdomain();
-
-  // Função assíncrona para buscar a lista
-  const getGiftList = async () => {
-    const data = await getGiftListBySlug(slug as string);
-    setListData(data);
-  };
+  const identifier = slug || subdomain;
 
   useEffect(() => {
-    console.log("Executando getGiftList");
+    if (!identifier) return;
 
-    if (slug) {
-      getGiftList();
-    }
-  }, [slug]);
+    const getGiftList = async () => {
+      console.log("Buscando lista para:", identifier);
+      const data = await getGiftListBySlug(identifier as string, true);
+      setListData(data);
+    };
+
+    getGiftList();
+  }, [identifier]);
 
   useEffect(() => {
     if (listData?.redirect) {
-      if (subdomain) {
-        // Redirecionamento baseado no subdomínio
-        const redirectUrl = `http://${listData.redirect}.localhost:3000/invitation`;
-        console.log("Redirecionando para:", redirectUrl);
-        window.location.href = redirectUrl;
-      } else {
-        // Redirecionamento baseado no slug
-        console.log("Redirecionando para:", listData.redirect);
-        router.replace(`/lists/${listData.redirect}/gifts`);
-      }
+      const redirectUrl = subdomain
+        ? `http://${listData.redirect}.localhost:3000/invitation`
+        : `/lists/${listData.redirect}/gifts`;
+
+      console.log("Redirecionando para:", redirectUrl);
+      router.replace(redirectUrl);
     }
   }, [listData, router, subdomain]);
 

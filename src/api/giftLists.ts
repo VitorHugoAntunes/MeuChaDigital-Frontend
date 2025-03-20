@@ -1,3 +1,4 @@
+import axios from 'axios';
 import api from '../config/axios';
 
 interface GiftListCreateData {
@@ -32,7 +33,12 @@ export const getAllGiftListsByUser = async (userId: string) => {
   return response.data;
 };
 
-export const getGiftListBySlug = async (slug: string) => {
+export const getGiftListBySlug = async (slug: string, subdomain?: boolean) => {
+  if (subdomain) {
+    const response = await axios.get(`http://localhost:8000/api/v1/lists/slug/${slug}`);
+    return response.data;
+  }
+
   const response = await api.get(`/lists/slug/${slug}`);
   return response.data;
 }
