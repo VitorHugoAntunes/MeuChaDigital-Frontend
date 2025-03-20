@@ -17,6 +17,13 @@ export default function InvitationPage() {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    if (invitation?.redirect) {
+      console.log('Redirecionando para:', invitation.redirect);
+      window.location.href = `http://${invitation.redirect}.localhost:3000/invitation`;
+    }
+  }, [invitation]);
+
+  useEffect(() => {
     if (!isLoading && isError) {
       console.error('Erro detectado na requisição:', error);
       setHasError(true);
@@ -58,18 +65,18 @@ export default function InvitationPage() {
   if (hasError) return null;
 
   return (
-    <InvitationLayout title={invitation?.name || undefined}>
+    <InvitationLayout title={invitation?.data.name || undefined}>
       {(headerHeight) => (
         <main className="px-8 flex flex-col flex-1 w-full">
           <InvitationHeroSection
-            bannerUrl={invitation?.banner.url || ''}
-            slug={invitation?.slug || ''}
+            bannerUrl={invitation?.data.banner.url || ''}
+            slug={invitation?.data.slug || ''}
             headerHeight={headerHeight || 0}
-            eventDate={invitation?.eventDate || ''}
+            eventDate={invitation?.data.eventDate || ''}
           />
-          <InvitationCalendarInfo eventDate={invitation?.eventDate || ''} />
-          <InvitationRSVPSection giftListId={invitation?.id || ''} />
-          <InvitationMomentsSection momentsImages={invitation?.momentsImages || []} />
+          <InvitationCalendarInfo eventDate={invitation?.data.eventDate || ''} />
+          <InvitationRSVPSection giftListId={invitation?.data.id || ''} />
+          <InvitationMomentsSection momentsImages={invitation?.data.momentsImages || []} />
           <InvitationLocationSection />
         </main>
       )}

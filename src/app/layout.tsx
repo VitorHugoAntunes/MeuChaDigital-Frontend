@@ -4,6 +4,7 @@ import "../styles/global.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { RedirectProvider } from "@/contexts/RedirectContext";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { PaymentProvider } from "@/contexts/PaymentContext";
 
@@ -32,17 +33,19 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.className + satisfy.className}`}>
       <body className="flex flex-col min-h-screen bg-background">
-        <ReactQueryProvider>
-          <AuthProvider>
-            <PaymentProvider>
-              <Header />
-              <div className="flex flex-1 w-full max-w-screen-2xl mx-auto px-8">
-                {children}
-              </div>
-              <Footer />
-            </PaymentProvider>
-          </AuthProvider>
-        </ReactQueryProvider>
+        <RedirectProvider>
+          <ReactQueryProvider>
+            <AuthProvider>
+              <PaymentProvider>
+                <Header />
+                <div className="flex flex-1 w-full max-w-screen-2xl mx-auto px-8">
+                  {children}
+                </div>
+                <Footer />
+              </PaymentProvider>
+            </AuthProvider>
+          </ReactQueryProvider>
+        </RedirectProvider>
       </body>
     </html>
   );

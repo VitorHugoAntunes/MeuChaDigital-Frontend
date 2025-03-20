@@ -29,6 +29,8 @@ export default function ListSettingsPage() {
 
   const navigation = useRouter();
 
+  console.log('LIST DATA', listData)
+
   const [initialBanner, setInitialBanner] = useState<File | null>(null);
   const [initialMomentImages, setInitialMomentImages] = useState<File[]>([]);
   const [allInitialData, setAllInitialData] = useState<Record<string, any>>({});
@@ -39,12 +41,12 @@ export default function ListSettingsPage() {
   const methods = useForm<ListSettingsFormData>({
     resolver: zodResolver(listSettingsSchema),
     defaultValues: {
-      listName: listData?.name || "",
-      listDescription: listData?.description || "",
-      eventDate: listData?.eventDate ? new Date(listData.eventDate).toISOString().split("T")[0] : "",
-      eventType: listData?.type || "WEDDING",
-      listSlug: listData?.slug || "",
-      listStatus: listData?.status || "ACTIVE",
+      listName: listData?.data.name || "",
+      listDescription: listData?.data.description || "",
+      eventDate: listData?.data.eventDate ? new Date(listData.data.eventDate).toISOString().split("T")[0] : "",
+      eventType: listData?.data.type || "WEDDING",
+      listSlug: listData?.data.slug || "",
+      listStatus: listData?.data.status || "ACTIVE",
     },
   });
 
@@ -52,15 +54,15 @@ export default function ListSettingsPage() {
 
   const updateFormValues = useCallback(() => {
     if (listData && !formInitialized) {
-      setValue("listName", listData.name);
-      setValue("listDescription", listData.description);
-      setValue("eventDate", listData.eventDate ? new Date(listData.eventDate).toISOString().split("T")[0] : "");
-      setValue("eventType", listData.type || "WEDDING");
-      setValue("listSlug", listData.slug || "");
-      setValue("listStatus", listData.status || "ACTIVE");
+      setValue("listName", listData.data.name);
+      setValue("listDescription", listData.data.description);
+      setValue("eventDate", listData.data.eventDate ? new Date(listData.data.eventDate).toISOString().split("T")[0] : "");
+      setValue("eventType", listData.data.type || "WEDDING");
+      setValue("listSlug", listData.data.slug || "");
+      setValue("listStatus", listData.data.status || "ACTIVE");
 
-      if (listData.banner) {
-        fetch(listData.banner.url)
+      if (listData.data.banner) {
+        fetch(listData.data.banner.url)
           .then((response) => response.blob())
           .then((blob) => {
             const file = new File([blob], "banner.jpeg", { type: blob.type });
@@ -69,8 +71,8 @@ export default function ListSettingsPage() {
           });
       }
 
-      if (listData.momentsImages?.length > 0) {
-        const momentFiles = listData.momentsImages.map((image, index) =>
+      if (listData.data.momentsImages?.length > 0) {
+        const momentFiles = listData.data.momentsImages.map((image, index) =>
           fetch(image.url)
             .then((response) => response.blob())
             .then((blob) => new File([blob], `momentImage${index}.jpeg`, { type: blob.type }))
@@ -78,18 +80,18 @@ export default function ListSettingsPage() {
 
         Promise.all(momentFiles).then((files) => {
           setInitialMomentImages(files);
-          setAllInitialData((prevState) => ({ ...prevState, momentsImages: listData.momentsImages }));
+          setAllInitialData((prevState) => ({ ...prevState, momentsImages: listData.data.momentsImages }));
         });
       }
 
       setAllInitialData((prevState) => ({
         ...prevState,
-        listName: listData.name,
-        listDescription: listData.description,
-        eventDate: listData.eventDate && new Date(listData.eventDate).toISOString().split("T")[0],
-        eventType: listData.type,
-        listSlug: listData.slug,
-        listStatus: listData.status,
+        listName: listData.data.name,
+        listDescription: listData.data.description,
+        eventDate: listData.data.eventDate && new Date(listData.data.eventDate).toISOString().split("T")[0],
+        eventType: listData.data.type,
+        listSlug: listData.data.slug,
+        listStatus: listData.data.status,
       }));
 
       setFormInitialized(true);
@@ -165,8 +167,8 @@ export default function ListSettingsPage() {
     console.log("Dados novos:", updatedData);
 
     updateGiftListMutation({
-      userId: listData.userId,
-      giftListId: listData.id,
+      userId: listData.data.userId,
+      giftListId: listData.data.id,
       ...updatedData,
     }, {
       onSuccess: () => {
@@ -202,8 +204,8 @@ export default function ListSettingsPage() {
 
   function handleDeleteList() {
     deleteGiftListMutation({
-      giftListId: listData.id,
-      slug: listData.slug,
+      giftListId: listData.data.id,
+      slug: listData.data.slug,
     }, {
       onSuccess: () => {
         setIsListDeleted(true);
@@ -224,10 +226,10 @@ export default function ListSettingsPage() {
             <h1 className="text-3xl font-bold text-text-primary">Configurações da Lista</h1>
           </header>
 
-          <BasicInfoSection methods={methods} errors={errors} typeValue={listData.eventType} />
+          <BasicInfoSection methods={methods} errors={errors} typeValue={listData.data.eventType} />
           <ImagesSection initialBanner={initialBanner} initialMomentImages={initialMomentImages} errors={errors} />
           <PrivacySection methods={methods} errors={errors} />
-          <DangerZoneSection listStatus={listData.status} isLoading={isUpdating} onDeleteList={handleOpenModal} />
+          <DangerZoneSection listStatus={listData.data.status} isLoading={isUpdating} onDeleteList={handleOpenModal} />
 
           <footer className="flex justify-end gap-4">
             <Button

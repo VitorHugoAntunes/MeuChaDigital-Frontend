@@ -2,16 +2,19 @@ import { useQuery } from '@tanstack/react-query';
 import { getInvitation, getInvitationGifts, getInvitationGift } from '@/api/invitation';
 
 interface Invitation {
-  id: string;
-  name: string;
-  slug: string;
-  eventDate: string;
-  banner: {
-    url: string;
+  data: {
+    id: string;
+    name: string;
+    slug: string;
+    eventDate: string;
+    banner: {
+      url: string;
+    }
+    momentsImages: {
+      url: string;
+    }[];
   }
-  momentsImages: {
-    url: string;
-  }[];
+  redirect?: string;
 }
 
 interface InvitationGifts {
