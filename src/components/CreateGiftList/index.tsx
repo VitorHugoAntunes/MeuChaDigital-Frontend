@@ -10,6 +10,7 @@ import { eventSchema, EventFormData } from '../../schemas/createGiftListSchema';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useCreateGiftList, useGiftListsByUser } from '@/hooks/giftLists';
+import Step3 from './Step_3';
 
 export default function CreateGiftList() {
   const { user } = useAuth();
@@ -30,20 +31,30 @@ export default function CreateGiftList() {
     }
   }, [isCreateSuccess, router]);
 
-  const totalSteps = 2;
+  const totalSteps = 3;
 
   const methods = useForm<EventFormData>({
     resolver: zodResolver(eventSchema),
-    mode: "onChange",
+    mode: "onSubmit",
     shouldUnregister: false,
     defaultValues: {
       type: '',
       name: '',
       slug: '',
       date: '',
+      time: '',
       description: '',
       banner: undefined,
       moments_images: [],
+      address: {
+        zipCode: '',
+        streetAddress: '',
+        streetNumber: '',
+        addressLine2: '',
+        neighborhood: '',
+        city: '',
+        state: '',
+      },
     },
   });
 
@@ -55,16 +66,18 @@ export default function CreateGiftList() {
       return;
     }
 
-    let fieldsToValidate: (keyof EventFormData)[] = [];
+    let fieldsToValidate: string | string[] | readonly ("type" | "name" | "slug" | "date" | "time" | "description" | "banner" | "moments_images" | "address" | "address.zipCode" | "address.streetAddress" | "address.streetNumber" | "address.neighborhood" | "address.city" | "address.state" | `moments_images.${number}` | "address.addressLine2")[] | undefined = [];
 
     if (step === 1) {
-      fieldsToValidate = ["type", "name", "slug", "date", "description"];
+      fieldsToValidate = ["type", "name", "slug", "date", "time", "description"];
     } else if (step === 2) {
       fieldsToValidate = ["banner", "moments_images"];
+    } else if (step === 3) {
+      fieldsToValidate = ["address.zipCode", "address.streetAddress", "address.streetNumber", "address.neighborhood", "address.city", "address.state"];
     }
 
     // Valida os campos e redireciona se estiverem válidos
-    const isStepValid = await trigger(fieldsToValidate);
+    const isStepValid = await trigger(fieldsToValidate as (keyof EventFormData)[]);
     if (isStepValid) {
       router.push(`/create-gift-list?step=${newStep}`);
     }
@@ -83,7 +96,13 @@ export default function CreateGiftList() {
       ...data,
       status: "ACTIVE",
       gifts: [],
+      address: {
+        ...data.address,
+        addressLine2: data.address.addressLine2 === "" ? "-" : data.address.addressLine2,
+      },
     };
+
+    console.log("Data to send:", dataToSend);
 
     try {
       createGiftListMutation(dataToSend);
@@ -97,6 +116,7 @@ export default function CreateGiftList() {
   const stepTitles: { [key: number]: string } = {
     1: "Detalhes do Evento",
     2: "Imagens do Evento",
+    3: "Local do Evento",
   };
 
   return (
@@ -110,7 +130,7 @@ export default function CreateGiftList() {
             Passo {step}: {stepTitles[step]}
           </div>
           <div className="flex gap-2">
-            {[1, 2].map((s) => (
+            {[1, 2, 3].map((s) => (
               <div
                 key={s}
                 className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-primary' : 'bg-gray-200'
@@ -123,6 +143,7 @@ export default function CreateGiftList() {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           {step === 1 && <Step1 />}
           {step === 2 && <Step2 />}
+          {step === 3 && <Step3 />}
 
           <div className="flex justify-between w-full mt-6">
             {step === 1 && (

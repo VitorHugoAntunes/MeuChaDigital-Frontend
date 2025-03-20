@@ -68,18 +68,34 @@ export default function Step1() {
         error={errors.slug?.message ? errors.slug.message.toString() : ""}
       />
 
-      <InputField
-        label="Data do evento"
-        type="date"
-        register={
-          {
-            ...register("date", {
-              onChange: (e) => handleInputChange("date", e.target.value),
-            })
+      <div className="grid grid-cols-2 gap-4">
+        <InputField
+          label="Horário do evento"
+          type="time"
+          register={
+            {
+              ...register("time", {
+                onChange: (e) => handleInputChange("time", e.target.value),
+              })
+            }
           }
-        }
-        error={errors.date?.message ? errors.date.message.toString() : ""}
-      />
+          error={errors.time?.message ? errors.time.message.toString() : ""}
+        />
+
+        <InputField
+          label="Data do evento"
+          type="date"
+          register={
+            {
+              ...register("date", {
+                onChange: (e) => handleInputChange("date", e.target.value),
+              })
+            }
+          }
+          error={errors.date?.message ? errors.date.message.toString() : ""}
+        />
+      </div>
+
       <InputTextArea
         label="Descrição"
         placeholder="Descreva o evento"

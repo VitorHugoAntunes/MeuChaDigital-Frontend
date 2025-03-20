@@ -16,6 +16,8 @@ export default function InvitationPage() {
   const { data: invitation, isError, error, isLoading } = useGetInvitation();
   const [hasError, setHasError] = useState(false);
 
+  console.log('invitation', invitation);
+
   useEffect(() => {
     if (!isLoading && isError) {
       console.error('Erro detectado na requisição:', error);
@@ -24,7 +26,6 @@ export default function InvitationPage() {
     }
   }, [isLoading, isError, error, router]);
 
-  // Textos de carregamento dinâmicos
   const loadingMessages = useMemo(() => [
     "Preparando tudo para você...",
     "Aguarde um instante...",
@@ -43,13 +44,12 @@ export default function InvitationPage() {
     return () => clearInterval(interval);
   }, [currentMessage, loadingMessages]);
 
-  // Exibe o loading apenas quando isLoading for false (lógica invertida)
   if (isLoading) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center">
-        <Loader2 className="h-12 w-12 text-primary-light animate-spin" /> {/* Ícone de carregamento animado */}
+        <Loader2 className="h-12 w-12 text-primary-light animate-spin" />
         <p className="mt-4 text-lg text-text-primary font-semibold">
-          {currentMessage} {/* Texto de carregamento dinâmico */}
+          {currentMessage}
         </p>
       </div>
     );
@@ -67,10 +67,20 @@ export default function InvitationPage() {
             headerHeight={headerHeight || 0}
             eventDate={invitation?.data.eventDate || ''}
           />
-          <InvitationCalendarInfo eventDate={invitation?.data.eventDate || ''} />
+          <InvitationCalendarInfo
+            eventDate={invitation?.data.eventDate || ''}
+            eventTime={invitation?.data.eventTime || ''}
+            eventLocation={invitation?.data.address ?? {
+              streetAddress: '',
+              streetNumber: '',
+              neighborhood: '',
+              city: '',
+              state: ''
+            }}
+          />
           <InvitationRSVPSection giftListId={invitation?.data.id || ''} />
           <InvitationMomentsSection momentsImages={invitation?.data.momentsImages || []} />
-          <InvitationLocationSection />
+          {invitation?.data.address && <InvitationLocationSection address={invitation.data.address} />}
         </main>
       )}
     </InvitationLayout>

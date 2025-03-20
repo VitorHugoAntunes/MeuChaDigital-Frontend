@@ -18,3 +18,7 @@ export const formatSlug = (slug: string) => {
     .replace(/-/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
 };
+
+export const formatZipCode = (zipCode: string) => {
+  return zipCode.replace(/(\d{5})(\d{3})/, "$1-$2");
+};

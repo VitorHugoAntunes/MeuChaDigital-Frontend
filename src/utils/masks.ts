@@ -31,3 +31,27 @@ export const CurrencyMask = (value: string) => {
 
   return `R$ ${formattedValue}`;
 };
+
+export const ZipCodeMask = (value: string) => {
+  return value.
+    replace(/\D/g, '').
+    replace(/(\d{5})(\d)/, '$1-$2').
+    replace(/(-\d{3})\d+?$/, '$1');
+}
+
+export const TimeMask = (value: string) => {
+  return value.
+    replace(/\D/g, '').
+    replace(/(\d{2})(\d)/, '$1:$2').
+    replace(/(:\d{2})\d+?$/, '$1');
+}
+
+export const applyMask = (value: string, mask: (value: string) => string) => {
+  return mask(value);
+}
+
+export const removeMask = (value: string) => {
+  if (!value) return value;
+
+  return value.replace(/\D/g, '');
+}

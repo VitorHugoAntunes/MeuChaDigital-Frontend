@@ -54,13 +54,22 @@ export default function BasicInfoSection({ methods, errors, typeValue }: BasicIn
             register={{ ...register("listDescription", { required: "Descrição da lista é obrigatória" }) }}
             error={errors.listDescription?.message}
           />
-          <InputField
-            label="Data do Evento"
-            type="date"
-            inputValue={methods.getValues("eventDate")}
-            register={{ ...register("eventDate", { required: "Data do evento é obrigatória" }) }}
-            error={errors.eventDate?.message}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <InputField
+              label="Horário do Evento"
+              type="time"
+              inputValue={methods.getValues("eventTime")}
+              register={{ ...register("eventTime", { required: "Horário do evento é obrigatório" }) }}
+              error={errors.eventTime?.message}
+            />
+            <InputField
+              label="Data do Evento"
+              type="date"
+              inputValue={methods.getValues("eventDate")}
+              register={{ ...register("eventDate", { required: "Data do evento é obrigatória" }) }}
+              error={errors.eventDate?.message}
+            />
+          </div>
         </div>
       </Card>
     </section>

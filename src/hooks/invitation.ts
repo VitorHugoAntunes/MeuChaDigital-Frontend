@@ -7,12 +7,22 @@ interface Invitation {
     name: string;
     slug: string;
     eventDate: string;
+    eventTime: string;
     banner: {
       url: string;
     }
     momentsImages: {
       url: string;
     }[];
+    address: {
+      zipCode: string;
+      streetAddress: string;
+      streetNumber: string;
+      addressLine2?: string;
+      neighborhood: string;
+      city: string;
+      state: string;
+    }
   }
   redirect?: string;
 }

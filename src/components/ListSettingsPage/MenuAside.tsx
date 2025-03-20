@@ -6,6 +6,7 @@ import Card from "@/components/Card";
 
 const menuItems = [
   { id: "informacoes-basicas", label: "Informações Básicas" },
+  { id: "endereco", label: "Endereço" },
   { id: "imagens", label: "Imagens" },
   { id: "privacidade", label: "Privacidade" },
   { id: "zona-de-perigo", label: "Zona de Perigo" },

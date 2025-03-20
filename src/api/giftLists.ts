@@ -1,17 +1,28 @@
 import axios from 'axios';
 import api from '../config/axios';
 
+interface Address {
+  zipCode: string;
+  streetAddress: string;
+  streetNumber: string;
+  addressLine2: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+}
 interface GiftListCreateData {
   userId: string;
   type: string;
   name: string;
   slug: string;
   date: string;
+  time: string;
   description: string;
   status: string;
   gifts: unknown[];
   banner: File;
   moments_images: File[];
+  address: Address;
 }
 
 interface GiftListUpdateData {
@@ -22,10 +33,12 @@ interface GiftListUpdateData {
   slug?: string;
   description?: string;
   eventDate?: string;
+  eventTime?: string;
   eventType?: string;
   status?: string;
   banner?: File;
   moments_images?: File[];
+  address?: Address;
 }
 
 export const getAllGiftListsByUser = async (userId: string) => {
@@ -53,6 +66,7 @@ export const createGiftList = async (data: GiftListCreateData) => {
   formData.append('name', data.name);
   formData.append('slug', data.slug);
   formData.append('eventDate', data.date);
+  formData.append('eventTime', data.time);
   formData.append('description', data.description);
   formData.append('status', data.status);
   formData.append('gifts', JSON.stringify(data.gifts));
@@ -66,6 +80,8 @@ export const createGiftList = async (data: GiftListCreateData) => {
       formData.append('moments_images', file);
     });
   }
+
+  formData.append('address', JSON.stringify(data.address));
 
   const response = await api.post('/lists', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -82,10 +98,13 @@ export const updateGiftList = async (data: GiftListUpdateData) => {
     if (value !== undefined) {
       if (Array.isArray(value)) {
         value.forEach((file) => {
-          formData.append(key, file);
+          formData.append(key, file); // Adiciona arquivos diretamente
         });
+      } else if (typeof value === 'object' && value !== null && key === "address") {
+        // Converte o objeto `address` para JSON
+        formData.append(key, JSON.stringify(value));
       } else {
-        formData.append(key, value);
+        formData.append(key, value); // Adiciona valores primitivos diretamente
       }
     }
   });
@@ -98,7 +117,6 @@ export const updateGiftList = async (data: GiftListUpdateData) => {
 
   return response.data;
 };
-
 
 export const deleteGiftList = async (id: string) => {
   try {
