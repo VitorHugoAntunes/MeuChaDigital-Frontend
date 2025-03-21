@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Modal from "@/components/Modal";
 import AddressSection from "@/components/ListSettingsPage/AddressSection";
+import Card from "@/components/Card";
 
 export default function ListSettingsPage() {
   const slug = useParams().list as string;
@@ -273,7 +274,7 @@ export default function ListSettingsPage() {
   }
 
   return (
-    <main className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 mt-8 mb-36 py-6 h-fit">
+    <main className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 mt-8 mb-36 py-6 h-fit relative">
       <MenuAside />
 
       <FormProvider {...methods}>
@@ -288,23 +289,27 @@ export default function ListSettingsPage() {
           <PrivacySection errors={errors} />
           <DangerZoneSection listStatus={listData.data.status} isLoading={isUpdating} onDeleteList={handleOpenModal} />
 
-          <footer className="flex justify-end gap-4">
-            <Button
-              variant="outlined-danger"
-              type="button"
-              onClick={handleRedirect}
-              disabled={isUpdating}
-            >
-              Cancelar
-            </Button>
-            <Button
-              type="submit"
-              disabled={isUpdating || !hasChanges}
-              loading={isUpdating}
-            >
-              Salvar
-            </Button>
-          </footer>
+          <Card className="sticky bottom-0 left-0 right-0 z-10 mt-4">
+            <div className="max-w-screen-lg mx-auto px-4">
+              <div className="flex justify-end gap-4">
+                <Button
+                  variant="outlined-danger"
+                  type="button"
+                  onClick={handleRedirect}
+                  disabled={isUpdating}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isUpdating || !hasChanges}
+                  loading={isUpdating}
+                >
+                  Salvar
+                </Button>
+              </div>
+            </div>
+          </Card>
         </form>
       </FormProvider>
 

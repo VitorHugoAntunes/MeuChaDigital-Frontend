@@ -21,10 +21,10 @@ interface GiftFormProps {
 }
 
 const CATEGORIES = [
-  { id: "d85d70fa-c52f-4e88-9200-8d15b146adbe", text: "Eletrônico" },
-  { id: "d85d70fa-c52f-4e88-9200-8d15b146adbe", text: "Casa" },
-  { id: "d85d70fa-c52f-4e88-9200-8d15b146adbe", text: "Lazer" },
-  { id: "d85d70fa-c52f-4e88-9200-8d15b146adbe", text: "Outros" },
+  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Eletrônico" },
+  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Casa" },
+  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Lazer" },
+  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Outros" },
 ];
 
 const PRIORITIES = [
