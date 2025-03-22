@@ -60,7 +60,7 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
 
   if (title === undefined) {
     return (
-      <header className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-8 bg-background text-text-primary border-b-2 border-b-gray-200 animate-pulse">
+      <header className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background text-text-primary border-b-2 border-b-gray-200 animate-pulse">
         <div className="h-8 w-48 bg-gray-300 rounded"></div>
 
         <nav className="flex space-x-6">
@@ -77,7 +77,7 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
     <>
       <header
         ref={ref}
-        className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-8 bg-background text-text-primary border-b-2 border-b-gray-200"
+        className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background text-text-primary border-b-2 border-b-gray-200"
       >
         <Link
           href={`http://${subdomain}.localhost:3000/invitation`}
