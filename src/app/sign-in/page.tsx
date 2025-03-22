@@ -17,8 +17,8 @@ export default function SignInPage() {
 
 
   return (
-    <main className="grid grid-cols-1 md:grid-cols-3 w-screen relative left-1/2 right-1/2 -mx-[50vw]">
-      <aside className="hidden md:flex flex-col items-center justify-center border-r-2 border-r-gray-200 col-span-2">
+    <main className="grid grid-cols-1 lg:grid-cols-3 w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+      <aside className="hidden lg:flex flex-col items-center justify-center border-r-2 border-r-gray-200 col-span-2">
         <Image src={hero} alt="Banner" className="w-full max-w-md" />
 
         <h1 className="text-2xl font-semibold text-text-primary text-center mt-4 w-3/4">
@@ -30,7 +30,7 @@ export default function SignInPage() {
         </p>
       </aside>
 
-      <section className="flex flex-col items-center justify-center space-y-8 px-8 col-span-1 bg-background">
+      <section className="flex flex-col items-center justify-center space-y-8 px-4 col-span-1 bg-background">
         <h1 className="text-2xl font-semibold text-text-primary text-center">
           Bem vindo! 👋
         </h1>

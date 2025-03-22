@@ -19,23 +19,23 @@ export default function InvitationLocationSection({ address }: InvitationLocatio
   const googleMapsUrl = `https://www.google.com/maps?q=${formattedAddress}&output=embed`;
 
   return (
-    <section id="location" className="text-center py-16 px-8">
-      <h3 className="text-4xl font-bold text-gray-900 mb-12">Localização</h3>
-      <Card className="max-w-screen-md w-full mx-auto rounded-3xl">
+    <section id="location" className="text-center my-8 lg:my-16 max-w-screen-sm w-full mx-auto">
+      <h3 className="text-4xl font-bold text-gray-900 mb-8 lg:mb-12">Localização</h3>
+      <Card className="max-w-screen-md w-full mx-auto rounded-3xl p-4 sm:p-6">
         <iframe
           src={googleMapsUrl}
           width="100%"
-          height="450"
           style={{ border: 0 }}
           allowFullScreen
           loading="lazy"
-          className="rounded-2xl"
+          className="rounded-2xl h-[250px] sm:h-[400px] w-full"
         ></iframe>
-        <div className="mt-8">
-          <p className="text-lg text-gray-700">
+
+        <div className="mt-4 lg:mt-8">
+          <p className="text-base sm:text-lg text-gray-700">
             {streetAddress}, {streetNumber} - {neighborhood}, {city} - {state}
           </p>
-          <p className="text-lg text-gray-700">CEP: {formatZipCode(zipCode)}</p>
+          <p className="text-base sm:text-lg text-gray-700">CEP: {formatZipCode(zipCode)}</p>
         </div>
       </Card>
     </section>

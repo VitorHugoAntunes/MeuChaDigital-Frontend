@@ -1,5 +1,5 @@
 import Button from "../Button";
-
+import { ChevronLeft, ChevronRight } from "lucide-react"
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -14,17 +14,21 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }: Pagination
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        Anterior
+        <ChevronLeft size={16} className="sm:hidden" />
+        <span className="hidden sm:inline">Anterior</span>
       </Button>
-      <span className="px-4 py-2">
+
+      <span className="px-4 py-2 text-sm text-text-secondary">
         Página {currentPage} de {totalPages}
       </span>
+
       <Button
         variant="neutral"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        Próxima
+        <span className="hidden sm:inline">Próxima</span>
+        <ChevronRight size={16} className="sm:hidden" />
       </Button>
     </div>
   );

@@ -66,7 +66,7 @@ export default function InputField({ label, description, inputValue, type = "tex
   };
 
   return (
-    <div className="mb-6">
+    <div className="mb-4 md:mb-6">
       <label className="block text-sm font-bold text-gray-700">{label}</label>
       {description && <p className="text-sm text-gray-600">{description}</p>}
 

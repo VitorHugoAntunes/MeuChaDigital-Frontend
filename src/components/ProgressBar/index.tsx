@@ -12,12 +12,12 @@ export default function ProgressBar({ initialValue, goalValue }: ProgressBarProp
   return (
     <section>
       <div className="flex justify-between text-sm text-text-secondary mb-2">
-        <span>
+        <span className="text-xs lg:text-sm font-semibold text-text-primary">
           Valor arrecadado: {formatCurrency(initialValue)} de {formatCurrency(goalValue)}
         </span>
       </div>
-      <div className="relative bg-gray-200 h-6 rounded-full w-full overflow-hidden" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
 
+      <div className="relative bg-gray-200 h-2 lg:h-6 rounded-full w-full overflow-hidden" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
         <div
           className="bg-primary h-full rounded-full transition-all duration-500 ease-in-out"
           style={{ width: `${progressRounded}%` }}
@@ -25,7 +25,7 @@ export default function ProgressBar({ initialValue, goalValue }: ProgressBarProp
       </div>
 
       <div
-        className={`mt-1 text-md font-medium text-text-secondary ${progressRounded === 100 ? 'text-green-500' : ''}`}
+        className={`mt-1 text-sm lg:text-md font-medium text-text-secondary ${progressRounded === 100 ? 'text-green-500' : ''}`}
       >
         {progressRounded}%
       </div>

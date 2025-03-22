@@ -16,10 +16,10 @@ export default function Step1() {
   };
 
   return (
-    <div className="mb-4 flex flex-col w-full">
+    <div className="flex flex-col w-full">
       <div className="flex flex-col mb-6">
         <label className="block text-sm font-bold text-gray-700">Tipo do evento</label>
-        <div className="grid grid-cols-3 gap-4 mt-1">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1">
           {["Casamento", "Aniversário", "Chá de bebê"].map((label, index) => {
             const value = ["WEDDING", "BIRTHDAY", "BABY_SHOWER"][index];
             return (

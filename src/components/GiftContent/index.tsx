@@ -25,7 +25,7 @@ interface GiftContentProps {
 
 export default function GiftContent({ gift, isUserOwner, slug, isInvitationPage, giftId }: GiftContentProps) {
   return (
-    <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 h-fit w-full">
+    <main className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:mt-8 py-6 h-fit w-full">
       <section className="bg-white rounded-lg p-6 border border-gray-200">
         <GiftHeader
           category={gift.category}

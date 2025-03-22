@@ -1,44 +1,78 @@
 import Button from "../../Button";
 import Image from "next/image";
 import bannerImg from "@/assets/banner.jpg";
-
-import { Gift, Mail, ListChecks } from 'lucide-react';
+import { Gift, Mail, ListChecks } from "lucide-react";
 
 export default function Banner() {
   return (
-    <section className="grid grid-cols-2 gap-16 my-16">
-      <aside className="flex flex-col justify-center space-y-4 w-fit">
-        <h1 className="text-4xl font-semibold">
-          Planeje o Chá Perfeito do Jeito Que Sempre Sonhou!
-        </h1>
+    <section className="relative w-full lg:w-auto lg:mx-0">
+      <div className="md:hidden absolute inset-0 w-screen left-1/2 right-1/2 -mx-[50vw]">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={bannerImg}
+            alt="Banner Meu Chá Digital"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-50"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+      </div>
 
-        <p className="text-xl mt-4">
-          Planeje, organize e celebre com facilidade. Crie memórias inesquecíveis para toda a vida.
-        </p>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 py-8 max-w-screen-2xl mx-auto">
+        <aside className="flex flex-col justify-center space-y-4 w-full text-white md:text-inherit rounded-2xl md:p-0">
+          <h1 className="text-2xl lg:text-4xl font-semibold text-center md:text-left">
+            Planeje o Chá Perfeito do Jeito Que Sempre Sonhou!
+          </h1>
 
-        <ul className="list-inside mt-4 space-y-2">
-          <li className="text-base">
-            <Gift size={24} className="inline mr-2 text-primary-light" />
-            Crie uma lista de presentes
-          </li>
-          <li className="text-base">
-            <Mail size={24} className="inline mr-2 text-primary-light" />
-            Envie convites digitais
-          </li>
-          <li className="text-base">
-            <ListChecks size={24} className="inline mr-2 text-primary-light" />
-            Receba confirmações de presença
-          </li>
-        </ul>
+          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left">
+            Planeje, organize e celebre com facilidade. Crie memórias inesquecíveis para toda a vida.
+          </p>
 
-        <Button>Comece a Planejar Agora</Button>
-      </aside>
+          <div className="md:hidden flex flex-col items-center w-full">
 
-      <Image
-        src={bannerImg}
-        alt="Banner Meu Chá Digital"
-        className="rounded-2xl"
-      />
+            <div className="flex justify-center mt-4 w-full ">
+              <Button widthFull>Comece a Planejar Agora</Button>
+            </div>
+          </div>
+
+          <div className="hidden md:block">
+            <ul className="list-inside mt-4 space-y-2">
+              <li className="text-base">
+                <Gift size={24} className="inline mr-2 text-primary-light" />
+                Crie uma lista de presentes
+              </li>
+              <li className="text-base">
+                <Mail size={24} className="inline mr-2 text-primary-light" />
+                Envie convites digitais
+              </li>
+              <li className="text-base">
+                <ListChecks size={24} className="inline mr-2 text-primary-light" />
+                Receba confirmações de presença
+              </li>
+            </ul>
+            <div className="flex mt-8">
+              <Button>Comece a Planejar Agora</Button>
+            </div>
+          </div>
+        </aside>
+
+        <div className="hidden md:block lg:hidden w-full">
+          <Image
+            src={bannerImg}
+            alt="Banner Meu Chá Digital"
+            className="rounded-2xl"
+          />
+        </div>
+
+        <div className="hidden lg:flex justify-center">
+          <Image
+            src={bannerImg}
+            alt="Banner Meu Chá Digital"
+            className="rounded-2xl w-full max-w-md lg:max-w-lg xl:max-w-xl"
+          />
+        </div>
+      </div>
     </section>
   );
 }

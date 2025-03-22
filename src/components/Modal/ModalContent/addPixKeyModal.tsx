@@ -115,7 +115,7 @@ export const AddPixKeyModal = ({ onClose }: AddPixModalProps) => {
           name="keyValue"
         />
 
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <Button
             variant="outlined-danger"
             widthFull

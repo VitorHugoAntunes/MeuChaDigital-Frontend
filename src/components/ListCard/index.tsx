@@ -21,7 +21,7 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
 
   return (
     <article className="bg-white rounded-lg shadow-md flex flex-col flex-1 w-full h-full hover:shadow-lg">
-      <figure className="w-full h-48 relative rounded-t-lg overflow-hidden bg-gray-300">
+      <figure className="w-full h-32 lg:h-48 relative rounded-t-lg overflow-hidden bg-gray-300">
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse">
             <span className="text-gray-500">Carregando...</span>
@@ -38,9 +38,9 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
         />
       </figure>
 
-      <section className="flex flex-col gap-6 p-6 flex-1">
+      <section className="flex flex-col gap-4 lg:gap-6 p-4 lg:p-6 flex-1">
         <header>
-          <h2 className="text-lg font-semibold text-text-primary">{title}</h2>
+          <h2 className="text-base lg:text-lg font-semibold text-text-primary">{title}</h2>
         </header>
 
         <ListCardInfo date={date} totalGifts={totalGifts} totalContributors={totalContributors} />

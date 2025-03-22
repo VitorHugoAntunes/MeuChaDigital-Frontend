@@ -24,7 +24,7 @@ export default function CheckoutPaymentType() {
   return (
     <div className="flex flex-col mt-4">
       <label className="block text-sm font-bold text-gray-700">Forma de pagamento</label>
-      <div className="grid grid-cols-3 gap-4 mt-1">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1">
         {paymentOptions.map(({ label, value, icon }) => (
           <EventTypeOption
             key={value}

@@ -147,11 +147,11 @@ export const InviteeTable = ({
   };
 
   return (
-    <Card className="w-full mt-8 p-6">
+    <Card className="w-full mt-8">
       <h2 className="text-lg font-semibold text-text-primary text-center sm:text-left">Lista de Convidados</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-        <div className="col-span-2">
+      <div className="flex flex-col sm:flex-row mt-4 gap-4">
+        <div className="w-full sm:w-2/3">
           <InputField
             label="Pesquisar"
             placeholder="Buscar por nome, telefone ou e-mail"
@@ -159,15 +159,22 @@ export const InviteeTable = ({
             register={register("search")}
           />
         </div>
-        <InputSelect
-          label="Status"
-          options={["Todos", "Aceito", "Recusado"]}
-          register={register("status")}
-        />
+        <div className="w-full sm:w-1/3">
+          <InputSelect
+            label="Status"
+            options={["Todos", "Aceito", "Recusado"]}
+            register={register("status")}
+          />
+        </div>
       </div>
 
-      <div className="flex justify-end mt-4">
-        <Button onClick={exportToExcel} loading={isExporting} disabled={isExporting}>
+      <div className="w-full md:w-fit mt-6">
+        <Button
+          onClick={exportToExcel}
+          loading={isExporting}
+          disabled={isExporting}
+          widthFull
+        >
           <FileDown size={20} />
           Exportar para Excel
         </Button>

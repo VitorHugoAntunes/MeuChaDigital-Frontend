@@ -21,10 +21,14 @@ interface GiftFormProps {
 }
 
 const CATEGORIES = [
-  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Eletrônico" },
-  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Casa" },
-  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Lazer" },
-  { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Outros" },
+  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Eletrônico" },
+  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Casa" },
+  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Lazer" },
+  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Outros" },
+  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Eletrônico" },
+  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Casa" },
+  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Lazer" },
+  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Outros" },
 ];
 
 const PRIORITIES = [
@@ -183,7 +187,7 @@ export const GiftForm = ({
 
   return (
     <FormProvider {...methods}>
-      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           label="Nome do presente"
           type="text"
@@ -251,7 +255,7 @@ export const GiftForm = ({
           )}
         </div>
 
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mt-6">
           <Button
             variant="outlined-danger"
             widthFull

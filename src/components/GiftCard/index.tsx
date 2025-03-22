@@ -28,8 +28,8 @@ const GiftCard = ({
   actionDeleteFn,
 }: GiftCardProps) => {
   return (
-    <article className="w-full max-w-sm border border-gray-200 rounded-lg bg-white overflow-hidden shadow-md hover:shadow-lg flex flex-col h-full">
-      <div className="relative w-full h-40 bg-gray-500">
+    <article className="w-full border border-gray-200 rounded-lg bg-white overflow-hidden shadow-md hover:shadow-lg flex flex-col h-full">
+      <div className="relative w-full h-48 bg-gray-500">
         <Image
           src={photo}
           alt={`Imagem do presente ${title}`}

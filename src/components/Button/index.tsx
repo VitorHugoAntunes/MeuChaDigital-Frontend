@@ -22,13 +22,13 @@ export default function Button({
   disabled = false,
 }: ButtonProps) {
   const variantStyles = {
-    default: 'bg-primary-light text-white px-8 py-2 rounded-full border-2 border-primary-light',
-    danger: 'bg-danger text-white px-8 py-2 rounded-full border-2 border-gray-200',
-    outlined: 'bg-white text-primary-light px-8 py-2 rounded-full border-2 border-primary-light',
-    "outlined-danger": 'bg-transparent text-danger px-8 py-2 rounded-full border-2 border-gray-200',
-    "outlined-warning": 'bg-transparent text-warning px-8 py-2 rounded-full border-2 border-gray-200',
-    neutral: 'bg-gray-100 text-gray-700 px-8 py-2 rounded-full border-2 border-gray-200',
-    google: 'bg-white text-gray-700 px-8 py-2 rounded-full border border-gray-300',
+    default: 'bg-primary-light text-white rounded-full border-2 border-primary-light',
+    danger: 'bg-danger text-white rounded-full border-2 border-gray-200',
+    outlined: 'bg-white text-primary-lightrounded-full border-2 border-primary-light',
+    "outlined-danger": 'bg-transparent text-danger rounded-full border-2 border-gray-200',
+    "outlined-warning": 'bg-transparent text-warning rounded-full border-2 border-gray-200',
+    neutral: 'bg-gray-100 text-gray-700 rounded-full border-2 border-gray-200',
+    google: 'bg-white text-gray-700 rounded-full border border-gray-300',
   };
 
   const hoverStyles = {
@@ -49,7 +49,8 @@ export default function Button({
       onClick={onClick}
       disabled={loading || disabled}
       className={
-        `${buttonStyles} transition-colors duration-300
+        `py-2 px-6 lg:px-8 font-semibold
+        ${buttonStyles} transition-colors duration-300
          ${widthFull ? 'w-full flex items-center justify-center gap-4' : 'w-fit flex items-center justify-center gap-4'}
          ${borderStyle === 'rounded' ? 'rounded-md' : 'rounded-full'}
          ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`

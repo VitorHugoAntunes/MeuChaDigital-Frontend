@@ -9,26 +9,23 @@ export default function Footer() {
   const pathName = usePathname();
   const currentUrl = pathName.split('?')[0];
 
-  // Não exibe o footer em páginas específicas
   if (currentUrl === '/sign-in' || currentUrl === '/create-gift-list' || currentUrl.startsWith('/invitation')) {
     return null;
   }
 
   return (
     <footer className="bg-background text-text-primary border-t-2 border-t-gray-200 mt-8">
-      <div className="container mx-auto px-4 py-8">
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div className="space-y-4">
+      <div className="container mx-auto px-4 py-4 lg:py-8">
+        <section className="flex flex-col md:flex-row justify-between gap-4 lg:gap-8 mb-4 lg:mb-8">
+          <div className="lg:space-y-4">
             <Link href="/" className="group hover:text-primary-dark transition-colors duration-300">
               <div className="inline-flex items-center space-x-2">
                 <Image
                   src={logo}
                   alt="Meu Chá Digital"
-                  className="group-hover:brightness-90 transition-all duration-300"
-                  width={40}
-                  height={40}
+                  className="h-6 w-6 transition-all duration-300 group-hover:brightness-90 lg:h-8 lg:w-8"
                 />
-                <h1 className="text-2xl font-semibold text-primary-light group-hover:brightness-90 transition-all duration-300">
+                <h1 className="text-base font-semibold text-primary-light transition-all duration-300 group-hover:brightness-90 lg:text-2xl">
                   Meu Chá Digital
                 </h1>
               </div>
@@ -38,8 +35,8 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Links úteis" className="space-y-4">
-            <h2 className="text-lg font-semibold text-text-primary">Links Úteis</h2>
+          <nav aria-label="Links úteis" className="space-y-2 lg:space-y-4">
+            <h2 className="text-base lg:text-lg font-semibold text-text-primary">Links Úteis</h2>
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
@@ -59,8 +56,8 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-text-primary">Contato</h2>
+          <div className="space-y-2 lg:space-y-4">
+            <h2 className="text-base lg:text-lg font-semibold text-text-primary">Contato</h2>
             <p className="text-text-secondary">
               Dúvidas ou sugestões? Entre em contato conosco:
             </p>
@@ -79,7 +76,7 @@ export default function Footer() {
           </div>
         </section>
 
-        <section className="border-t border-t-gray-200 pt-6 text-center">
+        <section className="border-t border-t-gray-200 pt-4 lg:pt-8 text-center">
           <p className="text-text-secondary">
             © 2025 Meu Chá Digital. Todos os direitos reservados.
           </p>

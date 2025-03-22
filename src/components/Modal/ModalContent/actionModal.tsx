@@ -23,7 +23,7 @@ export const ActionModal = ({ description, action, isLoading, onSuccess, onClose
     <form className="space-y-6" onSubmit={handleSubmit} noValidate>
       <p className="text-text-secondary">{description}</p>
 
-      <div className="flex justify-end space-x-4">
+      <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
         <Button
           type="button"
           variant="outlined-danger"

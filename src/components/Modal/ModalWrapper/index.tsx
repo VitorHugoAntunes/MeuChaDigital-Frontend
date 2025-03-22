@@ -38,7 +38,7 @@ export const ModalWrapper = ({ isOpen, onClose, children }: ModalWrapperProps) =
       onClick={onClose} // Fecha o modal ao clicar fora
     >
       <div
-        className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl transform transition-all duration-300"
+        className="bg-white p-4 m-4 rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all duration-300"
         onClick={(e) => e.stopPropagation()} // Impede que o modal feche ao clicar dentro
       >
         {children}

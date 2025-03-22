@@ -73,10 +73,10 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 py-6 h-fit">
+    <main className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:mt-8 py-6 h-fit sm:px-6 lg:px-8">
       <section className="flex flex-col gap-6">
         <Card>
-          <header className="flex items-center gap-4">
+          <header className="flex flex-col sm:flex-row items-center gap-4">
             <picture className="w-16 h-16 bg-gray-500 rounded-full overflow-hidden">
               <Image
                 src={user?.photo.url || "/avatar-placeholder.png"}
@@ -85,7 +85,7 @@ export default function ProfilePage() {
                 height={64}
               />
             </picture>
-            <div>
+            <div className="text-center sm:text-left">
               <h1 className="text-2xl font-bold text-text-primary">{user?.name || "Vitor Hugo"}</h1>
               <p className="text-md text-text-secondary">{user?.email || "email@gmail.com"}</p>
             </div>
@@ -93,12 +93,14 @@ export default function ProfilePage() {
         </Card>
 
         <Card>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <h2 className="text-xl font-semibold text-text-primary">Chaves PIX</h2>
-            <Button onClick={openAddPixKeyModal}>
-              Adicionar chave
-              <Plus size={20} />
-            </Button>
+            <div className="w-full sm:w-auto">
+              <Button onClick={openAddPixKeyModal} widthFull>
+                <Plus size={20} />
+                Adicionar chave
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6 space-y-4">
@@ -107,7 +109,6 @@ export default function ProfilePage() {
                 <span className="text-text-secondary">Carregando...</span>
               </div>
             ) : pixKeys && pixKeys.length > 0 ? (
-
               pixKeys.map((key: PixKey) => (
                 <KeyInfo
                   key={key.id}
@@ -131,26 +132,30 @@ export default function ProfilePage() {
           <h3 className="text-xl font-semibold text-text-primary pb-2">Conta</h3>
 
           <div className="flex flex-col gap-4">
-            <Card className="py-4 flex items-center justify-between gap-4">
+            <Card className="py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex-1">
                 <h4 className="text-lg font-semibold text-text-primary">Sair da conta</h4>
                 <p className="text-md text-text-secondary">Saia da sua conta a qualquer momento.</p>
               </div>
-              <Button variant="outlined-danger" onClick={openLogoutModal}>
-                Sair da conta
-              </Button>
+              <div className="w-full sm:w-auto">
+                <Button variant="outlined-danger" onClick={openLogoutModal} widthFull>
+                  Sair da conta
+                </Button>
+              </div>
             </Card>
 
-            <Card className="py-4 flex items-center justify-between gap-4">
+            <Card className="py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex-1">
                 <h4 className="text-lg font-semibold text-text-primary">Excluir conta</h4>
                 <p className="text-md text-text-secondary">
                   Para excluir sua conta, todas as suas listas devem estar com o status &quot;<strong>INATIVA</strong>&quot;.
                 </p>
               </div>
-              <Button variant="danger" onClick={openDeleteAccountModal}>
-                Excluir conta
-              </Button>
+              <div className="w-full sm:w-auto">
+                <Button variant="danger" onClick={openDeleteAccountModal} widthFull>
+                  Excluir conta
+                </Button>
+              </div>
             </Card>
           </div>
         </Card>
@@ -192,7 +197,7 @@ export default function ProfilePage() {
               actionTitle="Excluir chave PIX"
               actionDescription="Tem certeza que deseja excluir esta chave PIX?"
               modalType="action"
-              isLoading={isDeletingPixKey} // Passa o estado de carregamento
+              isLoading={isDeletingPixKey}
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
               onSuccess={() => {

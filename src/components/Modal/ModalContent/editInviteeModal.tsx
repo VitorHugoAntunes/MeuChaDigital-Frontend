@@ -161,7 +161,7 @@ export const EditInviteeModal = ({ slug, initialValues, onSuccess, onClose }: Ed
           error={errors.status?.message}
         />
 
-        <div className="flex justify-between mt-8 gap-4">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <Button
             variant="outlined-danger"
             widthFull

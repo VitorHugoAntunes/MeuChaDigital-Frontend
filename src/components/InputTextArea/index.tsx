@@ -10,7 +10,7 @@ type InputTextAreaProps = {
 
 export default function InputTextArea({ label, placeholder, inputValue, error, register }: InputTextAreaProps) {
   return (
-    <div className="mb-6">
+    <div className="mb-4 md:mb-6">
       <label className="block text-sm font-bold text-gray-700">{label}</label>
       <textarea
         placeholder={placeholder}

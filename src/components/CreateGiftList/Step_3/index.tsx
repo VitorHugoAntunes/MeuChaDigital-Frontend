@@ -37,8 +37,7 @@ export default function Step3() {
   }, [address, isError, setValue, clearErrors]);
 
   return (
-    <div className="mb-4 flex flex-col w-full">
-      {/* CEP */}
+    <div className="flex flex-col w-full">
       <InputField
         label="CEP"
         placeholder="Digite o CEP do local do evento"
@@ -53,8 +52,6 @@ export default function Step3() {
         error={getNestedError(errors, "address.zipCode")}
       />
 
-
-      {/* Logradouro */}
       <InputField
         label="Logradouro"
         description="Nome da rua, avenida, etc."
@@ -69,7 +66,6 @@ export default function Step3() {
         error={getNestedError(errors, "address.streetAddress")}
       />
 
-      {/* Número e Bloco/Apto na mesma linha */}
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
           <InputField
@@ -101,7 +97,6 @@ export default function Step3() {
         </div>
       </div>
 
-      {/* Bairro */}
       <InputField
         label="Bairro"
         placeholder="Digite o bairro do local do evento"
@@ -115,7 +110,6 @@ export default function Step3() {
         error={getNestedError(errors, "address.neighborhood")}
       />
 
-      {/* Cidade e Estado na mesma linha */}
       <div className="flex gap-4">
         <div className="flex-1">
           <InputField

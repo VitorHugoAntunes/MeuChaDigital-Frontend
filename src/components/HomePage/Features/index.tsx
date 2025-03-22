@@ -2,12 +2,13 @@ import FeatureItem from "./featureItem";
 
 export default function Features() {
   return (
-    <section className="mt-32">
-      <h2 className="text-3xl font-semibold text-center text-text-primary">
+    <section className="mt-16 lg:mt-32">
+
+      <h2 className="text-2xl lg:text-3xl font-semibold text-center text-text-primary">
         Tudo o que você precisa para o chá perfeito.
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8 mt-4 lg:mt-16">
         <FeatureItem
           title="Crie uma lista de presentes"
           description="Adicione presentes de qualquer loja e compartilhe com seus convidados."
@@ -27,5 +28,5 @@ export default function Features() {
         />
       </div>
     </section>
-  )
+  );
 }

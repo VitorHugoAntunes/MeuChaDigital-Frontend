@@ -53,7 +53,7 @@ export default function InviteeListPage() {
   }
 
   return (
-    <main className="flex flex-col flex-1 w-full max-w-7xl mx-auto my-8 px-4">
+    <main className="flex flex-col flex-1 w-full max-w-7xl mx-auto my-8">
       <Header
         title="Lista de Convidados"
         description="Adicione e organize convidados para sua celebração"

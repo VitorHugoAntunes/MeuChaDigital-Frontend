@@ -26,7 +26,7 @@ export default function Step2() {
   }, [setValue, trigger]);
 
   return (
-    <div className="mb-4 flex flex-col w-full">
+    <div className="flex flex-col w-full">
       <div className="mb-6">
         <FileUpload label="Foto de capa" onFileSelect={handleBannerImageChange} />
         {errors.banner?.message && (

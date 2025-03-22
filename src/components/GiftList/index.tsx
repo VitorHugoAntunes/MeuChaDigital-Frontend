@@ -157,31 +157,35 @@ export default function GiftList({
     <main className="flex flex-col flex-1 w-full">
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
         <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-8">
-          <div className="max-w-screen-2xl mx-auto px-8">
-            <h1 className="text-4xl font-bold text-text-primary mb-3">{giftList?.name}</h1>
-            <p className="text-lg text-text-secondary mb-6">
+          <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
+            <h1 className="text-2xl sm:text-4xl font-bold text-text-primary mb-3">
+              {giftList?.name}
+            </h1>
+            <p className="text-base sm:text-lg text-text-secondary mb-6">
               {giftList?.description || ""}
             </p>
-            <div className="flex items-center justify-between">
-
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               {isUserOwner && (
-                <div className="flex gap-4">
-                  <Link href="/lists/[slug]/invitee-list" as={`/lists/${slug}/invitee-list`}>
-                    <Button variant="outlined">
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                  <Link href="/lists/[slug]/invitee-list" as={`/lists/${slug}/invitee-list`} className="w-full md:w-fit">
+                    <Button variant="outlined" widthFull>
                       <Users size={20} />
-                      Convidados
+                      <span>Convidados</span>
                     </Button>
                   </Link>
-                  <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`}>
-                    <Button variant="outlined">
+                  <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`} className="w-full md:w-fit">
+                    <Button variant="outlined" widthFull>
                       <Settings2 size={20} />
-                      Configurações
+                      <span>Configurações</span>
                     </Button>
                   </Link>
-                  <Button onClick={openAddGiftModal}>
-                    <Plus size={20} />
-                    Adicionar Presente
-                  </Button>
+
+                  <div className="w-full md:w-fit">
+                    <Button onClick={openAddGiftModal} widthFull>
+                      <Plus size={20} />
+                      <span>Adicionar Presente</span>
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
@@ -189,36 +193,42 @@ export default function GiftList({
         </div>
       </header>
 
-      <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {gifts && gifts.length > 0 ? (
-          gifts.map((gift) => (
-            <Link href={
-              isInvitationPage
-                ? `http://${slug}.localhost:3000/invitation/gifts/${gift.id}`
-                : `/lists/${slug}/gifts/${gift.id}`
-            } key={gift.id}>
-              <GiftCard
+      <section className="lg:mt-4 w-full">
+        <div className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center">
+          {gifts && gifts.length > 0 ? (
+            gifts.map((gift) => (
+              <Link
+                href={
+                  isInvitationPage
+                    ? `http://${slug}.localhost:3000/invitation/gifts/${gift.id}`
+                    : `/lists/${slug}/gifts/${gift.id}`
+                }
                 key={gift.id}
-                photo={gift.photo?.url || "/default-gift.jpg"}
-                title={gift.name}
-                category={gift.category?.name || "Sem categoria"}
-                price={gift.totalValue}
-                description={gift.description}
-                priority={gift.priority}
-                isUserOwner={isUserOwner}
-                actionEditFn={(event) => openEditGiftModal(gift.id, event)}
-                actionDeleteFn={(event) => openDeleteGiftModal(gift.id, event)}
-              />
-            </Link>
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center w-full col-span-4 mt-8">
-            <h2 className="text-xl font-semibold text-gray-600">Nenhum presente encontrado.</h2>
-            {isUserOwner && (
-              <p className="text-md text-gray-500">Adicione presentes para começar sua lista!</p>
-            )}
-          </div>
-        )}
+                className="w-full"
+              >
+                <GiftCard
+                  key={gift.id}
+                  photo={gift.photo?.url || "/default-gift.jpg"}
+                  title={gift.name}
+                  category={gift.category?.name || "Sem categoria"}
+                  price={gift.totalValue}
+                  description={gift.description}
+                  priority={gift.priority}
+                  isUserOwner={isUserOwner}
+                  actionEditFn={(event) => openEditGiftModal(gift.id, event)}
+                  actionDeleteFn={(event) => openDeleteGiftModal(gift.id, event)}
+                />
+              </Link>
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center w-full mt-8 col-span-full">
+              <h2 className="text-xl font-semibold text-gray-600">Nenhum presente encontrado.</h2>
+              {isUserOwner && (
+                <p className="text-md text-gray-500">Adicione presentes para começar sua lista!</p>
+              )}
+            </div>
+          )}
+        </div>
       </section>
 
       {isModalOpen && (

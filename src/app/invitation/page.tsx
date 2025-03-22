@@ -60,7 +60,7 @@ export default function InvitationPage() {
   return (
     <InvitationLayout title={invitation?.data.name || undefined}>
       {(headerHeight) => (
-        <main className="px-8 flex flex-col flex-1 w-full">
+        <main className="flex flex-col flex-1 w-full">
           <InvitationHeroSection
             bannerUrl={invitation?.data.banner.url || ''}
             slug={invitation?.data.slug || ''}

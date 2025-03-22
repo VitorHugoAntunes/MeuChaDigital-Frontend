@@ -65,8 +65,8 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
 
   return (
     <FormProvider {...methods}>
-      <section id="rsvp" className="py-16 px-8 bg-gray-50">
-        <h2 className="text-center text-4xl font-bold text-gray-900 mb-12">
+      <section id="rsvp" className="mt-8 bg-gray-50">
+        <h2 className="text-center text-2xl sm:text-4xl font-bold text-gray-900 mb-8 lg:mb-12">
           Confirme sua presença
         </h2>
         <Card className="max-w-screen-sm w-full mx-auto">
@@ -112,7 +112,7 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
               error={errors.observation?.message}
             />
 
-            <div className="flex justify-between mt-8 gap-4">
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <Button
                 variant="outlined-danger"
                 widthFull

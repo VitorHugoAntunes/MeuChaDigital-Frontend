@@ -8,7 +8,7 @@ interface CardProps {
 
 export default function Card({ children, bgColor = 'bg-white', className }: CardProps) {
   return (
-    <section className={`${bgColor} rounded-lg p-6 border border-gray-200 ${className}`}>
+    <section className={`${bgColor} rounded-lg p-4 md:p-6 border border-gray-200 ${className}`}>
       {children}
     </section>
   );
