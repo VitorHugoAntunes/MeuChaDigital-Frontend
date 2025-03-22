@@ -9,6 +9,13 @@ export default {
     "./src/styles/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '670px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         background: colors.gray[50],
@@ -73,4 +80,5 @@ export default {
     },
   },
   plugins: [],
+
 } satisfies Config;
