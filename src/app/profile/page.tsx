@@ -73,7 +73,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:mt-8 py-6 h-fit sm:px-6 lg:px-8">
+    <main className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:mt-8 py-6 h-fit">
       <section className="flex flex-col gap-6">
         <Card>
           <header className="flex flex-col sm:flex-row items-center gap-4">
