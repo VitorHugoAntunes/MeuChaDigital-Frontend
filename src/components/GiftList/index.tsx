@@ -213,7 +213,7 @@ export default function GiftList({
 
       <section className="lg:mt-4 w-full min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh]">
         {gifts && gifts.length > 0 ? (
-          <div className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center">
+          <div className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center lg:justify-start">
             {gifts.map((gift) => (
               <Link
                 href={

@@ -91,7 +91,7 @@ const ListsPage = () => {
       )}
 
       <section className="lg:mt-4 w-full">
-        <div className="grid gap-12 grid-cols-[repeat(auto-fit,20rem)] lg:gap-16 lg:grid-cols-[repeat(auto-fit,28rem)] justify-center">
+        <div className="grid gap-12 grid-cols-[repeat(auto-fit,20rem)] lg:gap-16 lg:grid-cols-[repeat(auto-fit,28rem)] justify-center lg:justify-start">
           {giftLists?.map((list: GiftList) => (
             <Link
               key={list.id}
