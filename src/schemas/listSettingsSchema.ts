@@ -2,11 +2,11 @@ import { z } from "zod";
 
 export const listSettingsSchema = z.object({
   eventType: z.string().min(1, "Selecione um tipo de evento"),
-  listName: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
+  listName: z.string().min(3, "O nome deve ter pelo menos 3 caracteres").max(100, "O nome deve ter no máximo 100 caracteres"),
   listSlug: z.string().min(3, "O slug deve ter pelo menos 3 caracteres"),
   eventDate: z.string().min(1, "Escolha uma data válida"),
   eventTime: z.string().min(1, "Escolha um horário válido"),
-  listDescription: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres"),
+  listDescription: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres").max(250, "A descrição deve ter no máximo 250 caracteres"),
   listStatus: z.enum(["ACTIVE", "INACTIVE"], {
     errorMap: () => ({ message: "Selecione um status entre ativa e inativa" }),
   }),

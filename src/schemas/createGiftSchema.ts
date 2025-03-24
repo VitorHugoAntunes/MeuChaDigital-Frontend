@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const giftSchema = z.object({
-  name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
+  name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres").max(100, "O nome deve ter no máximo 100 caracteres"),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"], {
     errorMap: () => ({ message: "Selecione uma prioridade válida" }),
   }),
-  description: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres"),
+  description: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres").max(250, "A descrição deve ter no máximo 250 caracteres"),
   totalValue: z
     .number({ required_error: "O valor é obrigatório" })
     .positive("O valor deve ser maior que zero")

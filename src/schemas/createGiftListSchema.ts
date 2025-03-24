@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const eventSchema = z.object({
   type: z.string().min(1, "Selecione um tipo de evento"),
-  name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
+  name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres").max(100, "O nome deve ter no máximo 100 caracteres"),
   slug: z.string().min(3, "O slug deve ter pelo menos 3 caracteres"),
   date: z
     .string()
@@ -17,7 +17,7 @@ export const eventSchema = z.object({
       return selectedDate >= today;
     }, "A data deve ser hoje ou no futuro"),
   time: z.string().min(1, "Escolha um horário válido"),
-  description: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres"),
+  description: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres").max(250, "A descrição deve ter no máximo 250 caracteres"),
   banner: z
     .instanceof(File, { message: "A foto da capa é obrigatória" })
     .refine((file) => file.size > 0, "A foto da capa é obrigatória"),
