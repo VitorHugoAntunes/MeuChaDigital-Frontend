@@ -15,8 +15,8 @@ export default function KeyInfo({ title, value, action }: KeyInfoProps) {
         <p className="text-lg font-bold text-text-secondary">{value}</p>
       </div>
 
-      <button className="p-2 rounded-lg hover:bg-danger-light transition-colors duration-300 group" onClick={action}>
-        <Trash size={20} className="text-danger group-hover:text-white transition-colors duration-300" />
+      <button className="p-2 rounded-lg hover:bg-danger/20 transition-colors duration-300 group" onClick={action} title="Excluir chave PIX">
+        <Trash size={20} className="text-danger group-hover:text-danger-dark transition-colors duration-300" />
       </button>
     </article>
   );

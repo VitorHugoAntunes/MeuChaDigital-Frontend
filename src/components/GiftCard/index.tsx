@@ -28,63 +28,70 @@ const GiftCard = ({
   actionDeleteFn,
 }: GiftCardProps) => {
   return (
-    <article className="w-full border border-gray-200 rounded-lg bg-white overflow-hidden shadow-md hover:shadow-lg flex flex-col h-full">
-      <div className="relative w-full h-48 bg-gray-500">
+    <article className="w-full relative border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full group">
+      <div className="absolute top-4 left-4 z-10">
+        <PriorityTag priority={priority} />
+      </div>
+
+      <div className="relative w-full h-52 bg-gray-100 overflow-hidden">
         <Image
           src={photo}
           alt={`Imagem do presente ${title}`}
           layout="fill"
           objectFit="cover"
-          className="rounded-t-lg"
+          className="group-hover:scale-105 transition-transform duration-500"
         />
       </div>
 
-      <section className="p-4 space-y-4 flex flex-col flex-1">
-        <header className="flex items-center justify-between">
-          <Tag label={category} color="bg-primary text-white" />
-          <span className="text-lg font-bold text-success-dark">
-            {formatCurrency(price)}
-          </span>
+      <section className="p-5 flex flex-col flex-1">
+        <header className="mb-2">
+          <Tag
+            label={category}
+            color="bg-primary/10 text-primary"
+          />
         </header>
 
-        <h3 className="text-lg font-semibold text-text-primary line-clamp-2">
-          {title}
-        </h3>
+        <div className="mb-4 flex-1">
+          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 mb-2">
+            {title}
+          </h3>
+          <p className="text-sm text-gray-500 line-clamp-2">
+            {description}
+          </p>
+        </div>
 
-        <p className="text-sm text-text-secondary flex-1 line-clamp-3">
-          {description}
-        </p>
+        <div className="flex items-center justify-between mt-auto">
+          <span className="text-xl font-bold text-success">
+            {formatCurrency(price)}
+          </span>
 
-        <footer className="flex justify-between items-center">
-          <PriorityTag priority={priority} />
           {isUserOwner && (
-            <div className="flex gap-4">
-
+            <div className="flex gap-3">
               <button
-                className="text-warning hover:text-warning-dark transition-colors duration-200"
+                className="p-2 rounded-lg hover:bg-warning/20 transition-colors duration-300 group"
                 aria-label={`Editar ${title}`}
+                title="Editar presente"
                 onClick={(event) => {
                   event.preventDefault();
                   actionEditFn?.(event);
                 }}
               >
-                <Edit size={20} />
+                <Edit size={18} className="text-warning group-hover:text-warning-dark transition-colors duration-300" />
               </button>
-
               <button
-                className="text-danger hover:text-danger-dark transition-colors duration-200"
+                className="p-2 rounded-lg hover:bg-danger/20 transition-colors duration-300 group"
                 aria-label={`Excluir ${title}`}
+                title="Excluir presente"
                 onClick={(event) => {
                   event.preventDefault();
-
                   actionDeleteFn?.(event);
                 }}
               >
-                <Trash size={20} />
+                <Trash size={18} className="text-danger group-hover:text-danger-dark transition-colors duration-300" />
               </button>
             </div>
           )}
-        </footer>
+        </div>
       </section>
     </article>
   );

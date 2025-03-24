@@ -35,14 +35,14 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
 
       <section className="flex flex-col gap-4 lg:gap-6 p-4 lg:p-6 flex-1">
         <header>
-          <h2 className="text-base lg:text-lg font-semibold text-text-primary">{title}</h2>
+          <h2 className="text-base lg:text-lg font-semibold text-text-primary line-clamp-2">{title}</h2>
         </header>
 
         <ListCardInfo date={date} totalGifts={totalGifts} totalContributors={totalContributors} />
 
-        <ProgressBar initialValue={totalRaised} goalValue={totalGoal} />
+        <footer className="mt-auto space-y-4">
+          <ProgressBar initialValue={totalRaised} goalValue={totalGoal} />
 
-        <footer className="mt-auto">
           <Button variant="default" widthFull>
             Ver detalhes
           </Button>
