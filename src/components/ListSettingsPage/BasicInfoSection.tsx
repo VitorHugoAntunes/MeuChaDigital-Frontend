@@ -23,7 +23,7 @@ export default function BasicInfoSection({ methods, errors, typeValue }: BasicIn
         <div className="space-y-4">
           <div className="flex flex-col mb-6">
             <label className="block text-sm font-bold text-gray-700">Tipo do evento</label>
-            <div className="grid grid-cols-3 gap-4 mt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1">
               {["Casamento", "Aniversário", "Chá de bebê"].map((label, index) => {
                 const value = ["WEDDING", "BIRTHDAY", "BABY_SHOWER"][index];
                 return (

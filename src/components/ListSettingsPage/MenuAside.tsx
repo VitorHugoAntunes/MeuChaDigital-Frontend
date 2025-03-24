@@ -41,7 +41,7 @@ export default function MenuAside() {
   }, []);
 
   return (
-    <aside className="sticky top-6 h-fit">
+    <aside className="hidden lg:block  sticky top-6 h-fit">
       <Card>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Menu</h3>
         <nav className="space-y-2">

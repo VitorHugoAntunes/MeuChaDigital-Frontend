@@ -118,21 +118,21 @@ export default function ProfilePage() {
                 />
               ))
             ) : (
-              <p className="text-md text-text-secondary">Nenhuma chave PIX cadastrada.</p>
+              <p className="text-md md:text-center text-text-secondary">Nenhuma chave PIX cadastrada.</p>
             )}
           </div>
         </Card>
 
         <Card>
           <h3 className="text-xl font-semibold text-text-primary mb-4">Histórico de Transações</h3>
-          <p className="text-md text-text-secondary">Você ainda não realizou nenhuma transação.</p>
+          <p className="text-md md:text-center text-text-secondary">Você ainda não realizou nenhuma transação.</p>
         </Card>
 
         <Card>
           <h3 className="text-xl font-semibold text-text-primary pb-2">Conta</h3>
 
           <div className="flex flex-col gap-4">
-            <Card className="py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <Card className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex-1">
                 <h4 className="text-lg font-semibold text-text-primary">Sair da conta</h4>
                 <p className="text-md text-text-secondary">Saia da sua conta a qualquer momento.</p>
@@ -144,7 +144,8 @@ export default function ProfilePage() {
               </div>
             </Card>
 
-            <Card className="py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+
+            <Card className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex-1">
                 <h4 className="text-lg font-semibold text-text-primary">Excluir conta</h4>
                 <p className="text-md text-text-secondary">

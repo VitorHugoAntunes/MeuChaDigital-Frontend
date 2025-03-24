@@ -81,7 +81,7 @@ function Checkout({ isInvitationPage, checkoutItem, amount }: CheckoutProps) {
 
           <Divider />
 
-          <CheckoutPaymentType />
+          <CheckoutPaymentType anchor="#payment" />
 
           <Divider />
 

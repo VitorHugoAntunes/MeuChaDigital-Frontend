@@ -3,8 +3,13 @@
 import { useFormContext } from "react-hook-form";
 import EventTypeOption from "@/components/EventTypeOption";
 import { QrCode, CreditCard, Barcode } from "lucide-react";
+import Link from "next/link";
 
-export default function CheckoutPaymentType() {
+interface CheckoutPaymentTypeProps {
+  anchor: string;
+}
+
+export default function CheckoutPaymentType({ anchor }: CheckoutPaymentTypeProps) {
   const {
     watch,
     setValue,
@@ -14,15 +19,14 @@ export default function CheckoutPaymentType() {
 
   const selectedEventType = watch("type");
 
-  // Mapeia os ícones para cada opção
   const paymentOptions = [
     { label: "Pix", value: "PIX", icon: <QrCode /> },
     { label: "Cartão de Crédito", value: "CREDIT_CARD", icon: <CreditCard /> },
     { label: "Boleto", value: "BANK_SLIP", icon: <Barcode /> },
   ];
 
-  return (
-    <div className="flex flex-col mt-4">
+  const content = (
+    <>
       <label className="block text-sm font-bold text-gray-700">Forma de pagamento</label>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1">
         {paymentOptions.map(({ label, value, icon }) => (
@@ -42,6 +46,20 @@ export default function CheckoutPaymentType() {
       {errors.type?.message && (
         <span className="text-danger text-sm mt-1">{errors.type.message.toString()}</span>
       )}
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      <div className="block md:hidden">
+        <Link href={anchor} className="flex flex-col mt-4">
+          {content}
+        </Link>
+      </div>
+
+      <div className="hidden md:block mt-4">
+        {content}
+      </div>
+    </>
   );
 }

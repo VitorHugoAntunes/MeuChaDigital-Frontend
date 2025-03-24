@@ -108,7 +108,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
   if (!localId && timeRemaining === "00:00:00" || charge === null) {
     return (
-      <div className="text-center">
+      <div id="payment" className="text-center">
         <h2 className="text-lg font-bold text-text-primary">Pagamento via Pix</h2>
         <p className="text-sm text-gray-500 mb-4">
           Gere um QR Code exclusivo para realizar o pagamento via Pix.

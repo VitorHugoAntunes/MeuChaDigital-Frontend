@@ -58,7 +58,7 @@ const ListsPage = () => {
   return (
     <main className="flex flex-col flex-1 w-full">
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
-        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-8">
+        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-4 lg:py-8">
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
             <h1 className="text-2xl sm:text-4xl font-bold text-text-primary mb-3">
               Minhas Listas de Presentes
@@ -67,9 +67,9 @@ const ListsPage = () => {
               Gerencie suas listas de presentes de forma fácil e prática.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="w-full md:w-fit">
+              <div className="w-full sm:w-auto md:w-fit">
                 <Link href="/create-gift-list">
-                  <Button>
+                  <Button widthFull>
                     <Plus size={20} />
                     <span>Criar nova lista</span>
                   </Button>
@@ -84,7 +84,11 @@ const ListsPage = () => {
       {isError && <p className="text-center mt-8 text-red-500">Erro ao carregar as listas.</p>}
 
       {!isGiftListsLoading && !isError && giftLists?.length === 0 && (
-        <p className="text-center mt-8 text-text-secondary">Nenhuma lista encontrada.</p>
+        <div className="flex flex-col items-center justify-center w-full mt-8 lg:mt-4 min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh]">
+          <h2 className="text-lg text-center lg:text-xl font-semibold text-gray-600">Você ainda não tem nenhuma lista de presentes.</h2>
+
+          <p className="text-md text-gray-500">Crie sua primeira lista de presentes agora mesmo.</p>
+        </div>
       )}
 
       <section className="lg:mt-4 w-full">

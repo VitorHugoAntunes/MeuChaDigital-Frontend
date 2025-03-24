@@ -274,11 +274,11 @@ export default function ListSettingsPage() {
   }
 
   return (
-    <main className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 mt-8 mb-36 py-6 h-fit relative">
+    <main className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:mt-8 lg:mb-36 py-6 h-fit relative">
       <MenuAside />
 
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 lg:gap-8">
           <header>
             <h1 className="text-3xl font-bold text-text-primary">Configurações da Lista</h1>
           </header>
@@ -289,24 +289,31 @@ export default function ListSettingsPage() {
           <PrivacySection errors={errors} />
           <DangerZoneSection listStatus={listData.data.status} isLoading={isUpdating} onDeleteList={handleOpenModal} />
 
-          <Card className="sticky bottom-0 left-0 right-0 z-10 mt-4">
-            <div className="max-w-screen-lg mx-auto px-4">
-              <div className="flex justify-end gap-4">
-                <Button
-                  variant="outlined-danger"
-                  type="button"
-                  onClick={handleRedirect}
-                  disabled={isUpdating}
-                >
-                  Cancelar
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isUpdating || !hasChanges}
-                  loading={isUpdating}
-                >
-                  Salvar
-                </Button>
+          <Card className="sticky bottom-0 left-0 right-0 z-10 rounded-none sm:rounded -mx-4 sm:mx-0">
+            <div>
+              <div className="flex justify-end gap-4 sm:px-0">
+                <div className="w-full sm:w-auto">
+                  <Button
+                    variant="outlined-danger"
+                    type="button"
+                    onClick={handleRedirect}
+                    disabled={isUpdating}
+                    widthFull
+                  >
+                    Cancelar
+                  </Button>
+                </div>
+
+                <div className="w-full sm:w-auto">
+                  <Button
+                    type="submit"
+                    disabled={isUpdating || !hasChanges}
+                    loading={isUpdating}
+                    widthFull
+                  >
+                    Salvar
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>

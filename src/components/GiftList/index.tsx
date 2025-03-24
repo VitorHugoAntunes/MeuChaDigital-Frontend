@@ -156,7 +156,7 @@ export default function GiftList({
   return (
     <main className="flex flex-col flex-1 w-full">
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
-        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-8">
+        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-4 lg:py-8">
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
             <h1 className="text-2xl sm:text-4xl font-bold text-text-primary mb-3">
               {giftList?.name}
@@ -193,10 +193,10 @@ export default function GiftList({
         </div>
       </header>
 
-      <section className="lg:mt-4 w-full">
-        <div className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center">
-          {gifts && gifts.length > 0 ? (
-            gifts.map((gift) => (
+      <section className="lg:mt-4 w-full min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh]">
+        {gifts && gifts.length > 0 ? (
+          <div className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center">
+            {gifts.map((gift) => (
               <Link
                 href={
                   isInvitationPage
@@ -219,17 +219,19 @@ export default function GiftList({
                   actionDeleteFn={(event) => openDeleteGiftModal(gift.id, event)}
                 />
               </Link>
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center w-full mt-8 col-span-full">
-              <h2 className="text-xl font-semibold text-gray-600">Nenhum presente encontrado.</h2>
-              {isUserOwner && (
-                <p className="text-md text-gray-500">Adicione presentes para começar sua lista!</p>
-              )}
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center w-full h-full py-8">
+            <h2 className="text-xl font-semibold text-gray-600">Nenhum presente encontrado.</h2>
+            {isUserOwner && (
+              <p className="text-md text-gray-500">Adicione presentes para começar sua lista!</p>
+            )}
+          </div>
+        )}
       </section>
+
+
 
       {isModalOpen && (
         <>
