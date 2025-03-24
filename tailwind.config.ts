@@ -76,6 +76,7 @@ export default {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         satisfy: ["Satisfy", "cursive"],
+        parisienne: ["Parisienne", "cursive"],
       },
     },
   },

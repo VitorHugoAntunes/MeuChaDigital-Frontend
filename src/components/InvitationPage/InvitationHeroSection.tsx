@@ -24,11 +24,11 @@ export default function InvitationHeroSection({ headerHeight, bannerUrl, slug, e
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-screen-lg mx-auto px-8 text-center relative z-10"
+        className="max-w-screen-lg mx-auto px-4 text-center relative z-10"
       >
-        <h1 className="text-5xl font-satisfy text-white mb-6 drop-shadow-lg tracking-wide">Você está convidado!</h1>
-        <p className="text-7xl font-satisfy font-black text-white mt-2 drop-shadow-lg">{formatSlug(slug)}</p>
-        <time dateTime="2030-12-20" className="text-2xl text-white mt-4 block drop-shadow-lg first-letter:uppercase italic">{formatDateToFull(eventDate)}</time>
+        <h1 className="text-2xl lg:text-5xl text-white mb-6 drop-shadow-lg tracking-wide">Você está convidado(a)!</h1>
+        <p className="text-5xl lg:text-7xl font-parisienne font-bold text-white mt-2 drop-shadow-lg">{formatSlug(slug)}</p>
+        <time dateTime="2030-12-20" className="text-xl text-white mt-4 block drop-shadow-lg first-letter:uppercase italic">{formatDateToFull(eventDate)}</time>
       </motion.article>
     </section>
   );

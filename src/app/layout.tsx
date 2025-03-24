@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Satisfy } from "next/font/google";
+import { Inter, Satisfy, Parisienne } from "next/font/google";
 import "../styles/global.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -20,6 +20,12 @@ const satisfy = Satisfy({
   variable: "--font-satisfy",
 });
 
+const parisienne = Parisienne({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-parisienne",
+});
+
 export const metadata: Metadata = {
   title: "Meu Chá Digital",
   description: "Site de chás digitais",
@@ -31,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${inter.className + satisfy.className}`}>
+    <html lang="pt-BR" className={`${inter.className + satisfy.className + parisienne.className}`}>
       <body className="flex flex-col min-h-screen bg-background">
         <RedirectProvider>
           <ReactQueryProvider>
