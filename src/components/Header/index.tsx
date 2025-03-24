@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import logo from "@/assets/logo.png";
 import NavLink from "@/components/NavLink";
 import Button from "@/components/Button";
@@ -11,9 +12,10 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 export default function Header() {
+  const router = useRouter();
   const { isAuthenticated, user, isLoading } = useAuth();
   const pathName = usePathname();
-  const currentUrl = pathName.split("?")[0];
+  const currentUrl = pathName?.split("?")[0] || "";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function Header() {
   }
 
   function handleLogin() {
-    window.location.href = "/sign-in";
+    router.push("/sign-in");
   }
 
   const toggleMenu = () => {
@@ -50,32 +52,29 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
-  if (isLoading && isAuthenticated) {
+  if (isLoading) {
     return (
-      <header className="bg-background text-text-primary border-b-2 border-b-gray-200 grid grid-cols-3 items-center py-6 px-8">
-        <Link href="/" className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block">
-          <div className="flex items-center space-x-2">
-            <Image
-              src={logo}
-              alt="Meu Chá Digital"
-              className="group-hover:brightness-90 transition-all duration-300"
-            />
-            <h1 className="text-2xl font-semibold text-primary-light group-hover:brightness-90 transition-all duration-300">
-              Meu Chá Digital
-            </h1>
-          </div>
-        </Link>
+      <header className="bg-background text-text-primary border-b-2 border-b-gray-200 py-6 px-4 md:px-6 lg:px-8 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <div className="h-6 w-6 bg-gray-200 rounded-full animate-pulse lg:h-8 lg:w-8"></div>
+          <div className="h-6 w-32 bg-gray-200 rounded-md animate-pulse lg:w-40"></div>
+        </div>
 
-        <nav className="flex justify-center space-x-10 items-center">
-          <div className="w-20 h-4 bg-gray-200 rounded-md animate-pulse"></div>
-          <div className="w-20 h-4 bg-gray-200 rounded-md animate-pulse"></div>
-          <div className="w-20 h-4 bg-gray-200 rounded-md animate-pulse"></div>
+        <nav className="hidden lg:flex justify-center space-x-8 items-center">
+          <div className="flex space-x-8">
+            <div className="h-6 w-24 bg-gray-200 rounded-md animate-pulse"></div>
+            <div className="h-6 w-16 bg-gray-200 rounded-md animate-pulse"></div>
+            <div className="h-6 w-40 bg-gray-200 rounded-md animate-pulse"></div>
+          </div>
         </nav>
 
-        <div className="flex space-x-6 items-center justify-end">
-          <div className="w-24 h-4 bg-gray-200 rounded-md animate-pulse"></div>
-          <div className="w-20 h-[42.3px] bg-gray-200 rounded-md animate-pulse"></div>
-          <div className="w-20 h-[42.3px] bg-gray-200 rounded-md animate-pulse"></div>
+        <div className="hidden lg:flex space-x-4 items-center justify-end">
+          <div className="h-6 w-24 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="h-10 w-24 bg-gray-200 rounded-md animate-pulse"></div>
+        </div>
+
+        <div className="lg:hidden flex justify-end">
+          <div className="h-6 w-6 bg-gray-200 rounded-md animate-pulse"></div>
         </div>
       </header>
     );
@@ -94,7 +93,6 @@ export default function Header() {
             <h1 className="text-base font-semibold text-primary-light transition-all duration-300 group-hover:brightness-90 lg:text-2xl">
               Meu Chá Digital
             </h1>
-
           </div>
         </Link>
 
@@ -106,7 +104,7 @@ export default function Header() {
                   <NavLink href="/">Como funciona?</NavLink>
                 </li>
                 <li>
-                  <NavLink href="/">Ajuda</NavLink>
+                  <NavLink href="/help">Ajuda</NavLink>
                 </li>
                 <li>
                   <NavLink href="/lists">Minhas listas de presentes</NavLink>
@@ -166,7 +164,6 @@ export default function Header() {
                 <h1 className="text-base font-semibold text-primary-light transition-all duration-300 group-hover:brightness-90 lg:text-2xl">
                   Meu Chá Digital
                 </h1>
-
               </div>
             </Link>
 
@@ -183,7 +180,7 @@ export default function Header() {
                 </NavLink>
               </li>
               <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
-                <NavLink href="/" onClick={closeMenu}>
+                <NavLink href="/help" onClick={closeMenu}>
                   Ajuda
                 </NavLink>
               </li>

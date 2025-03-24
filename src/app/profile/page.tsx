@@ -26,7 +26,7 @@ export default function ProfilePage() {
   const [modalType, setModalType] = useState<"pix" | "deletePixKey" | "logout" | "deleteAccount" | null>(null);
   const [selectedPixKeyId, setSelectedPixKeyId] = useState<string | null>(null);
 
-  const { user, logoutUser, isLoggingOut } = useAuth();
+  const { user, logoutUser, isLoading, isLoggingOut } = useAuth();
 
   const { data: pixKeys, isLoading: isGettingAllPixKeysLoading } = useGetAllPixKeysByUser(user?.id || "");
   const { mutateAsync: deletePixKey, isLoading: isDeletingPixKey } = useDeletePixKey();
@@ -61,7 +61,7 @@ export default function ProfilePage() {
   async function handleDeletePixKey(pixKeyId: string) {
     try {
       await deletePixKey(pixKeyId);
-      setIsModalOpen(false); // Fecha o modal apenas após a mutação ser concluída
+      setIsModalOpen(false);
     } catch (error) {
       console.error("Erro ao excluir a chave PIX", error);
     }
@@ -78,16 +78,30 @@ export default function ProfilePage() {
         <Card>
           <header className="flex flex-col sm:flex-row items-center gap-4">
             <picture className="w-16 h-16 bg-gray-500 rounded-full overflow-hidden">
-              <Image
-                src={user?.photo.url || "/avatar-placeholder.png"}
-                alt={user?.name || "Avatar"}
-                width={64}
-                height={64}
-              />
+              {isLoading ? (
+                <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+              ) : (
+                <Image
+                  src={user?.photo.url || "/default-image.png"}
+                  alt={user?.name || "User"}
+                  width={64}
+                  height={64}
+                />
+              )}
+
             </picture>
             <div className="text-center sm:text-left">
-              <h1 className="text-2xl font-bold text-text-primary">{user?.name || "Vitor Hugo"}</h1>
-              <p className="text-md text-text-secondary">{user?.email || "email@gmail.com"}</p>
+              {isLoading ? (
+                <>
+                  <div className="w-24 h-6 bg-gray-200 animate-pulse"></div>
+                  <div className="w-32 h-6 bg-gray-200 animate-pulse mt-2"></div>
+                </>
+              ) : (
+                <>
+                  <h1 className="text-2xl font-bold text-text-primary">{user?.name || "Vitor Hugo"}</h1>
+                  <p className="text-md text-text-secondary">{user?.email || "email@gmail.com"}</p>
+                </>
+              )}
             </div>
           </header>
         </Card>

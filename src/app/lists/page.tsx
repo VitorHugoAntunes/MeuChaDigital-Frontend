@@ -80,7 +80,6 @@ const ListsPage = () => {
         </div>
       </header>
 
-      {isGiftListsLoading && <p className="text-center mt-8">Carregando listas...</p>}
       {isError && <p className="text-center mt-8 text-red-500">Erro ao carregar as listas.</p>}
 
       {!isGiftListsLoading && !isError && giftLists?.length === 0 && (

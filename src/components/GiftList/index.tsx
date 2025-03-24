@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/AuthContext";
-import GiftCardSkeleton from "../Skeleton/giftCardSkeleton";
+import { GiftCardSkeleton } from "../Skeleton/giftCardSkeleton";
 import { useDeleteGift } from "@/hooks/gifts";
 
 import { ToastContainer } from "react-toastify";
@@ -123,21 +123,25 @@ export default function GiftList({
 
   if (isLoading) {
     return (
-      <main className="flex flex-col flex-1 w-full">
-        <header>
-          <h1 className="text-4xl font-bold text-text-primary">{giftList?.name}</h1>
-          <h2 className="text-2xl font-semibold text-text-primary mt-2">
-            {isUserOwner ? "Meus Presentes" : "Presentes"}
-          </h2>
-          <p className="text-md mt-2 text-text-secondary">
-            {isUserOwner
-              ? "Gerencie seus presentes de forma fácil e prática."
-              : "Veja os presentes disponíveis para contribuição."}
-          </p>
+      <main className="flex flex-col flex-1 w-full min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh] h-full">
+        <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
+          <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-4 lg:py-8">
+            <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
+              <div className="h-9 w-64 bg-gray-200 rounded mb-3"></div>
+              <div className="h-5 w-3/4 bg-gray-200 rounded mb-6"></div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                  <div className="h-10 w-full sm:w-32 bg-gray-200 rounded"></div>
+                  <div className="h-10 w-full sm:w-36 bg-gray-200 rounded"></div>
+                  <div className="h-10 w-full sm:w-40 bg-gray-200 rounded"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </header>
 
-        <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, index) => (
+        <section className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center lg:mt-4">
+          {[...Array(5)].map((_, index) => (
             <GiftCardSkeleton key={index} />
           ))}
         </section>

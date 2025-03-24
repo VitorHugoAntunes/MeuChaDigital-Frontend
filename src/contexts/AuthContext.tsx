@@ -31,53 +31,47 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const queryClient = useQueryClient();
-
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const {
-    data: authData,
-    // isLoading: isAuthLoading,
-    refetch: refetchAuth,
-  } = useQuery({
+  const { data: authData, isFetching: isAuthFetching } = useQuery({
     queryKey: ["auth"],
     queryFn: userAuthenticated,
     retry: false,
-    staleTime: 1000 * 60 * 30,
-    enabled: false, // A consulta não é executada automaticamente
+    staleTime: 1000 * 60 * 30, // 30 minutos
     onSuccess: (data) => {
-      setIsAuthenticated(!!data?.id); // Define isAuthenticated com base no resultado
-      setIsLoading(false); // Finaliza o carregamento
+      setIsAuthenticated(!!data?.id);
     },
     onError: () => {
-      setIsAuthenticated(false); // Usuário não autenticado
-      setIsLoading(false); // Finaliza o carregamento
+      setIsAuthenticated(false);
     },
   });
 
-  // const { data: user, isLoading: isUserLoading } = useQuery({
-  const { data: user } = useQuery({
+  const { data: user, isFetching: isUserFetching } = useQuery({
     queryKey: ["user", authData?.id],
     queryFn: () => getUser(authData?.id),
-    enabled: !!authData?.id, // Executa apenas se authData.id existir
-    staleTime: 1000 * 60 * 30,
+    enabled: !!authData?.id,
+    staleTime: 1000 * 60 * 30, // 30 minutos
   });
 
+  useEffect(() => {
+    // Só consideramos loading enquanto estiver buscando os dados iniciais
+    setIsLoading(isAuthFetching || (!!authData?.id && isUserFetching));
+  }, [isAuthFetching, isUserFetching, authData]);
 
   useEffect(() => {
-    // Executa a verificação de autenticação ao montar o componente
-    refetchAuth();
-  }, []);
+    if (!isLoading && isInitialLoad) {
+      setIsInitialLoad(false);
+    }
+  }, [isLoading, isInitialLoad]);
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ["auth"] });
       queryClient.removeQueries({ queryKey: ["user"] });
-      queryClient.setQueryData(["auth"], null);
-      queryClient.setQueryData(["user"], null);
       setIsAuthenticated(false);
-      setIsLoading(false);
     },
   });
 
@@ -90,7 +84,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       value={{
         user: user || null,
         isAuthenticated,
-        isLoading,
+        isLoading: isInitialLoad ? true : isLoading,
         logoutUser,
         isLoggingOut: logoutMutation.isLoading,
       }}
