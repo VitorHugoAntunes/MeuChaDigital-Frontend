@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import { Gift, Menu, X } from 'lucide-react';
-
+import Image from 'next/image';
+import logo from "@/assets/logo.png";
 interface InvitationHeaderProps {
   ref?: React.RefObject<HTMLHeadElement | null>;
   title: string | undefined;
@@ -83,9 +84,17 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
           href={`http://${subdomain}.localhost:3000/invitation`}
           className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block"
         >
-          <h2 className="text-2xl font-semibold text-primary-light group-hover:brightness-90 transition-all duration-300">
-            {title}
-          </h2>
+          <div className="flex items-center space-x-2">
+            <Image
+              src={logo}
+              alt="Meu Chá Digital"
+              className="h-6 w-6 transition-all duration-300 group-hover:brightness-90 lg:h-8 lg:w-8"
+            />
+            <h1 className="text-base font-semibold text-primary-light transition-all duration-300 group-hover:brightness-90 lg:text-2xl">
+              Meu Chá Digital
+            </h1>
+
+          </div>
         </Link>
 
         <nav className="hidden lg:flex space-x-6">
