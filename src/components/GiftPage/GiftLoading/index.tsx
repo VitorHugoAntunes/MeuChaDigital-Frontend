@@ -31,26 +31,26 @@ export default function GiftLoading() {
       </section>
 
       <aside className="sticky top-6 h-fit bg-white rounded-lg p-6 border border-gray-200">
-        <div className="animate-pulse space-y-4">
-          <div className="h-6 w-24 bg-gray-200 rounded"></div>
-
-          <div className="h-40 w-40 bg-gray-200 rounded-lg mx-auto"></div>
-
-          <div className="h-4 w-full bg-gray-200 rounded"></div>
+        <div className="animate-pulse space-y-6">
+          <div className="h-6 w-32 bg-gray-200 rounded"></div>
 
           <div className="space-y-2">
-            <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
-            <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
-            <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
+            <div className="h-4 w-full bg-gray-200 rounded"></div>
+            <div className="h-4 w-4/5 bg-gray-200 rounded"></div>
           </div>
 
-          <div className="h-10 w-full bg-gray-200 rounded"></div>
+          <div className="space-y-2">
+            <div className="h-5 w-16 bg-gray-200 rounded"></div>
+            <div className="h-12 w-full bg-gray-200 rounded-lg"></div>
+          </div>
 
-          <div className="flex items-start gap-3">
+          <div className="h-12 w-full bg-gray-200 rounded-lg"></div>
+
+          <div className="flex items-start gap-3 pt-4">
             <div className="h-5 w-5 bg-gray-200 rounded-full"></div>
             <div className="flex-1 space-y-2">
-              <div className="h-4 w-full bg-gray-200 rounded"></div>
-              <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
+              <div className="h-3 w-full bg-gray-200 rounded"></div>
+              <div className="h-3 w-4/5 bg-gray-200 rounded"></div>
             </div>
           </div>
         </div>

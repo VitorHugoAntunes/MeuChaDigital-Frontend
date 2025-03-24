@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/Button";
 import GiftCard from "@/components/GiftCard";
 import { Plus, Users, Settings2 } from "lucide-react";
@@ -7,7 +9,6 @@ import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/AuthContext";
 import { GiftCardSkeleton } from "../Skeleton/giftCardSkeleton";
 import { useDeleteGift } from "@/hooks/gifts";
-
 import { ToastContainer } from "react-toastify";
 import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 
@@ -15,7 +16,7 @@ interface Gift {
   id: string;
   name: string;
   photo?: { url: string };
-  category?: { id: string, name: string };
+  category?: { id: string; name: string };
   totalValue: number;
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
@@ -47,6 +48,7 @@ export default function GiftList({
   isUserOwner,
   onAddGiftSuccess,
 }: GiftListProps) {
+  const [mounted, setMounted] = useState(false);
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"addGift" | "deleteGift" | "editGift">("addGift");
@@ -54,6 +56,10 @@ export default function GiftList({
   const [initialValues, setInitialValues] = useState<GiftUpdateFormData | undefined>(undefined);
 
   const { isLoading: isDeletingGift, mutateAsync: deleteGift } = useDeleteGift(slug || "");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const openAddGiftModal = () => {
     setModalType("addGift");
@@ -74,7 +80,6 @@ export default function GiftList({
 
   const openDeleteGiftModal = (giftId: string, event: React.MouseEvent) => {
     event.preventDefault();
-
     setModalType("deleteGift");
     setIsModalOpen(true);
     setSelectedGiftId(giftId);
@@ -121,7 +126,7 @@ export default function GiftList({
     }
   }, [isModalOpen]);
 
-  if (isLoading) {
+  if (isLoading || !mounted) {
     return (
       <main className="flex flex-col flex-1 w-full min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh] h-full">
         <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
@@ -149,10 +154,19 @@ export default function GiftList({
     );
   }
 
-  if (error) {
+  if (error && error.status !== 404) {
+    console.error("Erro ao carregar presentes:", error);
     return (
       <div className="flex flex-col flex-1 w-full my-8 justify-center items-center">
         <p className="text-lg font-semibold text-red-500">Erro ao carregar presentes.</p>
+      </div>
+    );
+  }
+
+  if (error && error.status === 404) {
+    return (
+      <div className="flex flex-col flex-1 w-full my-8 justify-center items-center">
+        <p className="text-lg font-semibold text-red-500">Lista de presentes não encontrada.</p>
       </div>
     );
   }
@@ -234,8 +248,6 @@ export default function GiftList({
           </div>
         )}
       </section>
-
-
 
       {isModalOpen && (
         <>

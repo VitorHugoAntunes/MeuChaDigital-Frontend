@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { RedirectProvider } from "@/contexts/RedirectContext";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { PaymentProvider } from "@/contexts/PaymentContext";
+import AuthWrapper from "@/components/AuthWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,7 +46,7 @@ export default function RootLayout({
               <PaymentProvider>
                 <Header />
                 <div className="flex flex-1 w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-                  {children}
+                  <AuthWrapper>{children}</AuthWrapper>
                 </div>
                 <Footer />
               </PaymentProvider>

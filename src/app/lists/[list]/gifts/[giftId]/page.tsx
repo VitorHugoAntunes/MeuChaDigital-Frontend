@@ -1,4 +1,3 @@
-// app/gift/[list]/[giftId]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -8,12 +7,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import GiftLoading from "@/components/GiftPage/GiftLoading";
 import Error from "@/components/Error";
 import NotFound from "@/components/NotFound";
-import { Link } from "lucide-react";
-import Button from "@/components/Button";
-import GiftContent from "@/components/GiftContent"; // Importe o componente compartilhado
+import GiftContent from "@/components/GiftContent";
 
 export default function GiftPage() {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isLoading: isUserLoading } = useAuth();
   const [isUserOwner, setIsUserOwner] = useState(false);
   const slug = useParams().list as string;
   const giftId = useParams().giftId as string;
@@ -25,26 +22,16 @@ export default function GiftPage() {
     }
   }, [gift, user]);
 
-  if (!isAuthenticated) {
-    return (
-      <main className="flex flex-col flex-1 w-screen justify-center items-center">
-        <h1 className="text-2xl font-semibold text-text-primary">Você não está logado</h1>
-        <p className="text-md mt-2 text-text-secondary">
-          Faça login para acessar suas listas de presentes.
-        </p>
-        <Link href="/sign-in" className="mt-6">
-          <Button variant="default">Entrar na conta</Button>
-        </Link>
-      </main>
-    );
-  }
-
-  if (isLoading) {
+  if (isLoading || isUserLoading) {
     return <GiftLoading />;
   }
 
-  if (error) {
+  if (error && (error as { status: number }).status !== 404) {
     return <Error title="Ocorreu um erro ao carregar o presente" />;
+  }
+
+  if (error && (error as { status: number }).status === 404) {
+    return <NotFound title="Presente não encontrado" />;
   }
 
   if (!gift) {

@@ -14,9 +14,20 @@ interface GiftHeaderProps {
   description: string;
   totalValue: number;
   isUserOwner: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
-export default function GiftHeader({ category, priority, name, description, totalValue, isUserOwner }: GiftHeaderProps) {
+export default function GiftHeader({
+  category,
+  priority,
+  name,
+  description,
+  totalValue,
+  isUserOwner,
+  onEdit,
+  onDelete
+}: GiftHeaderProps) {
   return (
     <header>
       <div className="flex items-center gap-2">
@@ -36,13 +47,13 @@ export default function GiftHeader({ category, priority, name, description, tota
       </div>
 
       {isUserOwner && (
-        <div className="flex items-center mt-4 gap-4 justify-end">
-          <Button variant="outlined-warning">
+        <div className="flex items-center mt-4 gap-4 justify-end w-full sm:w-auto md:w-fit">
+          <Button variant="outlined-warning" onClick={onEdit} widthFull>
             <Edit size={20} />
             Editar
           </Button>
 
-          <Button variant="outlined-danger">
+          <Button variant="outlined-danger" onClick={onDelete} widthFull>
             <Trash size={20} />
             Excluir
           </Button>
