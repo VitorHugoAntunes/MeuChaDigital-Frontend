@@ -61,6 +61,7 @@ export const useUpdateGift = () => {
     onSuccess: (_, variables) => {
       // Invalida a query de presentes para atualizar a lista após a atualização
       queryClient.invalidateQueries({ queryKey: ['gifts', variables.giftListId] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
   });
 };

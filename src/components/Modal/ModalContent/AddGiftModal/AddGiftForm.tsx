@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import { CurrencyMask } from "@/utils/masks";
 import InputTextArea from "@/components/InputTextArea";
 import { formatCurrency } from "@/utils/formatString";
+import { useCategories } from "@/hooks/categories";
 
 interface GiftFormProps {
   giftListId: string;
@@ -19,17 +20,6 @@ interface GiftFormProps {
   onSuccess?: () => void;
   onClose: () => void;
 }
-
-const CATEGORIES = [
-  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Eletrônico" },
-  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Casa" },
-  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Lazer" },
-  // { id: "65ba6cfa-bd63-4258-a2db-498a657be9da", text: "Outros" },
-  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Eletrônico" },
-  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Casa" },
-  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Lazer" },
-  { id: "6ce97b30-bdd0-4574-992d-c81f330c1eb2", text: "Outros" },
-];
 
 const PRIORITIES = [
   { value: "LOW", text: "Baixa" },
@@ -48,6 +38,8 @@ export const GiftForm = ({
   const [giftPhoto, setGiftPhoto] = useState<File | null>(null);
   const [allInitialData, setAllInitialData] = useState<GiftUpdateFormData | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
+
+  const { data: CATEGORIES, isLoading: isLoadingCategories } = useCategories();
 
   const methods = useForm<GiftFormData>({
     resolver: zodResolver(giftSchema),
@@ -220,8 +212,8 @@ export const GiftForm = ({
         <div className="grid grid-cols-2 gap-4">
           <InputSelect
             label="Categoria"
-            options={CATEGORIES.map((cat) => cat.text)}
-            values={CATEGORIES.map((cat) => cat.id)}
+            options={CATEGORIES ? CATEGORIES.map((cat) => cat.name) : []}
+            values={CATEGORIES ? CATEGORIES.map((cat) => cat.id) : []}
             register={{ ...register("categoryId", { required: "Categoria é obrigatória" }) }}
             error={errors.categoryId?.message}
           />

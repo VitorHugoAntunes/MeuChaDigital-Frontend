@@ -33,7 +33,6 @@ export const AddGiftModal = ({
         {isEdit ? "Edite o presente da sua lista." : "Adicione um lindo presente para sua lista de presentes."}
       </p>
       <GiftForm
-
         giftListId={giftListId}
         userId={userId}
         isEdit={isEdit}

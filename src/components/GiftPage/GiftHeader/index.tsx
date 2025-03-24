@@ -31,7 +31,7 @@ export default function GiftHeader({
   return (
     <header>
       <div className="flex items-center gap-2">
-        {category && <Tag label={category.name} color="bg-green-100 text-green-800" />}
+        {category && <Tag label={category.name} />}
         <PriorityTag priority={priority} />
       </div>
 

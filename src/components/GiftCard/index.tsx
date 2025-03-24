@@ -45,10 +45,7 @@ const GiftCard = ({
 
       <section className="p-5 flex flex-col flex-1">
         <header className="mb-2">
-          <Tag
-            label={category}
-            color="bg-primary/10 text-primary"
-          />
+          <Tag label={category} />
         </header>
 
         <div className="mb-4 flex-1">

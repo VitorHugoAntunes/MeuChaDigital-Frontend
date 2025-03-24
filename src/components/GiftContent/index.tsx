@@ -19,6 +19,7 @@ interface Gift {
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
   list: { userId: string };
+  onGiftUpdated?: () => void;
 }
 
 interface GiftContentProps {
