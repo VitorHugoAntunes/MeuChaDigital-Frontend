@@ -2,6 +2,7 @@ import Button from "../../Button";
 import Image from "next/image";
 import bannerImg from "@/assets/banner.jpg";
 import { Gift, Mail, ListChecks } from "lucide-react";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -52,7 +53,9 @@ export default function Banner() {
               </li>
             </ul>
             <div className="flex mt-8">
-              <Button>Comece a Planejar Agora</Button>
+              <Link href="/sign-in">
+                <Button>Comece a Planejar Agora</Button>
+              </Link>
             </div>
           </div>
         </aside>

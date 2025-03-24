@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import Link from "next/link";
 
 export default function GetStarted() {
   return (
@@ -9,7 +10,9 @@ export default function GetStarted() {
         </h2>
 
         <div className="flex justify-center mt-4 md:mt-8">
-          <Button>Crie sua conta agora</Button>
+          <Link href="/sign-in">
+            <Button>Crie sua conta agora</Button>
+          </Link>
         </div>
 
         <p className="text-center mt-2 md:mt-4 text-text-secondary">

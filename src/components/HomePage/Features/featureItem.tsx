@@ -17,7 +17,7 @@ export default function FeatureItem({ title, description, icon }: FeatureItemPro
       <p className="text-text-secondary">{description}</p>
 
       <NavLink
-        href="/"
+        href="/help"
         icon={<ArrowRight size={24} />}
       >
         Saiba mais

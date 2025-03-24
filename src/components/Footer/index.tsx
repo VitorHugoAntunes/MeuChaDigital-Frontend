@@ -39,18 +39,13 @@ export default function Footer() {
             <h2 className="text-base lg:text-lg font-semibold text-text-primary">Links Úteis</h2>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
-                  Sobre Nós
-                </Link>
-              </li>
-              <li>
                 <Link href="/terms" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
                   Termos de Uso
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
-                  Política de Privacidade
+                <Link href="/help" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
+                  Ajuda
                 </Link>
               </li>
             </ul>
@@ -63,13 +58,16 @@ export default function Footer() {
             </p>
             <ul className="space-y-2">
               <li>
-                <a href="mailto:suporte@meuchadigital.com" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
+                <a
+                  href="mailto:suporte@meuchadigital.com"
+                  className="text-text-secondary hover:text-primary-dark transition-colors duration-300"
+                  aria-label="Enviar email para o suporte"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open('mailto:suporte@meuchadigital.com', '_blank');
+                  }}
+                >
                   suporte@meuchadigital.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+5511999999999" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
-                  (11) 99999-9999
                 </a>
               </li>
             </ul>

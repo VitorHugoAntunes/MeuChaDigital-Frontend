@@ -1,6 +1,7 @@
+'use client';
+
 import Button from "@/components/Button";
 import NavLink from "@/components/NavLink";
-import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -21,9 +22,17 @@ export default function NotFound() {
 
       <p className="text-md text-gray-400 mt-8">
         Se você acha que isso é um erro,{" "}
-        <Link href="/contato" className={`transition-colors duration-300 text-primary-light hover:text-primary-dark`}>
-          entre em contato com o suporte.
-        </Link>
+        <a
+          href="mailto:suporte@meuchadigital.com"
+          className="transition-colors duration-300 text-primary-light hover:text-primary-dark"
+          aria-label="Enviar email para o suporte"
+          onClick={(e) => {
+            e.preventDefault();
+            window.open('mailto:suporte@meuchadigital.com', '_blank');
+          }}
+        >
+          entre em contato com o suporte
+        </a>
       </p>
     </main>
   );
