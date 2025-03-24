@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
-import { Info, Share2 } from 'lucide-react';
+import { Info, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { paymentAmountSchema } from '@/schemas/paymentAmountSchema';
 import { CurrencyMask } from '@/utils/masks';
@@ -81,8 +81,8 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
             <>
               <div className="mt-6">
                 <Button widthFull type="submit">
-                  <Share2 size={20} />
-                  Compartilhar link
+                  <ArrowRight size={20} />
+                  Ver link de pagamento
                 </Button>
               </div>
 
