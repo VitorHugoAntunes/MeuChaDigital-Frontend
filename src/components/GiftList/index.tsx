@@ -11,6 +11,7 @@ import { GiftCardSkeleton } from "../Skeleton/giftCardSkeleton";
 import { useDeleteGift } from "@/hooks/gifts";
 import { ToastContainer } from "react-toastify";
 import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
+import InputSelect from "@/components/InputSelect";
 
 interface Gift {
   id: string;
@@ -38,6 +39,12 @@ interface GiftListProps {
   onAddGiftSuccess?: () => void;
 }
 
+interface FilterOptions {
+  category: string;
+  priority: string;
+  sort: string;
+}
+
 export default function GiftList({
   gifts,
   giftList,
@@ -54,8 +61,41 @@ export default function GiftList({
   const [modalType, setModalType] = useState<"addGift" | "deleteGift" | "editGift">("addGift");
   const [selectedGiftId, setSelectedGiftId] = useState<string | null>(null);
   const [initialValues, setInitialValues] = useState<GiftUpdateFormData | undefined>(undefined);
+  const [filters, setFilters] = useState<FilterOptions>({
+    category: "Todas",
+    priority: "Todas",
+    sort: "nome-asc"
+  });
 
   const { isLoading: isDeletingGift, mutateAsync: deleteGift } = useDeleteGift(slug || "");
+
+  const categories = ["Todas", ...new Set(gifts.map(gift => gift.category?.name).filter(Boolean) as string[])];
+
+  const filteredGifts = gifts.filter(gift => {
+    const matchesCategory = filters.category === "Todas" || gift.category?.name === filters.category;
+    const matchesPriority = filters.priority === "Todas" || gift.priority === filters.priority;
+    return matchesCategory && matchesPriority;
+  }).sort((a, b) => {
+    switch (filters.sort) {
+      case "nome-asc":
+        return a.name.localeCompare(b.name);
+      case "nome-desc":
+        return b.name.localeCompare(a.name);
+      case "preco-asc":
+        return a.totalValue - b.totalValue;
+      case "preco-desc":
+        return b.totalValue - a.totalValue;
+      case "prioridade":
+        const priorityOrder = { HIGH: 1, MEDIUM: 2, LOW: 3 };
+        return priorityOrder[a.priority] - priorityOrder[b.priority];
+      default:
+        return 0;
+    }
+  });
+
+  const handleFilterChange = (field: keyof FilterOptions, value: string) => {
+    setFilters(prev => ({ ...prev, [field]: value }));
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -211,10 +251,37 @@ export default function GiftList({
         </div>
       </header>
 
+      <div className="w-full mb-6 flex flex-col sm:flex-row gap-4">
+        <div className="w-full sm:w-1/3">
+          <InputSelect
+            label="Categoria"
+            options={categories}
+            values={categories}
+            onChange={(e) => handleFilterChange("category", e.target.value)}
+          />
+        </div>
+        <div className="w-full sm:w-1/3">
+          <InputSelect
+            label="Prioridade"
+            options={["Todas", "Baixa", "Média", "Alta"]}
+            values={["Todas", "LOW", "MEDIUM", "HIGH"]}
+            onChange={(e) => handleFilterChange("priority", e.target.value)}
+          />
+        </div>
+        <div className="w-full sm:w-1/3">
+          <InputSelect
+            label="Ordenar por"
+            options={["Nome (A-Z)", "Nome (Z-A)", "Preço (menor)", "Preço (maior)", "Prioridade"]}
+            values={["nome-asc", "nome-desc", "preco-asc", "preco-desc", "prioridade"]}
+            onChange={(e) => handleFilterChange("sort", e.target.value)}
+          />
+        </div>
+      </div>
+
       <section className="lg:mt-4 w-full min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh]">
-        {gifts && gifts.length > 0 ? (
+        {filteredGifts.length > 0 ? (
           <div className="grid gap-8 grid-cols-[repeat(auto-fit,16.8rem)] justify-center lg:justify-start">
-            {gifts.map((gift) => (
+            {filteredGifts.map((gift) => (
               <Link
                 href={
                   isInvitationPage
@@ -225,7 +292,6 @@ export default function GiftList({
                 className="w-full"
               >
                 <GiftCard
-                  key={gift.id}
                   photo={gift.photo?.url || "/default-gift.jpg"}
                   title={gift.name}
                   category={gift.category?.name || "Sem categoria"}
@@ -241,7 +307,9 @@ export default function GiftList({
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center w-full h-full py-8">
-            <h2 className="text-xl font-semibold text-gray-600">Nenhum presente encontrado.</h2>
+            <h2 className="text-xl font-semibold text-gray-600">
+              {gifts.length === 0 ? "Nenhum presente encontrado." : "Nenhum presente encontrado com os filtros atuais."}
+            </h2>
             {isUserOwner && (
               <p className="text-md text-gray-500">Adicione presentes para começar sua lista!</p>
             )}

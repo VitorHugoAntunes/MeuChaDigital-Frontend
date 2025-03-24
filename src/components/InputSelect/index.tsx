@@ -6,9 +6,10 @@ interface InputSelectProps {
   values?: (string | number)[];
   error?: string;
   register?: UseFormRegisterReturn;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export default function InputSelect({ label, options, values, error, register }: InputSelectProps) {
+export default function InputSelect({ label, options, values, error, register, onChange }: InputSelectProps) {
   return (
     <div className="mb-4 md:mb-6">
       <label className="block text-sm font-medium text-gray-700">{label}</label>
@@ -16,7 +17,7 @@ export default function InputSelect({ label, options, values, error, register }:
         className={`mt-1 block w-full px-3 py-2 border ${error ? "border-red-500" : "border-gray-300"
           } rounded-md shadow-sm focus:border-primary focus:outline-none transition-colors bg-white h-[42px] font-inter`}
         {...register}
-
+        {...(onChange && { onChange })}
       >
         <option value="">Selecione</option>
         {options.map((option, index) => (
