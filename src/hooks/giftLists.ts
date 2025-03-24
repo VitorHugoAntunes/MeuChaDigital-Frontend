@@ -47,6 +47,7 @@ export const useUpdateGiftList = (slug: string) => {
   return useMutation(updateGiftList, {
     onSuccess: async (_, variables) => {
       await queryClient.invalidateQueries({ queryKey: ['giftLists', variables.slug] });
+      await queryClient.invalidateQueries({ queryKey: ['giftLists', variables.userId] });
 
       queryClient.refetchQueries({ queryKey: ['giftLists', slug] });
 
