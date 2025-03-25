@@ -2,14 +2,17 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const hostname = req.headers.get('host'); // Exemplo: "teste.localhost:3000"
+  const hostname = req.headers.get('host');
 
   if (hostname) {
-    const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost') {
-      const subdomain = parts[0]; // "teste" em "teste.localhost"
+    const domain = hostname.replace(/:\d+$/, '');
 
-      // Redireciona para uma rota específica no frontend
+    const isLocalhost = domain.endsWith('.localhost');
+    const isVercelApp = domain.endsWith('.meu-cha-digital-frontend.vercel.app');
+
+    if (isLocalhost || isVercelApp) {
+      const subdomain = domain.split('.')[0];
+
       const newUrl = new URL(req.url);
       newUrl.pathname = `/subdomain/${subdomain}`;
       return NextResponse.rewrite(newUrl);
@@ -18,3 +21,9 @@ export function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico).*)'
+  ]
+};

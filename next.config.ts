@@ -8,15 +8,28 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        has: [{ type: 'host', value: '*.localhost' }],
+        has: [
+          {
+            type: 'host',
+            value: '(?<subdomain>.*)\\.(localhost|meu-cha-digital-frontend\\.vercel\\.app)'
+          }
+        ],
         destination: '/subdomain',
       },
-      // Redireciona todas as requisições ao backend com o subdomínio
       {
         source: '/api/v1/:path*',
-        has: [{ type: 'host', value: '*.localhost' }],
-        destination: 'http://:subdomain.localhost:8000/api/v1/:path*',
+        has: [
+          {
+            type: 'host',
+            value: '(?<subdomain>.*)\\.(localhost|meu-cha-digital-frontend\\.vercel\\.app)'
+          }
+        ],
+        destination: ':subdomain.localhost:8000/api/v1/:path*',
       },
+      {
+        source: '/api/v1/:path*',
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000'}/api/v1/:path*`,
+      }
     ];
   },
   typescript: {
