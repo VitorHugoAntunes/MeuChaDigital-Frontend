@@ -48,8 +48,8 @@ export const getAllGiftListsByUser = async (userId: string) => {
 
 export const getGiftListBySlug = async (slug: string, subdomain?: boolean) => {
   if (subdomain) {
-    const response = await axios.get(`http://localhost:8000/api/v1/lists/slug/${slug}`);
-    // const response = await axios.get(`https://api.meuchadigital.com/api/v1/lists/slug/${slug}`);
+    // const response = await axios.get(`http://localhost:8000/api/v1/lists/slug/${slug}`);
+    const response = await axios.get(`https://api.meuchadigital.com/api/v1/lists/slug/${slug}`);
     return response.data;
   }
 

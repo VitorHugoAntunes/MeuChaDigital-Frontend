@@ -31,10 +31,10 @@ export const getInvitationGift = async (id: string) => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
     const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost') {
+    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital.com') {
       const subdomain = parts[0];
-      // const response = await axios.get(`https://${subdomain}.api.meuchadigital.com/api/v1/invitation/gifts/${id}`);
-      const response = await axios.get(`http://${subdomain}.localhost:8000/api/v1/invitation/gifts/${id}`);
+      const response = await axios.get(`https://${subdomain}.api.meuchadigital.com/api/v1/invitation/gifts/${id}`);
+      // const response = await axios.get(`http://${subdomain}.localhost:8000/api/v1/invitation/gifts/${id}`);
       return response.data;
     }
   }

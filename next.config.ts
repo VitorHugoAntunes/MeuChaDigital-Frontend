@@ -8,17 +8,26 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        has: [{ type: 'host', value: '*.localhost' }],
-        destination: '/subdomain',
+        has: [
+          {
+            type: 'host',
+            value: '(?<subdomain>.*).localhost|(?<subdomain>.*).meuchadigital.com'
+          }
+        ],
+        destination: '/subdomain/:subdomain'
       },
-      // Redireciona todas as requisições ao backend com o subdomínio
       {
         source: '/api/v1/:path*',
-        has: [{ type: 'host', value: '*.localhost' }],
-        destination: 'http://:subdomain.localhost:8000/api/v1/:path*',
-      },
+        has: [
+          {
+            type: 'host',
+            value: '(?<subdomain>.*).localhost|(?<subdomain>.*).meuchadigital.com'
+          }
+        ],
+        destination: 'http://:subdomain.localhost:8000/api/v1/:path*'
+      }
     ];
-  },
+  }
 };
 
 export default nextConfig;

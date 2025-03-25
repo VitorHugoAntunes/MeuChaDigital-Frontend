@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
 
   if (hostname) {
     const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost') {
+    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital.com') {
       const subdomain = parts[0]; // "teste" em "teste.localhost"
 
       // Redireciona para uma rota específica no frontend
