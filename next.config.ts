@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
+      // Subdomain homepage redirect
       {
         source: '/',
         has: [
@@ -16,6 +17,7 @@ const nextConfig: NextConfig = {
         ],
         destination: '/subdomain',
       },
+      // API requests with subdomains (local development)
       {
         source: '/api/v1/:path*',
         has: [
@@ -26,6 +28,7 @@ const nextConfig: NextConfig = {
         ],
         destination: 'http://:subdomain.localhost:8000/api/v1/:path*',
       },
+      // API requests with subdomains (Vercel production)
       {
         source: '/api/v1/:path*',
         has: [
@@ -34,11 +37,12 @@ const nextConfig: NextConfig = {
             value: '(?<subdomain>.*)\\.meu-cha-digital-frontend\\.vercel\\.app'
           }
         ],
-        destination: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000'}/api/v1/:path*`,
+        destination: 'https://api.meuchadigital.com/api/v1/:path*',
       },
+      // Fallback API rewrite
       {
         source: '/api/v1/:path*',
-        destination: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000'}/api/v1/:path*`,
+        destination: 'https://api.meuchadigital.com/api/v1/:path*',
       }
     ];
   },
