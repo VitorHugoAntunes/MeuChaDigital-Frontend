@@ -37,7 +37,7 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
           type="text"
           className="flex-1 px-4 py-2 text-text-primary bg-gray-100 border border-gray-300 rounded-lg md:rounded-l-lg focus:outline-none w-full"
           readOnly
-          value={`http://${slug}.localhost:3000/invitation`}
+          value={`http://${slug}.meuchadigital.com/invitation`}
         />
         <div className="w-full md:w-auto">
           <Button onClick={handleCopyLink} widthFull>
@@ -48,7 +48,7 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
       </div>
 
       <Link
-        href={`http://${slug}.localhost:3000/invitation`}
+        href={`http://${slug}.meuchadigital.com/invitation`}
         className="w-fit mt-4 text-center md:text-left text-primary hover:text-primary-light underline hover:no-underline transition-colors duration-300 mx-auto md:mx-0"
       >
         Ver link de convite

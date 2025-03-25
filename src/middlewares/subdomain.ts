@@ -8,7 +8,7 @@ export function middleware(req: NextRequest) {
     const domain = hostname.replace(/:\d+$/, '');
 
     const isLocalhost = domain.endsWith('.localhost');
-    const isVercelApp = domain.endsWith('.meu-cha-digital-frontend.vercel.app');
+    const isVercelApp = domain.endsWith('.meuchadigital.com');
 
     if (isLocalhost || isVercelApp) {
       const subdomain = domain.split('.')[0];

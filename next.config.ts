@@ -12,12 +12,11 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: 'host',
-            value: '(?<subdomain>.*)\\.(localhost|meu-cha-digital-frontend\\.vercel\\.app)'
+            value: '(?<subdomain>.*)\\.(localhost|meuchadigital\\.com)'
           }
         ],
         destination: '/subdomain',
       },
-      // API requests with subdomains (local development)
       {
         source: '/api/v1/:path*',
         has: [
@@ -28,13 +27,12 @@ const nextConfig: NextConfig = {
         ],
         destination: 'http://:subdomain.localhost:8000/api/v1/:path*',
       },
-      // API requests with subdomains (Vercel production)
       {
         source: '/api/v1/:path*',
         has: [
           {
             type: 'host',
-            value: '(?<subdomain>.*)\\.meu-cha-digital-frontend\\.vercel\\.app'
+            value: '(?<subdomain>.*)\\.meuchadigital\\.com'
           }
         ],
         destination: 'https://api.meuchadigital.com/api/v1/:path*',
