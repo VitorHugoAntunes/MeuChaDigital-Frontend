@@ -10,7 +10,7 @@ interface ShareLinkCardProps {
 
 export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
   const handleCopyLink = () => {
-    const link = `http://${slug}.localhost:3000/invitation`;
+    const link = `http://${slug}.meuchadigital.com/invitation`;
     navigator.clipboard.writeText(link);
     toast.success("Link copiado para a área de transferência!", {
       position: 'top-right',
