@@ -52,7 +52,7 @@ export const useGetInvitation = () => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
     const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost') {
+    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
       subdomain = parts[0]; // "teste" em "teste.localhost"
     }
   }
@@ -75,7 +75,7 @@ export const useGetInvitationGifts = () => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
     const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost') {
+    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
       subdomain = parts[0]; // "teste" em "teste.localhost"
     }
   }
@@ -98,7 +98,7 @@ export const useGetInvitationGift = (id: string) => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname;
     const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost') {
+    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
       subdomain = parts[0]; // "teste" em "teste.localhost"
     }
   }
