@@ -1,8 +1,7 @@
-import { redirect } from 'next/navigation';
 import api, { BASE_URL } from '../config/axios';
 
 export const login = async () => {
-  redirect(`${BASE_URL}/auth/google`);
+  window.open(`${BASE_URL}/auth/google`);
 };
 
 export const logout = async () => {
