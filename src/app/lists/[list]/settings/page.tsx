@@ -35,7 +35,45 @@ export default function ListSettingsPage() {
 
   const [initialBanner, setInitialBanner] = useState<File | null>(null);
   const [initialMomentImages, setInitialMomentImages] = useState<File[]>([]);
-  const [allInitialData, setAllInitialData] = useState<Record<string, any>>({});
+  interface InitialData {
+    listName: string;
+    listDescription: string;
+    eventDate: string | null;
+    eventTime: string;
+    eventType: string;
+    listSlug: string;
+    listStatus: string;
+    banner?: File | null;
+    momentsImages?: File[];
+    address: {
+      zipCode: string;
+      streetAddress: string;
+      streetNumber: string;
+      addressLine2?: string;
+      neighborhood: string;
+      city: string;
+      state: string;
+    };
+  }
+
+  const [allInitialData, setAllInitialData] = useState<InitialData>({
+    listName: "",
+    listDescription: "",
+    eventDate: null,
+    eventTime: "",
+    eventType: "WEDDING",
+    listSlug: "",
+    listStatus: "ACTIVE",
+    address: {
+      zipCode: "",
+      streetAddress: "",
+      streetNumber: "",
+      addressLine2: "",
+      neighborhood: "",
+      city: "",
+      state: "",
+    },
+  });
   const [hasChanges, setHasChanges] = useState(false);
 
   const [formInitialized, setFormInitialized] = useState(false);
@@ -92,7 +130,11 @@ export default function ListSettingsPage() {
       }
 
       if (listData.data.momentsImages?.length > 0) {
-        const momentFiles = listData.data.momentsImages.map((image, index) =>
+        interface MomentImage {
+          url: string;
+        }
+
+        const momentFiles: Promise<File>[] = listData.data.momentsImages.map((image: MomentImage, index: number) =>
           fetch(image.url)
             .then((response) => response.blob())
             .then((blob) => new File([blob], `momentImage${index}.jpeg`, { type: blob.type }))
@@ -132,9 +174,10 @@ export default function ListSettingsPage() {
     if (listData && !formInitialized) {
       updateFormValues();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listData, formInitialized]);
 
-  const updatedData: Record<string, any> = {};
+  const updatedData: Partial<ListSettingsFormData & { banner?: File; moments_images?: File[] }> = {};
 
   useEffect(() => {
     const subscription = methods.watch((value) => {
@@ -157,7 +200,7 @@ export default function ListSettingsPage() {
         (value.momentImages &&
           (value.momentImages.length !== initialMomentImages.length ||
             value.momentImages.some(
-              (file, index) => !initialMomentImages[index] || file.name !== initialMomentImages[index].name
+              (file, index) => file && (!initialMomentImages[index] || file.name !== initialMomentImages[index].name)
             ))
         );
 
@@ -165,20 +208,19 @@ export default function ListSettingsPage() {
     });
 
     return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [methods.watch, allInitialData, initialBanner, initialMomentImages]);
-
 
   const onSubmit: SubmitHandler<ListSettingsFormData> = (data) => {
     if (!allInitialData) return;
 
-
-    if (data.listName !== allInitialData.listName) updatedData.name = data.listName;
-    if (data.listDescription !== allInitialData.listDescription) updatedData.description = data.listDescription;
+    if (data.listName !== allInitialData.listName) updatedData.listName = data.listName;
+    if (data.listDescription !== allInitialData.listDescription) updatedData.listDescription = data.listDescription;
     if (data.eventDate !== allInitialData.eventDate) updatedData.eventDate = data.eventDate;
     if (data.eventTime !== allInitialData.eventTime) updatedData.eventTime = data.eventTime;
-    if (data.eventType !== allInitialData.eventType) updatedData.type = data.eventType;
-    if (data.listSlug !== allInitialData.listSlug) updatedData.slug = data.listSlug;
-    if (data.listStatus !== allInitialData.listStatus) updatedData.status = data.listStatus;
+    if (data.eventType !== allInitialData.eventType) updatedData.eventType = data.eventType;
+    if (data.listSlug !== allInitialData.listSlug) updatedData.listSlug = data.listSlug;
+    if (data.listStatus !== allInitialData.listStatus) updatedData.listStatus = data.listStatus;
 
     // Comparação de arquivos (banner)
     if (data.banner && data.banner !== initialBanner) {
@@ -197,13 +239,22 @@ export default function ListSettingsPage() {
       }
     }
 
-    if (data.address.zipCode !== allInitialData.address.zipCode) updatedData.address = { ...updatedData.address, zipCode: data.address.zipCode };
-    if (data.address.streetAddress !== allInitialData.address.streetAddress) updatedData.address = { ...updatedData.address, streetAddress: data.address.streetAddress };
-    if (data.address.streetNumber !== allInitialData.address.streetNumber) updatedData.address = { ...updatedData.address, streetNumber: data.address.streetNumber };
-    if (data.address.addressLine2 !== allInitialData.address.addressLine2) updatedData.address = { ...updatedData.address, addressLine2: data.address.addressLine2 };
-    if (data.address.neighborhood !== allInitialData.address.neighborhood) updatedData.address = { ...updatedData.address, neighborhood: data.address.neighborhood };
-    if (data.address.city !== allInitialData.address.city) updatedData.address = { ...updatedData.address, city: data.address.city };
-    if (data.address.state !== allInitialData.address.state) updatedData.address = { ...updatedData.address, state: data.address.state };
+    if (data.address.zipCode !== allInitialData.address.zipCode) updatedData.address = { ...updatedData.address, zipCode: data.address.zipCode, streetAddress: data.address.streetAddress || "", streetNumber: data.address.streetNumber || "", neighborhood: data.address.neighborhood || "", city: data.address.city || "", state: data.address.state || "", addressLine2: data.address.addressLine2 || "" };
+    if (data.address.streetAddress !== allInitialData.address.streetAddress) updatedData.address = { ...updatedData.address, zipCode: updatedData.address?.zipCode || "", streetAddress: data.address.streetAddress || "", streetNumber: updatedData.address?.streetNumber || "", neighborhood: updatedData.address?.neighborhood || "", city: updatedData.address?.city || "", state: updatedData.address?.state || "", addressLine2: updatedData.address?.addressLine2 || "" };
+    if (data.address.streetNumber !== allInitialData.address.streetNumber) updatedData.address = { ...updatedData.address, zipCode: updatedData.address?.zipCode || "", streetAddress: updatedData.address?.streetAddress || "", streetNumber: data.address.streetNumber || "", neighborhood: updatedData.address?.neighborhood || "", city: updatedData.address?.city || "", state: updatedData.address?.state || "", addressLine2: updatedData.address?.addressLine2 || "" };
+    if (data.address.addressLine2 !== allInitialData.address.addressLine2) updatedData.address = { ...updatedData.address, zipCode: updatedData.address?.zipCode || "", streetAddress: updatedData.address?.streetAddress || "", streetNumber: updatedData.address?.streetNumber || "", neighborhood: updatedData.address?.neighborhood || "", city: updatedData.address?.city || "", state: updatedData.address?.state || "", addressLine2: data.address.addressLine2 || "" };
+    if (data.address.neighborhood !== allInitialData.address.neighborhood) updatedData.address = { ...updatedData.address, zipCode: updatedData.address?.zipCode || "", streetAddress: updatedData.address?.streetAddress || "", streetNumber: updatedData.address?.streetNumber || "", addressLine2: updatedData.address?.addressLine2 || "", neighborhood: data.address.neighborhood || "", city: updatedData.address?.city || "", state: updatedData.address?.state || "" };
+    if (data.address.city !== allInitialData.address.city) updatedData.address = { ...updatedData.address, zipCode: updatedData.address?.zipCode || "", streetAddress: updatedData.address?.streetAddress || "", streetNumber: updatedData.address?.streetNumber || "", neighborhood: updatedData.address?.neighborhood || "", state: updatedData.address?.state || "", addressLine2: updatedData.address?.addressLine2 || "", city: data.address.city || "" };
+    if (data.address.state !== allInitialData.address.state) updatedData.address = {
+      ...updatedData.address,
+      zipCode: updatedData.address?.zipCode || "",
+      streetAddress: updatedData.address?.streetAddress || "",
+      streetNumber: updatedData.address?.streetNumber || "",
+      neighborhood: updatedData.address?.neighborhood || "",
+      city: updatedData.address?.city || "",
+      addressLine2: updatedData.address?.addressLine2 || "",
+      state: data.address.state || ""
+    };
 
     if (Object.keys(updatedData).length === 0) {
       console.log("Nenhuma alteração detectada.");
@@ -216,7 +267,20 @@ export default function ListSettingsPage() {
     updateGiftListMutation({
       userId: listData.data.userId,
       giftListId: listData.data.id,
-      ...updatedData,
+      address: {
+        ...allInitialData.address,
+        addressLine2: data.address.addressLine2 as string,
+      },
+      name: updatedData.listName,
+      description: updatedData.listDescription,
+      eventDate: updatedData.eventDate,
+      eventTime: updatedData.eventTime,
+      type: updatedData.eventType,
+      slug: updatedData.listSlug,
+      status: updatedData.listStatus,
+      banner: updatedData.banner,
+      moments_images: updatedData.moments_images,
+      eventType: updatedData.eventType,
     }, {
       onSuccess: () => {
         refetch();
@@ -237,12 +301,13 @@ export default function ListSettingsPage() {
             zipCode: data.address.zipCode,
             streetAddress: data.address.streetAddress,
             streetNumber: data.address.streetNumber,
-            addressLine2: data.address.addressLine2,
+            addressLine2: data.address.addressLine2 || "", // Definindo um valor padrão caso seja undefined
             neighborhood: data.address.neighborhood,
             city: data.address.city,
             state: data.address.state,
           },
         }));
+
       },
     });
 
@@ -283,10 +348,21 @@ export default function ListSettingsPage() {
             <h1 className="text-3xl font-bold text-text-primary">Configurações da Lista</h1>
           </header>
 
-          <BasicInfoSection methods={methods} errors={errors} typeValue={listData.data.eventType} />
+          <BasicInfoSection methods={methods} errors={Object.fromEntries(
+            Object.entries(errors).map(([key, value]) => [
+              key,
+              value ? { message: value.message || '' } : undefined
+            ])
+          )} typeValue={listData.data.eventType} />
           <AddressSection errors={errors} />
-          <ImagesSection initialBanner={initialBanner} initialMomentImages={initialMomentImages} errors={errors} />
-          <PrivacySection errors={errors} />
+          <ImagesSection initialBanner={initialBanner} initialMomentImages={initialMomentImages} errors={{
+            banner: errors.banner ? { message: errors.banner.message || '' } : undefined,
+            momentImages: errors.momentImages ? { message: errors.momentImages.message || '' } : undefined
+          }} />
+          <PrivacySection errors={{
+            listSlug: errors.listSlug ? { message: errors.listSlug.message || '' } : undefined,
+            listStatus: errors.listStatus ? { message: errors.listStatus.message || '' } : undefined
+          }} />
           <DangerZoneSection listStatus={listData.data.status} isLoading={isUpdating} onDeleteList={handleOpenModal} />
 
           <Card className="sticky bottom-0 left-0 right-0 z-10 rounded-none sm:rounded -mx-4 sm:mx-0">

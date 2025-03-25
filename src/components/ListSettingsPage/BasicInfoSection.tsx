@@ -1,13 +1,17 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, UseFormReturn } from "react-hook-form";
 import { ListSettingsFormData } from "@/schemas/listSettingsSchema";
 import InputField from "@/components/InputField";
 import InputTextArea from "@/components/InputTextArea";
 import EventTypeOption from "@/components/EventTypeOption";
 import Card from "@/components/Card";
 
+interface ErrorType {
+  message: string;
+}
+
 interface BasicInfoSectionProps {
-  methods: any;
-  errors: any;
+  methods: UseFormReturn<ListSettingsFormData>;
+  errors: Partial<Record<keyof ListSettingsFormData, ErrorType>>;
   typeValue: string;
 }
 

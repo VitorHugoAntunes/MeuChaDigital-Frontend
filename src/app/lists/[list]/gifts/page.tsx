@@ -20,7 +20,7 @@ export default function GiftsPage() {
       giftList={data?.giftList || { id: "", name: "" }}
       slug={slug}
       isLoading={isLoading}
-      error={error}
+      error={error as { status: number; message: string } | null}
       isUserOwner={isUserOwner}
       onAddGiftSuccess={refetch}
     />

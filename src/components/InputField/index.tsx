@@ -19,7 +19,7 @@ type InputFieldProps = {
   isNumeric?: boolean;
 };
 
-function InputFieldWithWatch({ name, mask, value, setValue }: {
+function InputFieldWithWatch({ name, mask, setValue }: {
   name: string;
   mask?: (value: string) => string;
   value: string;

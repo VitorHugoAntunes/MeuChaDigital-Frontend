@@ -7,7 +7,10 @@ import Card from "@/components/Card";
 interface ImagesSectionProps {
   initialBanner?: File | null;
   initialMomentImages?: File[];
-  errors: any;
+  errors: {
+    banner?: { message: string };
+    momentImages?: { message: string };
+  };
 }
 
 export default function ImagesSection({ initialBanner, initialMomentImages, errors }: ImagesSectionProps) {
@@ -21,8 +24,8 @@ export default function ImagesSection({ initialBanner, initialMomentImages, erro
           <div className="mb-6">
             <InputFileUpload
               label="Capa da Lista"
-              onFileSelect={(file) => setValue("banner", file)}
-              trigger={trigger}
+              onFileSelect={(file) => file && setValue("banner", file)}
+              trigger={() => trigger("banner")}
               initialFile={initialBanner || null}
             />
             {errors.banner && <span className="text-danger text-sm mt-1">{errors.banner.message}</span>}

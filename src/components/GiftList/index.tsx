@@ -34,7 +34,7 @@ interface GiftListProps {
   slug?: string;
   isInvitationPage?: boolean;
   isLoading: boolean;
-  error: any;
+  error: { status: number; message: string } | null;
   isUserOwner: boolean;
   onAddGiftSuccess?: () => void;
 }

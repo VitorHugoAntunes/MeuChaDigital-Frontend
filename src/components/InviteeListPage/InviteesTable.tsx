@@ -83,11 +83,13 @@ export const InviteeTable = ({
   useEffect(() => {
     onSearchChange(filters.search);
     setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.search, onSearchChange]);
 
   useEffect(() => {
     onStatusChange(filters.status);
     setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.status, onStatusChange]);
 
   useEffect(() => {

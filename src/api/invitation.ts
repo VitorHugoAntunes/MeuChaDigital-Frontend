@@ -8,6 +8,7 @@ export const getInvitation = async () => {
     if (parts.length >= 2 && parts[1] === 'localhost') {
       const subdomain = parts[0]; // "teste"
       const response = await axios.get(`http://${subdomain}.localhost:8000/api/v1/invitation`);
+      // const response = await axios.get(`https://${subdomain}.api.meuchadigital.com/api/v1/invitation`);
       return response.data;
     }
   }
@@ -19,6 +20,7 @@ export const getInvitationGifts = async () => {
     const parts = hostname.split('.');
     if (parts.length >= 2 && parts[1] === 'localhost') {
       const subdomain = parts[0];
+      // const response = await axios.get(`https://${subdomain}.api.meuchadigital.com/api/v1/invitation/gifts`);
       const response = await axios.get(`http://${subdomain}.localhost:8000/api/v1/invitation/gifts`);
       return response.data;
     }
@@ -31,6 +33,7 @@ export const getInvitationGift = async (id: string) => {
     const parts = hostname.split('.');
     if (parts.length >= 2 && parts[1] === 'localhost') {
       const subdomain = parts[0];
+      // const response = await axios.get(`https://${subdomain}.api.meuchadigital.com/api/v1/invitation/gifts/${id}`);
       const response = await axios.get(`http://${subdomain}.localhost:8000/api/v1/invitation/gifts/${id}`);
       return response.data;
     }

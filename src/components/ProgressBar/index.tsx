@@ -6,7 +6,7 @@ interface ProgressBarProps {
 }
 
 export default function ProgressBar({ initialValue, goalValue }: ProgressBarProps) {
-  const progress = (initialValue / goalValue) * 100;
+  const progress = goalValue > 0 ? (initialValue / goalValue) * 100 : 0;
   const progressRounded = Math.round(progress);
 
   return (

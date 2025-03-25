@@ -18,11 +18,11 @@ export default function CreateGiftList() {
   const searchParams = useSearchParams();
   const step = Number(searchParams.get('step')) || 1;
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const userId = user?.id ?? "";
-  const { refetch } = useGiftListsByUser(userId);
+  const { } = useGiftListsByUser(userId);
   const { mutate: createGiftListMutation, isSuccess: isCreateSuccess, isLoading: isMutationLoading } = useCreateGiftList();
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function CreateGiftList() {
     },
   });
 
-  const { handleSubmit, trigger, formState: { errors } } = methods;
+  const { handleSubmit, trigger } = methods;
 
   const goToStep = async (newStep: number, isBackward?: boolean) => {
     if (isBackward) {

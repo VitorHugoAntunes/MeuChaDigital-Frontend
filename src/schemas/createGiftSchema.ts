@@ -16,7 +16,8 @@ export const giftSchema = z.object({
   giftListId: z.string().min(1, "A lista de presentes é obrigatória"),
   giftPhoto: z
     .instanceof(File, { message: "A foto do presente é obrigatória" })
-    .refine((file) => file.size > 0, "A foto do presente é obrigatória"),
+    .refine((file) => file.size > 0, "A foto do presente é obrigatória")
+    .nullable(),
 });
 
 export const giftUpdateSchema = giftSchema.extend({

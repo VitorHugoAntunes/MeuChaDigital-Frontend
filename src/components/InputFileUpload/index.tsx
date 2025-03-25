@@ -5,7 +5,7 @@ import { ImageIcon, Trash2 } from "lucide-react";
 interface FileUploadProps {
   label: string;
   initialFile?: File | null;
-  trigger?: any;
+  trigger?: (event: string) => void;
   onFileSelect: (file: File | null) => void;
 }
 
@@ -26,7 +26,9 @@ export default function InputFileUpload({ label, initialFile, trigger, onFileSel
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setSelectedFile(file);
-    trigger("banner");
+    if (trigger) {
+      trigger("banner");
+    }
   };
 
   const handleRemoveFile = () => {
@@ -34,7 +36,9 @@ export default function InputFileUpload({ label, initialFile, trigger, onFileSel
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    trigger("banner");
+    if (trigger) {
+      trigger("banner");
+    }
   };
 
   return (

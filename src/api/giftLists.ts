@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import api from '../config/axios';
 
 interface Address {
   zipCode: string;
   streetAddress: string;
   streetNumber: string;
-  addressLine2: string;
+  addressLine2?: string;
   neighborhood: string;
   city: string;
   state: string;
@@ -49,6 +49,7 @@ export const getAllGiftListsByUser = async (userId: string) => {
 export const getGiftListBySlug = async (slug: string, subdomain?: boolean) => {
   if (subdomain) {
     const response = await axios.get(`http://localhost:8000/api/v1/lists/slug/${slug}`);
+    // const response = await axios.get(`https://api.meuchadigital.com/api/v1/lists/slug/${slug}`);
     return response.data;
   }
 
@@ -122,9 +123,11 @@ export const deleteGiftList = async (id: string) => {
   try {
     const response = await api.delete(`/lists/${id}`);
     return response.data;
-  } catch (error: any) {
-    if (error.response) {
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
       throw new Error(error.response.data.error || 'Erro ao deletar lista de presentes.');
+    } else {
+      throw new Error('Erro desconhecido ao deletar lista de presentes.');
     }
   }
 };

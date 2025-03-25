@@ -15,7 +15,7 @@ export const useDeleteUser = () => {
 
       logoutUser();
     },
-    onError: (error: any) => {
+    onError: (error: { response?: { data?: { error?: string } } }) => {
       console.error('Erro ao deletar usuário:', error);
 
       const errorMessage = error.response?.data?.error || 'Erro ao deletar usuário';

@@ -39,7 +39,7 @@ export const GiftForm = ({
   const [allInitialData, setAllInitialData] = useState<GiftUpdateFormData | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
 
-  const { data: CATEGORIES, isLoading: isLoadingCategories } = useCategories();
+  const { data: CATEGORIES } = useCategories();
 
   const methods = useForm<GiftFormData>({
     resolver: zodResolver(giftSchema),
@@ -64,7 +64,7 @@ export const GiftForm = ({
     if (isEdit && initialValues) {
       reset({
         ...initialValues,
-        totalValue: formatCurrency(initialValues.totalValue || 0),
+        totalValue: initialValues.totalValue || 0,
       });
       setAllInitialData(initialValues);
     }
@@ -89,7 +89,7 @@ export const GiftForm = ({
       clearErrors("giftPhoto");
     } else {
       setGiftPhoto(null);
-      setValue("giftPhoto", undefined);
+      setValue("giftPhoto", null);
     }
   }, [setValue, clearErrors]);
 
@@ -102,12 +102,40 @@ export const GiftForm = ({
     if (isEdit && !allInitialData) return;
 
     // Compara os valores atuais com os iniciais apenas se isEdit for true
-    const updatedData: Partial<GiftFormData> = {};
+    const updatedData: Partial<GiftUpdateFormData> = {};
+
     if (isEdit) {
+      const updatedData: Partial<GiftFormData> = {};
+
       Object.keys(data).forEach((key) => {
         const field = key as keyof GiftFormData;
-        if (data[field] !== allInitialData![field]) {
-          updatedData[field] = data[field];
+        const currentValue = data[field];
+        const initialValue = allInitialData?.[field];
+
+        // Verifica se o valor foi alterado
+        if (currentValue !== initialValue) {
+          // Tratamento type-safe para cada campo
+          switch (field) {
+            case 'giftPhoto':
+              updatedData.giftPhoto = (currentValue as File | undefined) ?? null;
+              break;
+            case 'priority':
+              updatedData.priority = currentValue as "LOW" | "MEDIUM" | "HIGH";
+              break;
+            case 'totalValue':
+              updatedData.totalValue = currentValue as number;
+              break;
+            case 'name':
+            case 'description':
+            case 'categoryId':
+            case 'userId':
+            case 'giftListId':
+              updatedData[field] = currentValue as string;
+              break;
+            default:
+              const _exhaustiveCheck: never = field;
+              return _exhaustiveCheck;
+          }
         }
       });
 
@@ -149,6 +177,11 @@ export const GiftForm = ({
               userId,
               giftListId,
               totalValue: Number(data.totalValue),
+              name: data.name as string,
+              priority: data.priority as string,
+              description: data.description as string,
+              categoryId: data.categoryId as string,
+              giftPhoto: data.giftPhoto as File | undefined,
             },
           },
           {

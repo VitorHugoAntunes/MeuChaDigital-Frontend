@@ -8,10 +8,10 @@ import MultiFileUpload from "@/components/InputMultiFileUpload";
 export default function Step2() {
   const { setValue, trigger, watch, formState: { errors, isSubmitted } } = useFormContext();
 
-  const momentsImages = watch("moments_images");
+  watch("moments_images");
 
-  const [bannerImage, setBannerImage] = useState<File | null>(null);
-  const [momentImages, setMomentImages] = useState<File[]>([]);
+  const [, setBannerImage] = useState<File | null>(null);
+  const [, setMomentImages] = useState<File[]>([]);
 
   const handleBannerImageChange = useCallback((file: File | null) => {
     setBannerImage(file);

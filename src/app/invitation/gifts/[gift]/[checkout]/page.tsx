@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 
 export default function CheckoutPage() {
   const giftId = useParams().gift as string;
-  const { data: gift, isLoading, error } = useGetInvitationGift(giftId);
+  const { data: gift, isLoading } = useGetInvitationGift(giftId);
 
   if (isLoading) {
     return <p>Carregando...</p>;

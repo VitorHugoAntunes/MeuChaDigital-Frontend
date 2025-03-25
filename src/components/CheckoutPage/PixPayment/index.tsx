@@ -32,7 +32,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     return savedCharge ? JSON.parse(savedCharge).localId : null;
   });
 
-  const { data: charge, isLoading, isError } = useGetCharge(localId, paramsGiftId);
+  const { data: charge, isLoading, isError } = useGetCharge(localId ?? undefined, paramsGiftId);
 
   const createDefaultChargeMutation = useCreateDefaultCharge();
   const createGuestChargeMutation = useCreateGuestCharge();

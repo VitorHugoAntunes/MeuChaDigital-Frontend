@@ -20,7 +20,7 @@ export const useCreateInvitee = () => {
         progress: undefined,
       });
     },
-    onError: (error: any) => {
+    onError: (error: { message: string }) => {
       console.error('Erro ao adicionar convidado', error.message);
       toast.error('Erro ao adicionar convidado', {
         position: 'top-right',
@@ -86,7 +86,7 @@ export const useUpdateInvitee = () => {
         progress: undefined,
       });
     },
-    onError: (error: any) => {
+    onError: (error: { message: string }) => {
       console.error('Erro ao atualizar convidado', error.message);
       toast.error('Erro ao atualizar convidado', {
         position: 'top-right',
@@ -120,7 +120,7 @@ export const useDeleteInvitee = () => {
         progress: undefined,
       });
     },
-    onError: (error: any) => {
+    onError: (error: { message: string }) => {
       console.error('Erro ao excluir convidado', error.message);
       toast.error('Erro ao excluir convidado', {
         position: 'top-right',

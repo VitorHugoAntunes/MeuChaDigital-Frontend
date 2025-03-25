@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useCep } from "@/hooks/zipCode";
 
 interface AddressSectionProps {
-  errors: any;
+  errors: Record<string, { message?: string }>;
 }
 
 export default function AddressSection({ errors }: AddressSectionProps) {
@@ -22,6 +22,7 @@ export default function AddressSection({ errors }: AddressSectionProps) {
   // Usa o hook personalizado para buscar o endereço
   const { data: address, isError } = useCep(rawZipCode);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getNestedError = (errors: any, path: string) => {
     return path.split('.').reduce((acc, part) => acc?.[part], errors)?.message ?? "";
   };

@@ -80,7 +80,7 @@ export const useDeleteGiftList = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ giftListId, slug }: { giftListId: string, slug: string }) =>
+    mutationFn: ({ giftListId }: { giftListId: string, slug: string }) =>
       deleteGiftList(giftListId), // Aqui você passa apenas o giftListId para a API
     onSuccess: async (_, { giftListId, slug }) => {
       queryClient.removeQueries({ queryKey: ['giftLists', slug] });

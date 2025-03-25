@@ -4,9 +4,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getGiftListBySlug } from "@/api/giftLists";
 
-const RedirectContext = createContext<any>(null);
+interface ListData {
+  redirect?: string;
+}
 
-export const RedirectProvider = ({ children }: any) => {
+const RedirectContext = createContext<ListData | null>(null);
+
+import { ReactNode } from "react";
+
+export const RedirectProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [listData, setListData] = useState<{ redirect?: string } | null>(null);
   const slug = useParams().list as string;

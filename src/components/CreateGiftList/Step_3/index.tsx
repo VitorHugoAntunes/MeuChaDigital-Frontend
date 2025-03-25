@@ -16,10 +16,10 @@ export default function Step3() {
   // Usa o hook personalizado para buscar o endereço
   const { data: address, isError } = useCep(rawZipCode);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getNestedError = (errors: any, path: string) => {
     return path.split('.').reduce((acc, part) => acc?.[part], errors)?.message ?? "";
   };
-
 
   // Atualiza os campos do formulário quando o endereço é retornado
   useEffect(() => {

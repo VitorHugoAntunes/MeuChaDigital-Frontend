@@ -5,7 +5,10 @@ import InputSelect from "@/components/InputSelect";
 import Card from "@/components/Card";
 
 interface PrivacySectionProps {
-  errors: any;
+  errors: {
+    listSlug?: { message: string };
+    listStatus?: { message: string };
+  };
 }
 
 export default function PrivacySection({ errors }: PrivacySectionProps) {

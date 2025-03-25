@@ -12,8 +12,8 @@ interface GiftCardProps {
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
   isUserOwner?: boolean;
-  actionEditFn?: (event: any) => void;
-  actionDeleteFn?: (event: any) => void;
+  actionEditFn?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  actionDeleteFn?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const GiftCard = ({

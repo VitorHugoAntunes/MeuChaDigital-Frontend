@@ -72,7 +72,7 @@ export const useDeleteGift = (slug: string) => {
   return useMutation({
     mutationFn: (data: { giftListId: string; giftId: string }) =>
       deleteGift(data.giftListId, data.giftId),
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       // Invalida a query de presentes usando o slug
       queryClient.invalidateQueries({ queryKey: ['gifts', slug] });
 

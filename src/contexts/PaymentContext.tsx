@@ -21,7 +21,7 @@ interface PaymentProps {
 const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
 
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
-  const [checkoutId, setCheckoutId] = useState<string>(() => {
+  const [checkoutId] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const savedCheckoutId = localStorage.getItem('currentCheckoutId');
       return savedCheckoutId || generateUniqueId();

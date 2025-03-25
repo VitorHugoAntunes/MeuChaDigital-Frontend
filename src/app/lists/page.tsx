@@ -9,6 +9,11 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
+interface Gift {
+  totalValue: number;
+  totalContributions: number;
+}
+
 interface GiftList {
   id: string;
   name: string;
@@ -20,6 +25,7 @@ interface GiftList {
   _count: {
     gifts: number;
   };
+  gifts: Gift[];
 }
 
 const ListsPage = () => {
@@ -54,6 +60,8 @@ const ListsPage = () => {
       </main>
     );
   }
+
+  console.log('todas as listas de presentes do usuário', giftLists);
 
   return (
     <main className="flex flex-col flex-1 w-full">
@@ -105,8 +113,8 @@ const ListsPage = () => {
                 date={formatDateToBR(list.eventDate)}
                 totalGifts={list._count.gifts}
                 totalContributors={5}
-                totalRaised={40}
-                totalGoal={100}
+                totalRaised={list.gifts ? list.gifts.reduce((acc, gift) => acc + gift.totalContributions, 0) : 0}
+                totalGoal={list.gifts ? list.gifts.reduce((acc, gift) => acc + gift.totalValue, 0) : 0}
               />
             </Link>
           ))}

@@ -80,8 +80,9 @@ export const AddPixKeyModal = ({ onClose }: AddPixModalProps) => {
         });
         onClose();
       },
-      onError: (error: any) => {
-        toast.error(error.message, {
+      onError: (error) => {
+        const typedError = error as { message: string };
+        return toast.error(typedError.message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
