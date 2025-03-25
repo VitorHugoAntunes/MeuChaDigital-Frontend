@@ -10,11 +10,16 @@ export function middleware(req: NextRequest) {
     const isLocalhost = domain.endsWith('.localhost');
     const isVercelApp = domain.endsWith('.meuchadigital.com');
 
+    // Ignorar chamadas para a API
+    if (req.nextUrl.pathname.startsWith('/api')) {
+      return NextResponse.next();
+    }
+
     if (isLocalhost || isVercelApp) {
       const subdomain = domain.split('.')[0];
 
       const newUrl = new URL(req.url);
-      newUrl.pathname = `/subdomain/${subdomain}`;
+      newUrl.pathname = `/subdomain/${subdomain}${req.nextUrl.pathname}`;
       return NextResponse.rewrite(newUrl);
     }
   }
@@ -24,6 +29,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)'
+    '/((?!api|_next/static|_next/image|favicon.ico).*)' // Ignorar API e arquivos estáticos
   ]
 };
