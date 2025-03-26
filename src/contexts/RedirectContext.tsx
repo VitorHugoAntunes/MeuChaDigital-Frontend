@@ -15,7 +15,7 @@ export const RedirectProvider = ({ children }: any) => {
     if (typeof window !== "undefined") {
       const hostname = window.location.hostname;
       const parts = hostname.split(".");
-      if (parts.length >= 2 && parts[1] === "localhost") {
+      if (parts.length >= 2 && parts[1] === "localhost" || parts[1] === "meuchadigital") {
         return parts[0];
       }
     }
