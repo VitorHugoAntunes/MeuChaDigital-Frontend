@@ -23,6 +23,7 @@ export interface UpdateInviteeData {
 
 export const createInvitee = async (data: InviteeData) => {
   return axios.post('https://api.meuchadigital.com/api/v1/invitees', data);
+  // return axios.post('http://localhost:8000/api/v1/invitees', data);
 }
 
 export const getAllInviteesByGiftListSlug = async (slug: string) => {

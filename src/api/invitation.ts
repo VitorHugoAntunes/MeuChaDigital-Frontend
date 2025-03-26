@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../config/axios';
 
 export const getInvitation = async () => {
   if (typeof window !== 'undefined') {
@@ -9,6 +9,7 @@ export const getInvitation = async () => {
       const subdomain = parts[0];
 
       const apiUrl = `https://${subdomain}.meuchadigital.com/api/v1/invitation`;
+      // const apiUrl = `https://${subdomain}.localhost:8000/api/v1/invitation`;
 
       try {
         const response = await axios.get(apiUrl);
@@ -29,6 +30,20 @@ export const getInvitationGift = async (id: string) => {
     if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
       const subdomain = parts[0];
       const response = await axios.get(`https://${subdomain}.meuchadigital.com/api/v1/invitation/gifts/${id}`);
+      // const response = await axios.get(`https://${subdomain}.localhost:8000/api/v1/invitation/gifts/${id}`);
+      return response.data;
+    }
+  }
+}
+
+export const getInvitationGifts = async () => {
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
+    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
+      const subdomain = parts[0];
+      const response = await axios.get(`https://${subdomain}.meuchadigital.com/api/v1/invitation/gifts`);
+      // const response = await axios.get(`https://${subdomain}.localhost:8000/api/v1/invitation/gifts`);
       return response.data;
     }
   }

@@ -11,6 +11,7 @@ interface ShareLinkCardProps {
 export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
   const handleCopyLink = () => {
     const link = `https://${slug}.meuchadigital.com/invitation`;
+    // const link = `http://${slug}.localhost:3000/invitation`;
     navigator.clipboard.writeText(link);
     toast.success("Link copiado para a área de transferência!", {
       position: 'top-right',
@@ -38,6 +39,7 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
           className="flex-1 px-4 py-2 text-text-primary bg-gray-100 border border-gray-300 rounded-lg md:rounded-l-lg focus:outline-none w-full"
           readOnly
           value={`https://${slug}.meuchadigital.com/invitation`}
+        // value={`http://${slug}.localhost:3000/invitation`}
         />
         <div className="w-full md:w-auto">
           <Button onClick={handleCopyLink} widthFull>
@@ -49,6 +51,7 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
 
       <Link
         href={`https://${slug}.meuchadigital.com/invitation`}
+        // href={`http://${slug}.localhost:3000/invitation`}
         className="w-fit mt-4 text-center md:text-left text-primary hover:text-primary-light underline hover:no-underline transition-colors duration-300 mx-auto md:mx-0"
       >
         Ver link de convite
