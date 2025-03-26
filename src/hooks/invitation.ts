@@ -47,22 +47,16 @@ interface InvitationGifts {
 }
 
 export const useGetInvitation = () => {
-  // Captura o subdomínio atual
-  let subdomain = '';
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
-      subdomain = parts[0]; // "teste" em "teste.localhost"
-    }
-  }
+  const subdomain = typeof window !== 'undefined'
+    ? window.location.hostname.split('.')[0]
+    : '';
 
   return useQuery<Invitation>({
     queryKey: ['invitation', subdomain],
     queryFn: getInvitation,
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: Boolean(subdomain), // Só executa se houver um subdomínio válido
+    enabled: !!subdomain,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -70,22 +64,16 @@ export const useGetInvitation = () => {
 };
 
 export const useGetInvitationGifts = () => {
-  // Captura o subdomínio atual
-  let subdomain = '';
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
-      subdomain = parts[0]; // "teste" em "teste.localhost"
-    }
-  }
+  const subdomain = typeof window !== 'undefined'
+    ? window.location.hostname.split('.')[0]
+    : '';
 
   return useQuery<InvitationGifts>({
     queryKey: ['invitation-gifts', subdomain],
     queryFn: getInvitationGifts,
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: Boolean(subdomain), // Só executa se houver um subdomínio válido
+    enabled: !!subdomain,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -93,22 +81,16 @@ export const useGetInvitationGifts = () => {
 };
 
 export const useGetInvitationGift = (id: string) => {
-  // Captura o subdomínio atual
-  let subdomain = '';
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    const parts = hostname.split('.');
-    if (parts.length >= 2 && parts[1] === 'localhost' || parts[1] === 'meuchadigital') {
-      subdomain = parts[0]; // "teste" em "teste.localhost"
-    }
-  }
+  const subdomain = typeof window !== 'undefined'
+    ? window.location.hostname.split('.')[0]
+    : '';
 
   return useQuery({
     queryKey: ['invitation-gift', subdomain, id],
     queryFn: () => getInvitationGift(id),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled: Boolean(subdomain), // Só executa se houver um subdomínio válido
+    enabled: !!subdomain && !!id,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
