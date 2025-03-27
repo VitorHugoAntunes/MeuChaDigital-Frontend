@@ -7,8 +7,8 @@ export const getInvitation = async () => {
     const url = `${axios.defaults.baseURL}/invitation`;
     console.log('[API] GET Invitation URL:', url);
 
-    // const response = await axios.get('/invitation');
-    // return response.data;
+    const response = await axios.get('/invitation', { withCredentials: true });
+    return response.data;
   } catch (error) {
     console.error('[API] Erro ao buscar convite:', {
       error,
@@ -24,8 +24,8 @@ export const getInvitationGift = async (id: string) => {
     const url = `${axios.defaults.baseURL}/invitation/gifts/${id}`;
     console.log('[API] GET Gift URL:', url);
 
-    // const response = await axios.get(`/invitation/gifts/${id}`);
-    // return response.data;
+    const response = await axios.get(`/invitation/gifts/${id}`, { withCredentials: true });
+    return response.data;
   } catch (error) {
     console.error('[API] Erro ao buscar presente:', {
       error,
@@ -42,8 +42,8 @@ export const getInvitationGifts = async () => {
     const url = `${axios.defaults.baseURL}/invitation/gifts`;
     console.log('[API] GET Gifts List URL:', url);
 
-    // const response = await axios.get('/invitation/gifts');
-    // return response.data;
+    const response = await axios.get('/invitation/gifts', { withCredentials: true });
+    return response.data;
   } catch (error) {
     console.error('[API] Erro ao buscar lista de presentes:', {
       error,
