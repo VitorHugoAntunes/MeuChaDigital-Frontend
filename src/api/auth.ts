@@ -1,9 +1,7 @@
 import api, { BASE_URL } from '../config/axios';
 
 export const login = async () => {
-  // window.open(`${BASE_URL}/auth/google`, '_self');
-  const response = await api.get('/auth/google', { withCredentials: true });
-  return response.data;
+  window.open(`${BASE_URL}/auth/google`, '_self');
 };
 
 export const logout = async () => {
