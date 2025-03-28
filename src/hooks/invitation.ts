@@ -53,7 +53,7 @@ export const useGetInvitation = () => {
 
   return useQuery<Invitation>({
     queryKey: ['invitation', subdomain],
-    queryFn: getInvitation,
+    queryFn: () => getInvitation(subdomain),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!subdomain,
@@ -70,7 +70,7 @@ export const useGetInvitationGifts = () => {
 
   return useQuery<InvitationGifts>({
     queryKey: ['invitation-gifts', subdomain],
-    queryFn: getInvitationGifts,
+    queryFn: () => getInvitationGifts(subdomain),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!subdomain,
@@ -87,7 +87,7 @@ export const useGetInvitationGift = (id: string) => {
 
   return useQuery({
     queryKey: ['invitation-gift', subdomain, id],
-    queryFn: () => getInvitationGift(id),
+    queryFn: () => getInvitationGift(subdomain, id),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!subdomain && !!id,

@@ -1,30 +1,33 @@
 import axios from '../config/axios';
 
-export const getInvitation = async () => {
+export const getInvitation = async (slug: string) => {
   try {
-    // O Axios vai combinar baseURL + '/invitation'
-    // Exemplo: https://api.meuchadigital.com/api/v1/invitation
-    const url = `${axios.defaults.baseURL}/invitation`;
-    console.log('[API] GET Invitation URL:', url);
+    const response = await axios.get('/invitation', {
+      params: {
+        subdomain: slug
+      },
+      withCredentials: true
+    });
 
-    const response = await axios.get('/invitation', { withCredentials: true });
     return response.data;
   } catch (error) {
     console.error('[API] Erro ao buscar convite:', {
       error,
-      url: error.config?.baseURL + error.config?.url // Log da URL que falhou
+      url: error.config?.baseURL + error.config?.url,
     });
     return null;
   }
 };
 
-export const getInvitationGift = async (id: string) => {
+export const getInvitationGift = async (slug: string, id: string) => {
   try {
-    // Monta a URL completa para debug
-    const url = `${axios.defaults.baseURL}/invitation/gifts/${id}`;
-    console.log('[API] GET Gift URL:', url);
+    const response = await axios.get(`/invitation/gifts/${id}`, {
+      params: {
+        subdomain: slug
+      },
+      withCredentials: true
+    });
 
-    const response = await axios.get(`/invitation/gifts/${id}`, { withCredentials: true });
     return response.data;
   } catch (error) {
     console.error('[API] Erro ao buscar presente:', {
@@ -32,17 +35,18 @@ export const getInvitationGift = async (id: string) => {
       url: error.config?.baseURL + error.config?.url,
       giftId: id
     });
-    throw error; // Propaga o erro para ser tratado pelo chamador
+    throw error;
   }
 };
 
-export const getInvitationGifts = async () => {
+export const getInvitationGifts = async (slug: string) => {
   try {
-    // URL completa para monitoramento
-    const url = `${axios.defaults.baseURL}/invitation/gifts`;
-    console.log('[API] GET Gifts List URL:', url);
-
-    const response = await axios.get('/invitation/gifts', { withCredentials: true });
+    const response = await axios.get('/invitation/gifts', {
+      params: {
+        subdomain: slug
+      },
+      withCredentials: true
+    });
     return response.data;
   } catch (error) {
     console.error('[API] Erro ao buscar lista de presentes:', {
