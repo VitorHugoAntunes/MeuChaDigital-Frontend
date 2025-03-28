@@ -29,7 +29,15 @@ const parisienne = Parisienne({
 
 export const metadata: Metadata = {
   title: "Meu Chá Digital",
-  description: "Site de chás digitais",
+  description: "Crie e compartilhe seu chá online de forma fácil, prática e personalizada. Adicione listas de presentes e organize tudo em um só lugar!",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
