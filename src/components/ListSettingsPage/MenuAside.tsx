@@ -1,19 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import Card from "@/components/Card";
 
-const menuItems = [
-  { id: "informacoes-basicas", label: "Informações Básicas" },
-  { id: "endereco", label: "Endereço" },
-  { id: "imagens", label: "Imagens" },
-  { id: "privacidade", label: "Privacidade" },
-  { id: "zona-de-perigo", label: "Zona de Perigo" },
-];
+interface MenuAsideProps {
+  type: "terms" | "privacy" | "settings";
+}
 
-export default function MenuAside() {
+const menuOptions = {
+  terms: [
+    { id: "aceitacao-dos-termos", label: "Aceitação dos Termos" },
+    { id: "cadastro-e-conta", label: "Cadastro e Conta" },
+    { id: "uso-de-nossos-servicos", label: "Uso de Nossos Serviços" },
+    { id: "privacidade-e-dados", label: "Privacidade e Dados" },
+    { id: "propriedade-intelectual", label: "Propriedade Intelectual" },
+    { id: "limitacao-de-responsabilidade", label: "Limitação de Responsabilidade" },
+    { id: "alteracoes-nos-termos", label: "Alterações nos Termos" },
+    { id: "disposicoes-gerais", label: "Disposições Gerais" },
+  ],
+  privacy: [
+    { id: "coleta-de-dados", label: "Coleta de Dados" },
+    { id: "uso-dos-dados", label: "Uso dos Dados" },
+    { id: "compartilhamento", label: "Compartilhamento de Informações" },
+    { id: "seguranca", label: "Segurança" },
+    { id: "direitos-do-usuario", label: "Direitos do Usuário" },
+  ],
+  settings: [
+    { id: "informacoes-basicas", label: "Informações Básicas" },
+    { id: "endereco", label: "Endereço" },
+    { id: "imagens", label: "Imagens" },
+    { id: "privacidade", label: "Privacidade" },
+    { id: "zona-de-perigo", label: "Zona de Perigo" },
+  ],
+};
+
+export default function MenuAside({ type }: MenuAsideProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const menuItems = useMemo(() => menuOptions[type] || [], [type]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,10 +62,10 @@ export default function MenuAside() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [menuItems]);
 
   return (
-    <aside className="hidden lg:block  sticky top-6 h-fit">
+    <aside className="hidden lg:block sticky top-6 h-fit">
       <Card>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Menu</h3>
         <nav className="space-y-2">
@@ -50,8 +74,8 @@ export default function MenuAside() {
               key={item.id}
               href={`#${item.id}`}
               className={`block text-md px-3 py-2 rounded-md transition-all duration-300 ${activeSection === item.id
-                ? "text-primary-dark bg-pink-100"
-                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  ? "text-primary-dark bg-pink-100"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
             >
               {item.label}

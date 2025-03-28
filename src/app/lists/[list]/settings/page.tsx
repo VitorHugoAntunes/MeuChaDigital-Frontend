@@ -275,7 +275,7 @@ export default function ListSettingsPage() {
 
   return (
     <main className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:mt-8 lg:mb-36 py-6 h-fit relative">
-      <MenuAside />
+      <MenuAside type="settings" />
 
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 lg:gap-8">
