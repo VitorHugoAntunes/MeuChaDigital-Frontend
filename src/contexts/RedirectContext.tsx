@@ -40,7 +40,8 @@ export const RedirectProvider = ({ children }: any) => {
   useEffect(() => {
     if (listData?.redirect) {
       const redirectUrl = subdomain
-        ? `http://${listData.redirect}.localhost:3000/invitation`
+        // ? `http://${listData.redirect}.localhost:3000/invitation`
+        ? `https://${listData.redirect}.meuchadigital.com/invitation`
         : `/lists/${listData.redirect}/gifts`;
 
       console.log("Redirecionando para:", redirectUrl);

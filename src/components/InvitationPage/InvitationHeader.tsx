@@ -23,7 +23,7 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
     if (typeof window !== "undefined") {
       const hostname = window.location.hostname;
       const parts = hostname.split(".");
-      if (parts.length >= 2 && parts[1] === "localhost") {
+      if (parts.length >= 2 && parts[1] === "localhost" || parts[1] === "meuchadigital") {
         setSubdomain(parts[0]); // Extrai o subdomínio (ex: "teste-2")
       }
     }
@@ -81,7 +81,8 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
         className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background text-text-primary border-b-2 border-b-gray-200"
       >
         <Link
-          href={`http://${subdomain}.localhost:3000/invitation`}
+          // href={`http://${subdomain}.localhost:3000/invitation`}
+          href={`https://${subdomain}.meuchadigital.com/invitation`}
           className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block"
         >
           <div className="flex items-center space-x-2">
@@ -98,10 +99,23 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
         </Link>
 
         <nav className="hidden lg:flex space-x-6">
-          <NavLink href={`http://${subdomain}.localhost:3000/invitation/#rsvp`}>Confirme sua presença</NavLink>
+          {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#rsvp`}>Confirme sua presença</NavLink>
           <NavLink href={`http://${subdomain}.localhost:3000/invitation/#moments`}>Nossos momentos</NavLink>
           <NavLink href={`http://${subdomain}.localhost:3000/invitation/#location`}>Localização</NavLink>
-          <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`}>
+          <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`}> */}
+          <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#rsvp`}>
+            Confirme sua presença
+          </NavLink>
+
+          <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#moments`}>
+            Nossos momentos
+          </NavLink>
+
+          <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#location`}>
+            Localização
+          </NavLink>
+
+          <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/gifts`}>
             <Button borderStyle="rounded">
               <Gift size={20} />
               Lista de presentes
@@ -120,7 +134,8 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
         <div className="fixed inset-0 bg-background z-50 lg:hidden flex flex-col overflow-y-hidden">
           <div className="border-b-2 border-b-gray-200 py-6 px-8 flex justify-between items-center">
             <Link
-              href={`http://${subdomain}.localhost:3000/invitation`}
+              // href={`http://${subdomain}.localhost:3000/invitation`}
+              href={`https://${subdomain}.meuchadigital.com/invitation`}
               className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block"
             >
               <h2 className="text-2xl font-semibold text-primary-light group-hover:brightness-90 transition-all duration-300">
@@ -136,22 +151,26 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
           <nav className="flex-1 flex flex-col items-center w-full">
             <ul className="text-center w-full">
               <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
-                <NavLink href={`http://${subdomain}.localhost:3000/invitation/#rsvp`} onClick={closeMenu}>
+                {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#rsvp`} onClick={closeMenu}> */}
+                <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#rsvp`} onClick={closeMenu}>
                   Confirme sua presença
                 </NavLink>
               </li>
               <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
-                <NavLink href={`http://${subdomain}.localhost:3000/invitation/#moments`} onClick={closeMenu}>
+                {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#moments`} onClick={closeMenu}> */}
+                <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#moments`} onClick={closeMenu}>
                   Nossos momentos
                 </NavLink>
               </li>
               <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
-                <NavLink href={`http://${subdomain}.localhost:3000/invitation/#location`} onClick={closeMenu}>
+                {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#location`} onClick={closeMenu}> */}
+                <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#location`} onClick={closeMenu}>
                   Localização
                 </NavLink>
               </li>
               <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
-                <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`} onClick={closeMenu}>
+                {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`} onClick={closeMenu}> */}
+                <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/gifts`} onClick={closeMenu}>
                   <Button borderStyle="rounded">
                     <Gift size={20} />
                     Lista de presentes
