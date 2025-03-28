@@ -41,7 +41,8 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
     setCheckoutItem(giftName);
 
     if (isInvitationPage === true) {
-      router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}/checkout-${giftName}`);
+      // router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}/checkout-${giftName}`);
+      router.push(`https://${slug}.meuchadigital.com/invitation/gifts/${giftId}/checkout-${giftName}`);
     } else {
       router.push(`/lists/${slug}/gifts/${giftId}/checkout-${giftName}`);
     }

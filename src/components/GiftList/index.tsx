@@ -285,7 +285,8 @@ export default function GiftList({
               <Link
                 href={
                   isInvitationPage
-                    ? `http://${slug}.localhost:3000/invitation/gifts/${gift.id}`
+                    // ? `http://${slug}.localhost:3000/invitation/gifts/${gift.id}`
+                    ? `https://${slug}.meuchadigital.com/invitation/gifts/${gift.id}`
                     : `/lists/${slug}/gifts/${gift.id}`
                 }
                 key={gift.id}
