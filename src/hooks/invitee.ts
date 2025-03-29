@@ -9,20 +9,10 @@ export const useCreateInvitee = () => {
     mutationFn: (data: InviteeData) => createInvitee(data),
     onSuccess: () => {
       queryClient.invalidateQueries(['invitees']);
-
-      toast.success('Convidado adicionado com sucesso', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
     },
     onError: (error: any) => {
       console.error('Erro ao adicionar convidado', error.message);
-      toast.error('Erro ao adicionar convidado', {
+      toast.error('Erro ao enviar resposta', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: true,

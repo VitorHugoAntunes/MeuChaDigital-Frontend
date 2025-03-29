@@ -63,7 +63,7 @@ export default function InvitationPage() {
         <main className="flex flex-col flex-1 w-full">
           <InvitationHeroSection
             bannerUrl={invitation?.data.banner.url || ''}
-            slug={invitation?.data.slug || ''}
+            title={invitation?.data.name || ''}
             headerHeight={headerHeight || 0}
             eventDate={invitation?.data.eventDate || ''}
           />

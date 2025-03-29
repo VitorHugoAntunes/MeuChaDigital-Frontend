@@ -5,12 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 interface ActionModalProps {
   description: string;
   action: string;
+  isActionSuccess?: boolean;
   isLoading?: boolean;
   onSuccess?: () => void;
   onClose: () => void;
 }
 
-export const ActionModal = ({ description, action, isLoading, onSuccess, onClose }: ActionModalProps) => {
+export const ActionModal = ({ description, action, isActionSuccess, isLoading, onSuccess, onClose }: ActionModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -33,7 +34,9 @@ export const ActionModal = ({ description, action, isLoading, onSuccess, onClose
         >
           Cancelar
         </Button>
-        <Button type="submit" variant="danger" widthFull disabled={isLoading} loading={isLoading}>
+        <Button type="submit" variant={
+          isActionSuccess ? "default" : "danger"
+        } widthFull disabled={isLoading} loading={isLoading}>
           {action}
         </Button>
       </div>

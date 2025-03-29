@@ -14,8 +14,9 @@ interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
   modalType: "gift" | "pix" | "invitee" | "action";
-  action?: "Sair" | "Excluir";
+  action?: "Sair" | "Excluir" | "Confirmar" | "Rejeitar";
   actionTitle?: string;
+  isActionSuccess?: boolean;
   isEdit?: boolean;
   initialValues?: GiftUpdateFormData | UpdateInviteeFormData;
   actionDescription?: string;
@@ -26,7 +27,7 @@ interface ModalProps {
   onSuccess?: () => void;
 }
 
-const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isEdit, initialValues, isLoading, action, actionTitle, actionDescription, userId, slug, onSuccess }: ModalProps) => {
+const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuccess, isEdit, initialValues, isLoading, action, actionTitle, actionDescription, userId, slug, onSuccess }: ModalProps) => {
   const closeModal = () => setIsModalOpen(false);
 
   const modalComponents: Record<string, ReactNode | null> = {
@@ -35,7 +36,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isEdit, ini
     ) : null,
     pix: <AddPixKeyModal onClose={closeModal} />,
     invitee: <EditInviteeModal onClose={closeModal} slug={slug as string} initialValues={initialValues as UpdateInviteeFormData} onSuccess={onSuccess} />,
-    action: <ActionModal action={action || ""} description={actionDescription || ""} isLoading={isLoading} onSuccess={onSuccess} onClose={closeModal} />,
+    action: <ActionModal action={action || ""} description={actionDescription || ""} isActionSuccess={isActionSuccess} isLoading={isLoading} onSuccess={onSuccess} onClose={closeModal} />,
   };
 
   return (
