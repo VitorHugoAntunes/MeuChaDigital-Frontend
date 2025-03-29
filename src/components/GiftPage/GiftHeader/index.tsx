@@ -12,6 +12,7 @@ interface GiftHeaderProps {
   priority: "LOW" | "MEDIUM" | "HIGH";
   name: string;
   description: string;
+  totalValueContributed: number;
   totalValue: number;
   isUserOwner: boolean;
   onEdit?: () => void;
@@ -23,6 +24,7 @@ export default function GiftHeader({
   priority,
   name,
   description,
+  totalValueContributed,
   totalValue,
   isUserOwner,
   onEdit,
@@ -43,7 +45,7 @@ export default function GiftHeader({
       </p>
 
       <div className="mt-4">
-        <ProgressBar initialValue={totalValue} goalValue={totalValue} />
+        <ProgressBar initialValue={totalValueContributed} goalValue={totalValue} />
       </div>
 
       {isUserOwner && (

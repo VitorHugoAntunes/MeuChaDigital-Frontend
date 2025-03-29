@@ -11,6 +11,7 @@ interface Gift {
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
   list: { userId: string };
+  totalContributions: number;
 }
 
 export const useGiftsBySlug = (slug: string) => {

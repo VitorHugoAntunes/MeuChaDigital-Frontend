@@ -19,6 +19,7 @@ interface Gift {
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
   list: { userId: string };
+  totalContributions: number;
   onGiftUpdated?: () => void;
 }
 
@@ -97,6 +98,7 @@ export default function GiftContent({
             priority={gift.priority}
             name={gift.name}
             description={gift.description}
+            totalValueContributed={gift.totalContributions}
             totalValue={gift.totalValue}
             isUserOwner={isUserOwner}
             onEdit={openEditGiftModal}

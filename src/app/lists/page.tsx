@@ -10,6 +10,11 @@ import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { GiftCardSkeleton } from "@/components/Skeleton/giftCardSkeleton";
 
+interface Gift {
+  totalValue: number;
+  totalValueContributed: number;
+  totalContributors: number;
+}
 interface GiftList {
   id: string;
   name: string;
@@ -21,6 +26,7 @@ interface GiftList {
   _count: {
     gifts: number;
   };
+  gifts: Gift[];
 }
 
 const ListsPage = () => {
@@ -110,9 +116,9 @@ const ListsPage = () => {
                   title={list.name}
                   date={formatDateToBR(list.eventDate)}
                   totalGifts={list._count.gifts}
-                  totalContributors={5}
-                  totalRaised={40}
-                  totalGoal={100}
+                  totalContributors={list.gifts.reduce((acc, gift) => acc + gift.totalContributors, 0)}
+                  totalRaised={list.gifts.reduce((acc, gift) => acc + gift.totalValueContributed, 0)}
+                  totalGoal={list.gifts.reduce((acc, gift) => acc + gift.totalValue, 0)}
                 />
               </Link>
             ))
