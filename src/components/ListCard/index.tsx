@@ -22,6 +22,7 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
   return (
     <article className="bg-white rounded-lg shadow-md flex flex-col flex-1 w-full h-full hover:shadow-lg">
       <figure className="w-full h-32 lg:h-48 relative rounded-t-lg overflow-hidden bg-gray-300">
+        {isLoading && <div className="w-full h-32 lg:h-48 bg-gray-300 animate-pulse" />}
         <Image
           src={photo || "/images/banner-placeholder.png"}
           alt={`Imagem da lista ${title}`}

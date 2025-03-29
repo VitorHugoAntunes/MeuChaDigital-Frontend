@@ -11,6 +11,7 @@ import { InviteeTable } from "@/components/InviteeListPage/InviteesTable";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useState } from "react";
 import exportToExcel from "@/utils/exportToExcel";
+import Card from "@/components/Card";
 
 export default function InviteeListPage() {
   const { list: slug } = useParams();
@@ -27,9 +28,8 @@ export default function InviteeListPage() {
     status
   );
 
-  const { isFetching: isInviteesExporting, refetch: fetchAllInvitees } = useGetAllInviteesByGiftListSlug(
-    slug as string,
-    false
+  const { data: invitees, isFetching: isInviteesExporting, refetch: fetchAllInvitees } = useGetAllInviteesByGiftListSlug(
+    slug as string
   );
 
   const handlePageChange = (page: number) => {
@@ -64,32 +64,53 @@ export default function InviteeListPage() {
           <LoadingSpinner />
         </div>
       ) : (
-        <>
+        <div className="flex flex-col gap-6">
           <StatCards
             totalInvitees={filteredInvitees?.totalWithoutPagination}
             acceptedInvitees={filteredInvitees?.totalAccepted}
             rejectedInvitees={filteredInvitees?.totalRejected}
           />
           <ShareLinkCard slug={slug as string} />
-          <InviteeTable
-            slug={slug as string}
-            invitees={filteredInvitees?.invitees || []}
-            total={filteredInvitees?.total || 0}
-            totalPages={filteredInvitees?.totalPages || 1}
-            handleDelete={handleDelete}
-            isDeleting={isDeleting}
-            onPageChange={handlePageChange}
-            currentPage={currentPage}
-            search={search}
-            onSearchChange={setSearch}
-            status={status}
-            onStatusChange={setStatus}
-            setCurrentPage={setCurrentPage}
-            exportToExcel={handleExportToExcel}
-            isExporting={isInviteesExporting}
-            isLoading={isFilteredInviteesLoading || isFilteredInviteesFetching}
-          />
-        </>
+
+          <Card className="text-amber-800" bgColor="bg-amber-50">
+            <p className="font-medium mb-2">✨ Dica importante:</p>
+            <p>
+              Quanto antes você compartilhar, mais tempo seus convidados terão para confirmar presença e você poderá se organizar melhor.
+            </p>
+          </Card>
+
+          {invitees?.length > 0 ? (
+            <InviteeTable
+              slug={slug as string}
+              invitees={filteredInvitees?.invitees || []}
+              total={filteredInvitees?.total || 0}
+              totalPages={filteredInvitees?.totalPages || 1}
+              handleDelete={handleDelete}
+              isDeleting={isDeleting}
+              onPageChange={handlePageChange}
+              currentPage={currentPage}
+              search={search}
+              onSearchChange={setSearch}
+              status={status}
+              onStatusChange={setStatus}
+              setCurrentPage={setCurrentPage}
+              exportToExcel={handleExportToExcel}
+              isExporting={isInviteesExporting}
+              isLoading={isFilteredInviteesLoading || isFilteredInviteesFetching}
+            />
+          ) : (
+            <Card className="w-full">
+              <h2 className="text-lg font-semibold text-text-primary text-left">Lista de Convidados</h2>
+
+              <p className="text-text-secondary mt-4 text-left md:text-center">
+                Você ainda não tem convidados confirmados.
+              </p>
+              <p className="text-text-secondary text-left md:text-center">
+                Compartilhe o convite para começar a receber as respostas!
+              </p>
+            </Card>
+          )}
+        </div>
       )}
 
       <ToastContainer />

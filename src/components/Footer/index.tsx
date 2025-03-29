@@ -44,6 +44,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/privacy" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
+                  Política de Privacidade
+                </Link>
+              </li>
+              <li>
                 <Link href="/help" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
                   Ajuda
                 </Link>

@@ -21,10 +21,12 @@ const menuOptions = {
   ],
   privacy: [
     { id: "coleta-de-dados", label: "Coleta de Dados" },
-    { id: "uso-dos-dados", label: "Uso dos Dados" },
-    { id: "compartilhamento", label: "Compartilhamento de Informações" },
-    { id: "seguranca", label: "Segurança" },
+    { id: "uso-das-informacoes", label: "Uso das Informações" },
+    { id: "protecao-de-dados", label: "Proteção de Dados" },
+    { id: "compartilhamento-de-dados", label: "Compartilhamento de Dados" },
+    { id: "cookies", label: "Cookies" },
     { id: "direitos-do-usuario", label: "Direitos do Usuário" },
+    { id: "alteracoes-na politica", label: "Alterações na Política" },
   ],
   settings: [
     { id: "informacoes-basicas", label: "Informações Básicas" },
@@ -74,8 +76,8 @@ export default function MenuAside({ type }: MenuAsideProps) {
               key={item.id}
               href={`#${item.id}`}
               className={`block text-md px-3 py-2 rounded-md transition-all duration-300 ${activeSection === item.id
-                  ? "text-primary-dark bg-pink-100"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                ? "text-primary-dark bg-pink-100"
+                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
             >
               {item.label}

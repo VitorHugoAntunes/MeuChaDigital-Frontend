@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
-import { Plus, ShieldCheck, TriangleAlert } from "lucide-react";
+import { Loader2, Plus, ShieldCheck, TriangleAlert } from "lucide-react";
 import Image from "next/image";
 import Card from "@/components/Card";
 import KeyInfo from "@/components/ProfilePage/KeyInfo";
@@ -120,7 +120,7 @@ export default function ProfilePage() {
           <div className="mt-6 space-y-4">
             {isGettingAllPixKeysLoading ? (
               <div className="flex justify-center items-center py-4">
-                <span className="text-text-secondary">Carregando...</span>
+                <Loader2 className="h-12 w-12 text-primary-light animate-spin" />
               </div>
             ) : pixKeys && pixKeys.length > 0 ? (
               pixKeys.map((key: PixKey) => (
@@ -157,7 +157,6 @@ export default function ProfilePage() {
                 </Button>
               </div>
             </Card>
-
 
             <Card className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex-1">

@@ -147,8 +147,8 @@ export const InviteeTable = ({
   };
 
   return (
-    <Card className="w-full mt-8">
-      <h2 className="text-lg font-semibold text-text-primary text-center sm:text-left">Lista de Convidados</h2>
+    <Card className="w-full">
+      <h2 className="text-lg font-semibold text-text-primary text-left">Lista de Convidados</h2>
 
       <div className="flex flex-col sm:flex-row mt-4 gap-4">
         <div className="w-full sm:w-2/3">

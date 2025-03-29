@@ -45,7 +45,7 @@ export default function TermsPage() {
         </section>
 
         <section className="mt-12">
-          <p className="text-base lg:text-lg">Ao usar nosso serviço, você concorda com estes termos.</p>
+          <p className="text-base lg:text-lg">Ao usar nossos serviços, você concorda com estes termos.</p>
         </section>
 
         <p className="text-center lg:text-left text-base lg:text-lg mt-12">Última atualização: 28 de março de 2025</p>

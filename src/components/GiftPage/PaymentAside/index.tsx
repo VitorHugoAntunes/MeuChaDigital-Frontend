@@ -35,6 +35,11 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
     formState: { errors, isSubmitted },
   } = methods;
 
+  const handleToSharing = () => {
+    // router.push(`http://${slug}.localhost:3000/invitation/gifts/${giftId}`);
+    router.push(`https://${slug}.meuchadigital.com/invitation/gifts/${giftId}`);
+  };
+
   const onSubmit = (data: { amount: number }) => {
     setAmount(data.amount);
     setMaxAmount(maxAmount);
@@ -54,36 +59,12 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
           <h2 className="text-lg font-semibold text-text-primary mb-4">Pagamento</h2>
 
-          <div>
-            <p className="text-md text-text-secondary mb-4">
-              Contribua com o valor que deseja pagar, você pode pagar o valor total ou parcial.
-            </p>
-
-            <InputField
-              label="Valor"
-              type="text"
-              placeholder="R$ 0,00"
-              register={register("amount", {
-                required: "O valor é obrigatório",
-                setValueAs: (value) => {
-                  const numericValue = Number(value.replace(/\D/g, "")) / 100;
-                  return isNaN(numericValue) || numericValue === 0 ? undefined : numericValue;
-                },
-              })}
-              error={isSubmitted ? errors.amount?.message : undefined}
-              isNumeric={true}
-              mask={CurrencyMask}
-              min={0.01}
-              max={maxAmount}
-            />
-          </div>
-
           {isUserOwner ? (
             <>
               <div className="mt-6">
-                <Button widthFull type="submit">
+                <Button widthFull onClick={handleToSharing}>
                   <ArrowRight size={20} />
-                  Ver link de pagamento
+                  Ver como convidado
                 </Button>
               </div>
 
@@ -98,6 +79,30 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
             </>
           ) : (
             <>
+              <div>
+                <p className="text-md text-text-secondary mb-4">
+                  Contribua com o valor que deseja pagar, você pode pagar o valor total ou parcial.
+                </p>
+
+                <InputField
+                  label="Valor"
+                  type="text"
+                  placeholder="R$ 0,00"
+                  register={register("amount", {
+                    required: "O valor é obrigatório",
+                    setValueAs: (value) => {
+                      const numericValue = Number(value.replace(/\D/g, "")) / 100;
+                      return isNaN(numericValue) || numericValue === 0 ? undefined : numericValue;
+                    },
+                  })}
+                  error={isSubmitted ? errors.amount?.message : undefined}
+                  isNumeric={true}
+                  mask={CurrencyMask}
+                  min={0.01}
+                  max={maxAmount}
+                />
+              </div>
+
               <div className="mt-6">
                 <Button widthFull type="submit">Pagar</Button>
               </div>
@@ -106,11 +111,11 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
                 <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
                 <div>
                   <p className="text-sm text-gray-600">
-                    Pagamento seguro garantido pelo Efi Bank
+                    Pagamento seguro garantido pelo Efi Bank.
                   </p>
                   <p className="text-sm text-gray-600">
                     Ao clicar em &quot;Pagar&quot;, você concorda com os{" "}
-                    <Link href="#" className="text-primary hover:underline">
+                    <Link href="/terms" className="text-primary hover:underline">
                       Termos de Uso.
                     </Link>
                   </p>

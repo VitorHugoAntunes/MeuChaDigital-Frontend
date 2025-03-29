@@ -8,6 +8,7 @@ import { formatDateToBR } from "@/utils/formatDate";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { GiftCardSkeleton } from "@/components/Skeleton/giftCardSkeleton";
 
 interface GiftList {
   id: string;
@@ -92,24 +93,30 @@ const ListsPage = () => {
 
       <section className="lg:mt-4 w-full">
         <div className="grid gap-12 grid-cols-[repeat(auto-fit,20rem)] lg:gap-16 lg:grid-cols-[repeat(auto-fit,28rem)] justify-center lg:justify-start">
-          {giftLists?.map((list: GiftList) => (
-            <Link
-              key={list.id}
-              href={`/lists/${list.slug}/gifts`}
-              className="w-full cursor-pointer"
-            >
-              <ListCard
+          {isGiftListsLoading ? (
+            [...Array(3)].map((_, index) => (
+              <GiftCardSkeleton key={index} />
+            ))
+          ) : (
+            giftLists?.map((list: GiftList) => (
+              <Link
                 key={list.id}
-                photo={list.banner?.url}
-                title={list.name}
-                date={formatDateToBR(list.eventDate)}
-                totalGifts={list._count.gifts}
-                totalContributors={5}
-                totalRaised={40}
-                totalGoal={100}
-              />
-            </Link>
-          ))}
+                href={`/lists/${list.slug}/gifts`}
+                className="w-full cursor-pointer"
+              >
+                <ListCard
+                  key={list.id}
+                  photo={list.banner?.url}
+                  title={list.name}
+                  date={formatDateToBR(list.eventDate)}
+                  totalGifts={list._count.gifts}
+                  totalContributors={5}
+                  totalRaised={40}
+                  totalGoal={100}
+                />
+              </Link>
+            ))
+          )}
         </div>
       </section>
     </main>

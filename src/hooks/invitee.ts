@@ -35,13 +35,13 @@ export const useCreateInvitee = () => {
   });
 };
 
-export const useGetAllInviteesByGiftListSlug = (slug: string, enabled: false) => {
+export const useGetAllInviteesByGiftListSlug = (slug: string) => {
   return useQuery({
     queryKey: ['invitees', slug],
     queryFn: () => getAllInviteesByGiftListSlug(slug),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
-    enabled,
+    enabled: !!slug,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
