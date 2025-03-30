@@ -21,7 +21,10 @@ export default function InvitationFooter({ slug }: InvitationFooterProps) {
         <Heart size={16} className="text-primary inline-block" />
         {` ${slug} `}
         <Heart size={16} className="text-primary inline-block" />
+
       </p>
+
+      <p className="text-sm mt-2">© 2025 Meu Chá Digital. Todos os direitos reservados.</p>
     </footer>
   );
 }

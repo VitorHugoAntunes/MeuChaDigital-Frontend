@@ -1,15 +1,24 @@
 "use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import logo from '@/assets/logo.png';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import Image from "next/image";
+import logo from "@/assets/logo.png";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
   const pathName = usePathname();
-  const currentUrl = pathName.split('?')[0];
+  const [currentUrl, setCurrentUrl] = useState<string | null>(null);
 
-  if (currentUrl === '/sign-in' || currentUrl === '/create-gift-list' || currentUrl.startsWith('/invitation')) {
+  useEffect(() => {
+    setCurrentUrl(pathName.split("?")[0]);
+  }, [pathName]);
+
+  if (
+    currentUrl === "/sign-in" ||
+    currentUrl === "/create-gift-list" ||
+    currentUrl?.startsWith("/invitation")
+  ) {
     return null;
   }
 
@@ -30,26 +39,33 @@ export default function Footer() {
                 </h1>
               </div>
             </Link>
-            <p className="text-text-secondary">
-              Tornando seus momentos especiais inesquecíveis.
-            </p>
+            <p className="text-text-secondary">Tornando seus momentos especiais inesquecíveis.</p>
           </div>
 
           <nav aria-label="Links úteis" className="space-y-2 lg:space-y-4">
             <h2 className="text-base lg:text-lg font-semibold text-text-primary">Links Úteis</h2>
             <ul className="space-y-2">
               <li>
-                <Link href="/terms" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
+                <Link
+                  href="/terms"
+                  className="text-text-secondary hover:text-primary-dark transition-colors duration-300"
+                >
                   Termos de Uso
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
+                <Link
+                  href="/privacy"
+                  className="text-text-secondary hover:text-primary-dark transition-colors duration-300"
+                >
                   Política de Privacidade
                 </Link>
               </li>
               <li>
-                <Link href="/help" className="text-text-secondary hover:text-primary-dark transition-colors duration-300">
+                <Link
+                  href="/help"
+                  className="text-text-secondary hover:text-primary-dark transition-colors duration-300"
+                >
                   Ajuda
                 </Link>
               </li>
@@ -58,9 +74,7 @@ export default function Footer() {
 
           <div className="space-y-2 lg:space-y-4">
             <h2 className="text-base lg:text-lg font-semibold text-text-primary">Contato</h2>
-            <p className="text-text-secondary">
-              Dúvidas ou sugestões? Entre em contato conosco:
-            </p>
+            <p className="text-text-secondary">Dúvidas ou sugestões? Entre em contato conosco:</p>
             <ul className="space-y-2">
               <li>
                 <a
@@ -69,7 +83,7 @@ export default function Footer() {
                   aria-label="Enviar email para o suporte"
                   onClick={(e) => {
                     e.preventDefault();
-                    window.open('mailto:suporte@meuchadigital.com', '_blank');
+                    window.open("mailto:suporte@meuchadigital.com", "_blank");
                   }}
                 >
                   suporte@meuchadigital.com
@@ -80,9 +94,7 @@ export default function Footer() {
         </section>
 
         <section className="border-t border-t-gray-200 pt-4 lg:pt-8 text-center">
-          <p className="text-text-secondary">
-            © 2025 Meu Chá Digital. Todos os direitos reservados.
-          </p>
+          <p className="text-text-secondary">© 2025 Meu Chá Digital. Todos os direitos reservados.</p>
         </section>
       </div>
     </footer>

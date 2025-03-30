@@ -7,55 +7,49 @@ import InvitationMomentsSection from '@/components/InvitationPage/InvitationMome
 import InvitationRSVPSection from '@/components/InvitationPage/InvitationRSVPSection';
 import { useGetInvitation } from '@/hooks/invitation';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InvitationLayout from '@/layouts/InvitationLayout/layout';
-import { Loader2 } from 'lucide-react'; // Ícone de carregamento
+import { Loader2 } from 'lucide-react';
+
+const loadingMessages = ["Preparando tudo para você...", "Aguarde um instante..."];
 
 export default function InvitationPage() {
   const router = useRouter();
   const { data: invitation, isError, error, isLoading } = useGetInvitation();
-  const [hasError, setHasError] = useState(false);
+
+  const messageIndexRef = useRef(0);
+  const [, forceRender] = useState(0);
 
   console.log('invitation', invitation);
 
   useEffect(() => {
     if (!isLoading && isError) {
       console.error('Erro detectado na requisição:', error);
-      setHasError(true);
       router.replace('/not-found');
     }
   }, [isLoading, isError, error, router]);
 
-  const loadingMessages = useMemo(() => [
-    "Preparando tudo para você...",
-    "Aguarde um instante...",
-  ], []);
-  const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
-
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentMessage((prev) => {
-        const currentIndex = loadingMessages.indexOf(prev);
-        const nextIndex = (currentIndex + 1) % loadingMessages.length;
-        return loadingMessages[nextIndex];
-      });
-    }, 3000);
+    if (isLoading) {
+      const interval = setInterval(() => {
+        messageIndexRef.current = (messageIndexRef.current + 1) % loadingMessages.length;
+        forceRender((prev) => prev + 1);
+      }, 3000);
 
-    return () => clearInterval(interval);
-  }, [currentMessage, loadingMessages]);
+      return () => clearInterval(interval);
+    }
+  }, [isLoading]);
 
   if (isLoading) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center">
         <Loader2 className="h-12 w-12 text-primary-light animate-spin" />
         <p className="mt-4 text-lg text-text-primary font-semibold">
-          {currentMessage}
+          {loadingMessages[messageIndexRef.current]}
         </p>
       </div>
     );
   }
-
-  if (hasError) return null;
 
   return (
     <InvitationLayout title={invitation?.data.name || undefined}>
