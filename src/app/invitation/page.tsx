@@ -6,10 +6,8 @@ import axios from '@/config/axios';
 interface InvitationData {
   name: string;
   description: string;
-  data: {
-    banner: {
-      url: string;
-    };
+  banner: {
+    url: string;
   };
 }
 
@@ -60,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Meu Chá Digital",
       images: [
         {
-          url: invitationData ? invitationData.data.banner.url : '/og-image.jpg',
+          url: invitationData ? invitationData.banner.url : '/og-image.jpg',
           width: 1200,
           height: 630,
           alt: invitationData.name || 'Meu Chá Digital - Organize seu chá de forma fácil',
@@ -76,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: invitationData.name,
       description: invitationData.description,
-      images: [invitationData ? invitationData.data.banner.url : '/twitter-image.jpg'],
+      images: [invitationData ? invitationData.banner.url : '/twitter-image.jpg'],
       creator: "@meuchadigital",
     },
     appleWebApp: {
