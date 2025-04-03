@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function GetStarted() {
   return (
-    <section className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-primary-extraLight mt-16 py-8 md:py-16">
+    <section className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-primary-extraLight dark:bg-gray-dark mt-16 py-8 md:py-16">
       <div className="max-w-screen-xl mx-auto px-4 md:px-8">
         <h2 className="text-2xl md:text-3xl font-semibold text-center text-text-primary">
           Pronto para começar a planejar o seu dia perfeito?

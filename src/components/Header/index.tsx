@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "../ThemeToggle";
 
 export default function Header() {
   const router = useRouter();
@@ -54,26 +55,26 @@ export default function Header() {
 
   if (isLoading) {
     return (
-      <header className="bg-background text-text-primary border-b-2 border-b-gray-200 py-6 px-4 md:px-6 lg:px-8 flex justify-between items-center">
+      <header className="bg-background dark:bg-gray-dark text-text-primary border-b-2 border-b-gray-dark py-6 px-4 md:px-6 lg:px-8 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <div className="h-6 w-6 bg-gray-200 rounded-full animate-pulse lg:h-8 lg:w-8"></div>
-          <div className="h-6 w-32 bg-gray-200 rounded-md animate-pulse lg:w-40"></div>
+          <div className="h-6 w-6 bg-gray-dark dark:bg-gray-light rounded-full animate-pulse lg:h-8 lg:w-8"></div>
+          <div className="h-6 w-32 bg-gray-dark dark:bg-gray-light rounded-md animate-pulse lg:w-40"></div>
         </div>
 
         <nav className="hidden lg:flex justify-center space-x-8 items-center">
           <div className="flex space-x-8">
-            <div className="h-6 w-16 bg-gray-200 rounded-md animate-pulse"></div>
-            <div className="h-6 w-40 bg-gray-200 rounded-md animate-pulse"></div>
+            <div className="h-6 w-16 bg-gray-dark dark:bg-gray-light rounded-md animate-pulse"></div>
+            <div className="h-6 w-40 bg-gray-dark dark:bg-gray-light rounded-md animate-pulse"></div>
           </div>
         </nav>
 
         <div className="hidden lg:flex space-x-4 items-center justify-end">
-          <div className="h-6 w-24 bg-gray-200 rounded-md animate-pulse"></div>
-          <div className="h-10 w-24 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="h-6 w-24 bg-gray-dark dark:bg-gray-light rounded-md animate-pulse"></div>
+          <div className="h-10 w-24 bg-gray-dark dark:bg-gray-light rounded-md animate-pulse"></div>
         </div>
 
         <div className="lg:hidden flex justify-end">
-          <div className="h-6 w-6 bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="h-6 w-6 bg-gray-dark dark:bg-gray-light rounded-md animate-pulse"></div>
         </div>
       </header>
     );
@@ -81,7 +82,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-background text-text-primary border-b-2 border-b-gray-200 py-6 px-4 md:px-6 lg:px-8 flex items-center">
+      <header className="bg-background dark:bg-gray-dark text-text-primary border-b-2 border-b-gray-dark dark:border-b-gray-light py-6 px-4 md:px-6 lg:px-8 flex items-center">
         <div className="flex-1 flex justify-start">
           <Link href="/" className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block">
             <div className="flex items-center space-x-2">
@@ -117,6 +118,8 @@ export default function Header() {
         </nav>
 
         <div className="flex-1 flex justify-end items-center space-x-4">
+          <ThemeToggle />
+
           {isAuthenticated && user ? (
             <>
               {user?.name && (
@@ -145,7 +148,7 @@ export default function Header() {
 
       {isMenuOpen && (
         <div className="fixed inset-0 bg-background z-50 lg:hidden flex flex-col overflow-y-hidden">
-          <div className="border-b-2 border-b-gray-200 py-6 px-4 md:px-6 lg:px-8 flex justify-between items-center">
+          <div className="border-b-2 border-b-gray-dark py-6 px-4 md:px-6 lg:px-8 flex justify-between items-center">
             <Link href="/" className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block">
               <div className="flex items-center space-x-2">
                 <Image
@@ -167,13 +170,13 @@ export default function Header() {
           <nav className="flex-1 flex flex-col items-center w-full">
             <ul className="text-center w-full">
               {isAuthenticated && user && (
-                <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
+                <li className="flex w-full justify-center py-4 border-b-2 border-gray-dark hover:bg-gray-100 dark:hover:bg-gray-light transition rounded-md">
                   <NavLink href="/lists" onClick={closeMenu}>
                     Minhas listas de presentes
                   </NavLink>
                 </li>
               )}
-              <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
+              <li className="flex w-full justify-center py-4 border-b-2 border-gray-dark hover:bg-gray-100 dark:hover:bg-gray-light transition rounded-md">
                 <NavLink href="/help" onClick={closeMenu}>
                   Ajuda
                 </NavLink>
@@ -181,7 +184,7 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="py-4 px-4 md:px-6 lg:px-8 border-t-2 border-t-gray-200">
+          <div className="py-4 px-4 md:px-6 lg:px-8 border-t-2 border-t-gray-dark">
             {isAuthenticated && user ? (
               <>
                 {user?.name && (

@@ -4,11 +4,12 @@ import { useEffect } from "react";
 
 interface ModalWrapperProps {
   isOpen: boolean;
+  modalTitle: string;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-export const ModalWrapper = ({ isOpen, onClose, children }: ModalWrapperProps) => {
+export const ModalWrapper = ({ isOpen, modalTitle, onClose, children }: ModalWrapperProps) => {
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -33,13 +34,13 @@ export const ModalWrapper = ({ isOpen, onClose, children }: ModalWrapperProps) =
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50"
       role="dialog"
-      aria-labelledby="modal-title"
+      aria-labelledby={modalTitle}
       aria-hidden={!isOpen}
-      onClick={onClose} // Fecha o modal ao clicar fora
+      onClick={onClose}
     >
       <div
-        className="bg-white p-4 m-4 rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all duration-300"
-        onClick={(e) => e.stopPropagation()} // Impede que o modal feche ao clicar dentro
+        className="bg-white dark:bg-gray-dark p-4 m-4 rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all duration-300"
+        onClick={(e) => e.stopPropagation()}
       >
         {children}
       </div>

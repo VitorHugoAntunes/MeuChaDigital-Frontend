@@ -123,8 +123,8 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
 
   return (
     <FormProvider {...methods}>
-      <section id="rsvp" className="my-8 lg:my-16 bg-gray-50">
-        <h2 className="text-center text-2xl sm:text-4xl font-bold text-gray-900 mb-8 lg:mb-12">
+      <section id="rsvp" className="my-8 lg:my-16">
+        <h2 className="text-center text-2xl sm:text-4xl font-bold text-text-primary mb-8 lg:mb-12">
           Confirme sua presença
         </h2>
         <Card className="max-w-screen-sm w-full mx-auto">
@@ -134,7 +134,7 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
                 {submissionType === "ACCEPTED" ? "Presença confirmada!" : "Recebemos sua resposta"}
               </h3>
 
-              <p className="text-gray-600 mb-6 mx-auto">
+              <p className="text-text-secondary mb-6 mx-auto">
                 {submissionType === "ACCEPTED" ? (
                   <>
                     <span className="flex items-center justify-center gap-2">
@@ -153,7 +153,7 @@ export default function InvitationRSVPSection({ giftListId }: InvitationRSVPSect
               </p>
 
               <div className={`p-4 rounded-lg ${submissionType === "ACCEPTED" ? "bg-success-50" : "bg-danger-50"} border ${submissionType === "ACCEPTED" ? "border-success-100" : "border-danger-100"}`}>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-text-secondary">
                   Caso mude de ideia, entre em contato conosco para alterar sua resposta.
                 </p>
               </div>

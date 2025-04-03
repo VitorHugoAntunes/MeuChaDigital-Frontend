@@ -72,7 +72,7 @@ export default function InviteeListPage() {
           />
           <ShareLinkCard slug={slug as string} />
 
-          <Card className="text-amber-800" bgColor="bg-amber-50">
+          <Card className="text-amber-800" bgColor="!bg-amber-50 dark:!bg-amber-50">
             <p className="font-medium mb-2">✨ Dica importante:</p>
             <p>
               Quanto antes você compartilhar, mais tempo seus convidados terão para confirmar presença e você poderá se organizar melhor.

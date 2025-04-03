@@ -168,7 +168,7 @@ export const InviteeTable = ({
         </div>
       </div>
 
-      <div className="w-full md:w-fit mt-6">
+      <div className="w-full md:w-fit mt-6 self-end ml-auto flex justify-end items-end">
         <Button
           onClick={exportToExcel}
           loading={isExporting}
@@ -180,7 +180,8 @@ export const InviteeTable = ({
         </Button>
       </div>
 
-      <div className="overflow-x-auto mt-4 rounded-md border border-gray-300">
+
+      <div className="overflow-x-auto mt-4 rounded-md border border-gray-300 dark:border-gray-600">
         {isLoading ? (
           <div className="flex justify-center items-center p-6">
             <Loader2 size={40} className="animate-spin text-primary-light" />
@@ -192,7 +193,7 @@ export const InviteeTable = ({
         ) : (
           <table className="w-full rounded-md">
             <thead>
-              <tr className="bg-gray-100 border-b border-gray-300">
+              <tr className="bg-gray-100 dark:bg-gray-light border-b border-gray-300 dark:border-gray-light">
                 <th className="p-3 text-xs text-left text-text-secondary uppercase">Nome</th>
                 <th className="p-3 text-xs text-left text-text-secondary uppercase">Telefone</th>
                 <th className="p-3 text-xs text-left text-text-secondary uppercase">Email</th>
@@ -206,7 +207,7 @@ export const InviteeTable = ({
               {filteredInvitees.map((invitee, index) => (
                 <tr
                   key={invitee.id}
-                  className={`border-b border-gray-300 hover:bg-gray-50 transition ${index === filteredInvitees.length - 1 ? "border-b-0" : ""
+                  className={`border-b border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-light transition ${index === filteredInvitees.length - 1 ? "border-b-0" : ""
                     }`}
                 >
                   <td className="p-3 text-text-primary whitespace-nowrap" title={invitee.name}>
@@ -223,8 +224,8 @@ export const InviteeTable = ({
                       label={invitee.status === "ACCEPTED" ? "Aceito" : "Recusado"}
                       color={
                         invitee.status === "ACCEPTED"
-                          ? "bg-success-extraLight text-success-extraDark"
-                          : "bg-danger-extraLight text-danger-extraDark"
+                          ? "bg-success-extraLight text-success-extraDark dark:text-success dark:bg-gray-dark"
+                          : "bg-danger-extraLight text-danger-extraDark dark:text-danger dark:bg-gray-dark"
                       }
                     />
                   </td>
@@ -238,14 +239,14 @@ export const InviteeTable = ({
                     {invitee.observation || "-"}
                   </td>
                   <td className="p-3 flex justify-center gap-2">
-                    <button className="text-warning hover:text-warning-dark transition">
-                      <Edit size={18} onClick={() => handleOpenEditInviteeModal(invitee.id)} />
+                    <button className="hover:bg-warning transition-colors duration-300 group/edit p-2 rounded-lg" onClick={() => handleOpenEditInviteeModal(invitee.id)}>
+                      <Edit size={18} className="text-warning group-hover/edit:text-white transition-colors duration-300" />
                     </button>
                     <button
-                      className="text-danger hover:text-danger-dark transition"
+                      className="hover:bg-danger transition-colors duration-300 group/delete p-2 rounded-lg"
                       onClick={() => handleOpenDeleteInviteeModal(invitee.id)}
                     >
-                      <Trash size={18} />
+                      <Trash size={18} className="text-danger group-hover/delete:text-white transition-colors duration-300" />
                     </button>
                   </td>
                 </tr>

@@ -1,7 +1,8 @@
 import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
+
 
 export default {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -18,60 +19,66 @@ export default {
     },
     extend: {
       colors: {
-        background: colors.gray[50],
+        background: "var(--background)",
         text: {
-          primary: colors.zinc[900],
-          secondary: colors.zinc[500],
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
         },
         primary: {
-          DEFAULT: '#ff769f',
-          light: '#ff8fb1',
-          dark: '#ff5c8d',
-          extraLight: '#ffdce6',
-          extraDark: '#ff437c',
+          DEFAULT: "var(--primary)",
+          light: "var(--primary-light)",
+          dark: "var(--primary-dark)",
+          extraLight: "var(--primary-extraLight)",
+          extraDark: "var(--primary-extraDark)",
         },
         secondary: {
-          DEFAULT: colors.blue[500],
-          light: colors.blue[400],
-          dark: colors.blue[600],
-          extraLight: colors.blue[100],
-          extraDark: colors.blue[800],
+          DEFAULT: "var(--secondary)",
+          light: "var(--secondary-light)",
+          dark: "var(--secondary-dark)",
+          extraLight: "var(--secondary-extraLight)",
+          extraDark: "var(--secondary-extraDark)",
         },
         danger: {
-          DEFAULT: colors.red[500],
-          light: colors.red[400],
-          dark: colors.red[600],
-          extraLight: colors.red[100],
-          extraDark: colors.red[800],
+          DEFAULT: "var(--danger)",
+          light: "var(--danger-light)",
+          dark: "var(--danger-dark)",
+          extraLight: "var(--danger-extraLight)",
+          extraDark: "var(--danger-extraDark)",
         },
         warning: {
-          DEFAULT: colors.yellow[500],
-          light: colors.yellow[400],
-          dark: colors.yellow[600],
-          extraLight: colors.yellow[100],
-          extraDark: colors.yellow[800],
+          DEFAULT: "var(--warning)",
+          light: "var(--warning-light)",
+          dark: "var(--warning-dark)",
+          extraLight: "var(--warning-extraLight)",
+          extraDark: "var(--warning-extraDark)",
+          gray: ""
         },
         success: {
-          DEFAULT: colors.green[500],
-          light: colors.green[400],
-          dark: colors.green[600],
-          extraLight: colors.green[100],
-          extraDark: colors.green[800],
+          DEFAULT: "var(--success)",
+          light: "var(--success-light)",
+          dark: "var(--success-dark)",
+          extraLight: "var(--success-extraLight)",
+          extraDark: "var(--success-extraDark)",
         },
         purple: {
-          DEFAULT: colors.purple[500],
-          light: colors.purple[400],
-          dark: colors.purple[600],
-          extraLight: colors.purple[100],
-          extraDark: colors.purple[800],
+          DEFAULT: "var(--purple)",
+          light: "var(--purple-light)",
+          dark: "var(--purple-dark)",
+          extraLight: "var(--purple-extraLight)",
+          extraDark: "var(--purple-extraDark)",
         },
         gray: {
-          DEFAULT: colors.gray[500],
-          light: colors.gray[400],
-          dark: colors.gray[600],
-          extraLight: colors.gray[100],
-          extraDark: colors.gray[800],
+          DEFAULT: "var(--gray)",
+          light: "var(--gray-light)",
+          dark: "var(--gray-dark)",
+          extraLight: "var(--gray-extraLight)",
+          extraDark: "var(--gray-extraDark)",
+        },
+        input: {
+          DEFAULT: "var(--input)",
+          border: "var(--input-border)",
         }
+
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

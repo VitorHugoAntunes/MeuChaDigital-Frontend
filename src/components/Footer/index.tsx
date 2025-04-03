@@ -23,7 +23,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-background text-text-primary border-t-2 border-t-gray-200 mt-8">
+    <footer className="bg-background text-text-primary border-t-2 border-t-gray-dark mt-8">
       <div className="container mx-auto px-4 py-4 lg:py-8">
         <section className="flex flex-col md:flex-row justify-between gap-4 lg:gap-8 mb-4 lg:mb-8">
           <div className="lg:space-y-4">
@@ -93,7 +93,7 @@ export default function Footer() {
           </div>
         </section>
 
-        <section className="border-t border-t-gray-200 pt-4 lg:pt-8 text-center">
+        <section className="border-t border-t-gray-dark pt-4 lg:pt-8 text-center">
           <p className="text-text-secondary">© 2025 Meu Chá Digital. Todos os direitos reservados.</p>
         </section>
       </div>

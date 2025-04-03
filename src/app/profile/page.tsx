@@ -79,7 +79,7 @@ export default function ProfilePage() {
           <header className="flex flex-col sm:flex-row items-center gap-4">
             <picture className="w-16 h-16 bg-gray-500 rounded-full overflow-hidden">
               {isLoading ? (
-                <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                <div className="w-full h-full bg-gray-dark animate-pulse"></div>
               ) : (
                 <Image
                   src={user?.photo.url || "/default-image.png"}
@@ -93,8 +93,8 @@ export default function ProfilePage() {
             <div className="text-center sm:text-left">
               {isLoading ? (
                 <>
-                  <div className="w-24 h-6 bg-gray-200 animate-pulse"></div>
-                  <div className="w-32 h-6 bg-gray-200 animate-pulse mt-2"></div>
+                  <div className="w-24 h-6 bg-gray-dark animate-pulse"></div>
+                  <div className="w-32 h-6 bg-gray-dark animate-pulse mt-2"></div>
                 </>
               ) : (
                 <>

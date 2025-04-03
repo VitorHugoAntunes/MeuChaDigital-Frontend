@@ -125,7 +125,7 @@ export default function GiftList({
     setSelectedGiftId(giftId);
   };
 
-  const openEditGiftModal = (giftId: string, event: React.MouseEvent) => {
+  const openEditGiftModal = async (giftId: string, event: React.MouseEvent) => {
     event.preventDefault();
 
     const giftToEdit = gifts.find((gift) => gift.id === giftId);
@@ -134,28 +134,28 @@ export default function GiftList({
       setIsModalOpen(true);
       setSelectedGiftId(giftId);
 
-      async function getGiftPhotoFile() {
-        if (giftToEdit && giftToEdit.photo?.url) {
+      let file: File | null = null;
+      if (giftToEdit.photo?.url) {
+        try {
           const response = await fetch(giftToEdit.photo.url);
           const blob = await response.blob();
-          const file = new File([blob], "giftPhoto", { type: "image/jpeg" });
-          return file;
+          file = new File([blob], "giftPhoto", { type: blob.type || "image/jpeg" });
+          console.log('conseguiu pegar a foto do presente');
+        } catch (error) {
+          console.error("Error fetching gift photo:", error);
         }
-        return null;
       }
 
-      getGiftPhotoFile().then((file) => {
-        setInitialValues({
-          id: giftToEdit.id,
-          name: giftToEdit.name,
-          totalValue: giftToEdit.totalValue,
-          categoryId: giftToEdit.category?.id || "",
-          priority: giftToEdit.priority,
-          description: giftToEdit.description,
-          giftPhoto: file || new File([], "default"),
-          userId: user?.id || "",
-          giftListId: giftList.id,
-        });
+      setInitialValues({
+        id: giftToEdit.id,
+        name: giftToEdit.name,
+        totalValue: giftToEdit.totalValue,
+        categoryId: giftToEdit.category?.id || "",
+        priority: giftToEdit.priority,
+        description: giftToEdit.description,
+        giftPhoto: file || new File([], "default"),
+        userId: user?.id || "",
+        giftListId: giftList.id,
       });
     }
   };
@@ -170,15 +170,15 @@ export default function GiftList({
     return (
       <main className="flex flex-col flex-1 w-full min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh] h-full">
         <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
-          <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-4 lg:py-8">
+          <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] dark:from-gray-dark dark:to-gray-extraDark shadow-sm py-4 lg:py-8">
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
-              <div className="h-9 w-64 bg-gray-200 rounded mb-3"></div>
-              <div className="h-5 w-3/4 bg-gray-200 rounded mb-6"></div>
+              <div className="h-9 w-64 bg-gray-dark  dark:bg-gray-light rounded mb-3"></div>
+              <div className="h-5 w-3/4 bg-gray-dark  dark:bg-gray-light rounded mb-6"></div>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                  <div className="h-10 w-full sm:w-32 bg-gray-200 rounded"></div>
-                  <div className="h-10 w-full sm:w-36 bg-gray-200 rounded"></div>
-                  <div className="h-10 w-full sm:w-40 bg-gray-200 rounded"></div>
+                  <div className="h-10 w-full sm:w-32 bg-gray-dark  dark:bg-gray-light rounded"></div>
+                  <div className="h-10 w-full sm:w-36 bg-gray-dark  dark:bg-gray-light  rounded"></div>
+                  <div className="h-10 w-full sm:w-40 bg-gray-dark  dark:bg-gray-light rounded"></div>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function GiftList({
   return (
     <main className="flex flex-col flex-1 w-full">
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
-        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-4 lg:py-8">
+        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] dark:from-gray-dark dark:to-gray-extraDark shadow-sm py-4 lg:py-8">
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
             <h1 className="text-2xl sm:text-4xl font-bold text-text-primary mb-3">
               {giftList?.name}

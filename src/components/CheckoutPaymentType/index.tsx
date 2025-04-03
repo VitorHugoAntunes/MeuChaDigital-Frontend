@@ -27,7 +27,7 @@ export default function CheckoutPaymentType({ anchor }: CheckoutPaymentTypeProps
 
   const content = (
     <>
-      <label className="block text-sm font-bold text-gray-700">Forma de pagamento</label>
+      <label className="block text-sm font-bold text-gray-700 dark:text-text-primary">Forma de pagamento</label>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-1">
         {paymentOptions.map(({ label, value, icon }) => (
           <EventTypeOption

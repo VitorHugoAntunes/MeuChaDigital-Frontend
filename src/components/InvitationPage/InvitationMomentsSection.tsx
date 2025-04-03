@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface MomentImageProps {
   src: string;
@@ -16,16 +16,16 @@ interface MomentImagesProps {
 
 function MomentImage({ src, alt, onClick }: MomentImageProps) {
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-auto flex items-center justify-center">
       <div
-        className="relative w-full h-80 md:h-[500px] lg:h-[600px] rounded-2xl shadow-lg hover:shadow-xl overflow-hidden cursor-pointer"
+        className="relative w-full aspect-video overflow-hidden rounded-2xl cursor-pointer transition-shadow duration-300"
         onClick={onClick}
       >
         <Image
           src={src}
           alt={alt}
           fill
-          className="object-cover"
+          className="object-contain hover:opacity-90 transition-opacity duration-300"
           loading="lazy"
         />
       </div>
@@ -60,32 +60,43 @@ export default function InvitationMomentsSection({ momentsImages }: MomentImages
   }
 
   const goToPrevious = () => {
-    setCurrentIndex(prev =>
+    setCurrentIndex((prev) =>
       prev === 0 ? momentsImages.length - 1 : prev - 1
     );
   };
 
   const goToNext = () => {
-    setCurrentIndex(prev =>
+    setCurrentIndex((prev) =>
       prev === momentsImages.length - 1 ? 0 : prev + 1
     );
   };
 
   return (
-    <section id="moments" className="w-screen relative left-1/2 right-1/2 -mx-[50vw] flex flex-col items-center py-16 mt-8 ">
-      <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Nossos Momentos</h2>
+    <section
+      id="moments"
+      className="w-screen relative left-1/2 right-1/2 -mx-[50vw] flex flex-col items-center py-16 mt-8"
+    >
+      <h2 className="text-4xl font-bold text-text-primary mb-12 text-center">
+        Nossos Momentos
+      </h2>
 
       <div className="w-full max-w-6xl px-4 relative">
         <div className="relative w-full overflow-hidden rounded-lg">
-          <div className="flex transition-transform duration-300 rounded-lg" style={{
-            transform: `translateX(-${currentIndex * 100}%)`
-          }}>
+          <div
+            className="flex transition-transform duration-300 rounded-lg"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
             {momentsImages.map((image, index) => (
               <div key={index} className="w-full flex-shrink-0 rounded-lg">
                 <MomentImage
                   src={image.url}
                   alt={`Momento ${index + 1}`}
-                  onClick={() => setSelectedImage(image.url)}
+                  onClick={() => {
+                    setSelectedImage(image.url);
+                    setCurrentIndex(index);
+                  }}
                 />
               </div>
             ))}
@@ -112,7 +123,8 @@ export default function InvitationMomentsSection({ momentsImages }: MomentImages
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full ${currentIndex === index ? 'bg-primary' : 'bg-gray-300'}`}
+              className={`w-3 h-3 rounded-full ${currentIndex === index ? "bg-primary" : "bg-gray-300"
+                }`}
               aria-label={`Ir para imagem ${index + 1}`}
             />
           ))}
@@ -124,9 +136,9 @@ export default function InvitationMomentsSection({ momentsImages }: MomentImages
           className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-6xl w-full h-[90vh] flex flex-col">
+          <div className="relative max-w-6xl w-full h-[90vh] flex flex-col items-center">
             <button
-              className="self-end mb-2 text-white hover:text-gray-300 transition-colors z-10"
+              className="absolute top-0 right-0 text-white hover:text-gray-300 transition-colors z-10"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedImage(null);
@@ -135,14 +147,37 @@ export default function InvitationMomentsSection({ momentsImages }: MomentImages
             >
               <X className="h-8 w-8" />
             </button>
-            <div className="relative flex-1">
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToPrevious();
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md z-10 hover:bg-white"
+              aria-label="Imagem anterior"
+            >
+              <ChevronLeft className="h-8 w-8 text-black" />
+            </button>
+
+            <div className="relative flex-1 w-full aspect-video">
               <Image
-                src={selectedImage}
+                src={momentsImages[currentIndex].url}
                 alt="Imagem ampliada"
                 fill
                 className="object-contain"
               />
             </div>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToNext();
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md z-10 hover:bg-white"
+              aria-label="Próxima imagem"
+            >
+              <ChevronRight className="h-8 w-8 text-black" />
+            </button>
           </div>
         </div>
       )}

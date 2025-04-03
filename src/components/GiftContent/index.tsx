@@ -56,7 +56,9 @@ export default function GiftContent({
         const blob = await response.blob();
         return new File([blob], "giftPhoto", { type: "image/jpeg" });
       }
+      console.log('conseguiu pegar a foto do presente');
       return new File([], "default");
+
     }
 
     getGiftPhotoFile().then((file) => {
@@ -92,7 +94,7 @@ export default function GiftContent({
   return (
     <>
       <main className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:mt-8 py-6 h-fit w-full">
-        <section className="bg-white rounded-lg p-6 border border-gray-200">
+        <section className="bg-white dark:bg-gray-dark rounded-lg p-6 border border-gray-light">
           <GiftHeader
             category={gift.category}
             priority={gift.priority}

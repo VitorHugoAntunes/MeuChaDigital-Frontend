@@ -2,6 +2,94 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+:root {
+  --background: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --primary: #ff769f;
+  --primary-light: #ff8fb1;
+  --primary-dark: #ff5c8d;
+  --primary-extraLight: #ffdce6;
+  --primary-extraDark: #ff437c;
+  --secondary: #3b82f6;
+  --secondary-light: #60a5fa;
+  --secondary-dark: #2563eb;
+  --secondary-extraLight: #dbeafe;
+  --secondary-extraDark: #1e40af;
+  --danger: #ef4444;
+  --danger-light: #f87171;
+  --danger-dark: #dc2626;
+  --danger-extraLight: #fee2e2;
+  --danger-extraDark: #991b1b;
+  --warning: #facc15;
+  --warning-light: #fde047;
+  --warning-dark: #eab308;
+  --warning-extraLight: #fef9c3;
+  --warning-extraDark: #92400e;
+  --success: #22c55e;
+  --success-light: #4ade80;
+  --success-dark: #16a34a;
+  --success-extraLight: #dcfce7;
+  --success-extraDark: #166534;
+  --purple: #a855f7;
+  --purple-light: #c084fc;
+  --purple-dark: #9333ea;
+  --purple-extraLight: #f3e8ff;
+  --purple-extraDark: #6b21a8;
+  --gray: #6b7280;
+  --gray-light: #f3f4f6;
+  --gray-dark: #e5e7eb;
+  --gray-extraLight: #f3f4f6;
+  --gray-extraDark: #1f2937;
+}
+
+.dark {
+  --background: #111827;
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+
+  --primary: #ff6b8b;
+  --primary-light: #ff8fa3;
+  --primary-dark: #ff4d73;
+  --primary-extraLight: #ffe0e8;
+  --primary-extraDark: #ff2d5f;
+
+  --secondary: #3b82f6;
+  --secondary-light: #60a5fa;
+  --secondary-dark: #2563eb;
+  --secondary-extraLight: #dbeafe;
+  --secondary-extraDark: #1e40af;
+  --danger: #ef4444;
+  --danger-light: #f87171;
+  --danger-dark: #dc2626;
+  --danger-extraLight: #fee2e2;
+  --danger-extraDark: #991b1b;
+  --warning: #facc15;
+  --warning-light: #fde047;
+  --warning-dark: #eab308;
+  --warning-extraLight: #fef9c3;
+  --warning-extraDark: #92400e;
+  --success: #22c55e;
+  --success-light: #4ade80;
+  --success-dark: #16a34a;
+  --success-extraLight: #dcfce7;
+  --success-extraDark: #166534;
+  --purple: #a855f7;
+  --purple-light: #c084fc;
+  --purple-dark: #9333ea;
+  --purple-extraLight: #f3e8ff;
+  --purple-extraDark: #6b21a8;
+
+  --gray: #757575;
+  --gray-light: #374151;
+  --gray-dark: #1f2937;
+  --gray-extraLight: #f3f4f6;
+  --gray-extraDark: #1f2337;
+
+  --input: #252d42;
+  --input-border: #2e364d;
+}
+
 * {
   margin: 0;
   padding: 0;

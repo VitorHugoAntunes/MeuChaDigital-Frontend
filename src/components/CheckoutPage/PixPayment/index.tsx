@@ -110,7 +110,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     return (
       <div id="payment" className="text-center">
         <h2 className="text-lg font-bold text-text-primary">Pagamento via Pix</h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-text-secondary mb-4">
           Gere um QR Code exclusivo para realizar o pagamento via Pix.
         </p>
 
@@ -131,18 +131,18 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
       {isLoading ? (
         <div className="animate-pulse">
-          <div className="h-6 w-48 bg-gray-200 rounded mx-auto mb-4 animate-pulse"></div> {/* Título */}
-          <div className="h-4 w-64 bg-gray-200 rounded mx-auto mb-6 animate-pulse"></div> {/* Descrição */}
-          <div className="w-48 h-48 bg-gray-200 rounded-lg mx-auto animate-pulse"></div> {/* QR Code Skeleton */}
+          <div className="h-6 w-48 bg-gray-dark rounded mx-auto mb-4 animate-pulse"></div> {/* Título */}
+          <div className="h-4 w-64 bg-gray-dark rounded mx-auto mb-6 animate-pulse"></div> {/* Descrição */}
+          <div className="w-48 h-48 bg-gray-dark rounded-lg mx-auto animate-pulse"></div> {/* QR Code Skeleton */}
           <Divider />
-          <div className="h-4 w-56 bg-gray-200 rounded mx-auto mt-4 mb-6 animate-pulse"></div> {/* Texto de expiração */}
-          <div className="h-10 w-full bg-gray-200 rounded-lg animate-pulse"></div> {/* Botão de copiar código */}
+          <div className="h-4 w-56 bg-gray-dark rounded mx-auto mt-4 mb-6 animate-pulse"></div> {/* Texto de expiração */}
+          <div className="h-10 w-full bg-gray-dark rounded-lg animate-pulse"></div> {/* Botão de copiar código */}
         </div>
       ) : (
         charge && timeRemaining !== "00:00:00" && localId && (
           <>
             <h2 className="text-lg font-bold text-text-primary">Escaneie o QR Code</h2>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-text-secondary">
               Escaneie o QR Code com o aplicativo do seu banco para realizar o pagamento.
             </p>
 
@@ -150,7 +150,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
             <Divider />
 
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-text-secondary mb-4">
               Este QR Code expira em <strong>{timeRemaining}</strong>.
               <br />
               Após a expiração, você precisará gerar um novo QR Code.

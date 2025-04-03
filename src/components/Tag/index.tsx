@@ -1,24 +1,24 @@
 enum TagColors {
   // Cores para categorias
-  SPORTS = "bg-blue-100 text-blue-800",
-  BABY = "bg-pink-100 text-pink-800",
-  APPLIANCES = "bg-gray-100 text-gray-800",
-  TOOLS = "bg-amber-100 text-amber-800",
-  KITCHEN = "bg-orange-100 text-orange-800",
-  ELECTRONICS = "bg-indigo-100 text-indigo-800",
-  FASHION = "bg-purple-100 text-purple-800",
-  DECOR = "bg-teal-100 text-teal-800",
-  BEDDING = "bg-cyan-100 text-cyan-800",
-  BOOKS = "bg-emerald-100 text-emerald-800",
-  BEAUTY = "bg-fuchsia-100 text-fuchsia-800",
+  SPORTS = "bg-blue-200 text-blue-800",
+  BABY = "bg-pink-200 text-pink-800",
+  APPLIANCES = "bg-gray-200 text-gray-800",
+  TOOLS = "bg-amber-200 text-amber-800",
+  KITCHEN = "bg-orange-200 text-orange-800",
+  ELECTRONICS = "bg-indigo-200 text-indigo-800",
+  FASHION = "bg-purple-200 text-purple-800",
+  DECOR = "bg-teal-200 text-teal-800",
+  BEDDING = "bg-cyan-200 text-cyan-800",
+  BOOKS = "bg-emerald-200 text-emerald-800",
+  BEAUTY = "bg-fuchsia-200 text-fuchsia-800",
 
   // Cores para prioridades
-  PRIORITY_LOW = "bg-green-100 text-green-800",
-  PRIORITY_MEDIUM = "bg-yellow-100 text-yellow-800",
-  PRIORITY_HIGH = "bg-red-100 text-red-800",
+  PRIORITY_LOW = "bg-green-200 text-green-800",
+  PRIORITY_MEDIUM = "bg-yellow-200 text-yellow-800",
+  PRIORITY_HIGH = "bg-red-200 text-red-800",
 
   // Cor padrão
-  DEFAULT = "bg-gray-200 text-gray-900"
+  DEFAULT = "bg-gray-dark text-gray-900"
 }
 
 interface TagProps {

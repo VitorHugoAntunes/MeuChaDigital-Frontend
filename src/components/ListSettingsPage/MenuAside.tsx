@@ -69,7 +69,7 @@ export default function MenuAside({ type }: MenuAsideProps) {
   return (
     <aside className="hidden lg:block sticky top-6 h-fit">
       <Card>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Menu</h3>
+        <h3 className="text-lg font-semibold text-text-primary mb-4">Menu</h3>
         <nav className="space-y-2">
           {menuItems.map((item) => (
             <Link
@@ -77,7 +77,7 @@ export default function MenuAside({ type }: MenuAsideProps) {
               href={`#${item.id}`}
               className={`block text-md px-3 py-2 rounded-md transition-all duration-300 ${activeSection === item.id
                 ? "text-primary-dark bg-pink-100"
-                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                : "text-text-secondary hover:text-gray-500 dark:hover:text-gray-extraLight hover:bg-gray-100 dark:hover:bg-gray-light"
                 }`}
             >
               {item.label}

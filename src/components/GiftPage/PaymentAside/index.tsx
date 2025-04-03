@@ -55,7 +55,7 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
 
   return (
     <FormProvider {...methods}>
-      <aside className="sticky top-6 h-fit bg-white rounded-lg p-6 border border-gray-200">
+      <aside className="sticky top-6 h-fit bg-white dark:bg-gray-dark rounded-lg p-6 border border-gray-dark">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
           <h2 className="text-lg font-semibold text-text-primary mb-4">Pagamento</h2>
 
@@ -69,9 +69,9 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
               </div>
 
               <div className="mt-6 flex items-start gap-3">
-                <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
+                <Info size={20} className="text-text-secondary flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-text-secondary">
                     Compartilhe o link para que outras pessoas possam contribuir com o presente.
                   </p>
                 </div>

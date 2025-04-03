@@ -8,7 +8,7 @@ import { formatDateToBR } from "@/utils/formatDate";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { GiftCardSkeleton } from "@/components/Skeleton/giftCardSkeleton";
+import { ListCardSkeleton } from "@/components/Skeleton/listCardSkeleton";
 
 interface Gift {
   totalValue: number;
@@ -65,7 +65,7 @@ const ListsPage = () => {
   return (
     <main className="flex flex-col flex-1 w-full">
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
-        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] shadow-sm py-4 lg:py-8">
+        <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] dark:from-gray-dark dark:to-gray-extraDark shadow-sm py-4 lg:py-8">
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
             <h1 className="text-2xl sm:text-4xl font-bold text-text-primary mb-3">
               Minhas Listas de Presentes
@@ -101,7 +101,7 @@ const ListsPage = () => {
         <div className="grid gap-12 grid-cols-[repeat(auto-fit,20rem)] lg:gap-16 lg:grid-cols-[repeat(auto-fit,28rem)] justify-center lg:justify-start">
           {isGiftListsLoading ? (
             [...Array(3)].map((_, index) => (
-              <GiftCardSkeleton key={index} />
+              <ListCardSkeleton key={index} />
             ))
           ) : (
             giftLists?.map((list: GiftList) => (

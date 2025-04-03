@@ -20,7 +20,7 @@ export default function ListCard({ photo, title, date, totalGifts, totalContribu
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <article className="bg-white rounded-lg shadow-md flex flex-col flex-1 w-full h-full hover:shadow-lg">
+    <article className="bg-white border-2 border-gray-dark dark:bg-gray-dark rounded-lg flex flex-col flex-1 w-full h-full hover:border-2 hover:border-primary transition-all duration-300">
       <figure className="w-full h-32 lg:h-48 relative rounded-t-lg overflow-hidden bg-gray-300">
         {isLoading && <div className="w-full h-32 lg:h-48 bg-gray-300 animate-pulse" />}
         <Image

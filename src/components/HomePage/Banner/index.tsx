@@ -21,12 +21,12 @@ export default function Banner() {
       </div>
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 py-8 max-w-screen-2xl mx-auto">
-        <aside className="flex flex-col justify-center space-y-4 w-full text-white md:text-inherit rounded-2xl md:p-0">
-          <h1 className="text-2xl lg:text-4xl font-semibold text-center md:text-left">
+        <aside className="flex flex-col justify-center space-y-4 w-full md:text-inherit rounded-2xl md:p-0">
+          <h1 className="text-2xl lg:text-4xl font-semibold text-center md:text-left text-text-primary">
             Planeje o Chá Perfeito do Jeito Que Sempre Sonhou!
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left">
+          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left text-text-primary">
             Planeje, organize e celebre com facilidade. Crie memórias inesquecíveis para toda a vida.
           </p>
 
@@ -39,15 +39,15 @@ export default function Banner() {
 
           <div className="hidden md:block">
             <ul className="list-inside mt-4 space-y-2">
-              <li className="text-base">
+              <li className="text-base text-text-secondary">
                 <Gift size={24} className="inline mr-2 text-primary-light" />
                 Crie uma lista de presentes
               </li>
-              <li className="text-base">
+              <li className="text-base text-text-secondary">
                 <Mail size={24} className="inline mr-2 text-primary-light" />
                 Envie convites digitais
               </li>
-              <li className="text-base">
+              <li className="text-base text-text-secondary">
                 <ListChecks size={24} className="inline mr-2 text-primary-light" />
                 Receba confirmações de presença
               </li>

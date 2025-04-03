@@ -28,7 +28,7 @@ const GiftCard = ({
   actionDeleteFn,
 }: GiftCardProps) => {
   return (
-    <article className="w-full relative border border-gray-200 rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full group">
+    <article className="w-full relative border border-gray-dark rounded-xl bg-white dark:bg-gray-dark overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full group">
       <div className="absolute top-4 left-4 z-10">
         <PriorityTag priority={priority} />
       </div>
@@ -49,10 +49,10 @@ const GiftCard = ({
         </header>
 
         <div className="mb-4 flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 mb-2">
+          <h3 className="text-lg font-semibold text-text-primary line-clamp-2 mb-2">
             {title}
           </h3>
-          <p className="text-sm text-gray-500 line-clamp-2">
+          <p className="text-sm text-text-secondary line-clamp-2">
             {description}
           </p>
         </div>
@@ -65,7 +65,7 @@ const GiftCard = ({
           {isUserOwner && (
             <div className="flex gap-3">
               <button
-                className="p-2 rounded-lg hover:bg-warning/20 transition-colors duration-300 group"
+                className="p-2 rounded-lg hover:bg-warning transition-colors duration-300 group/edit"
                 aria-label={`Editar ${title}`}
                 title="Editar presente"
                 onClick={(event) => {
@@ -73,10 +73,10 @@ const GiftCard = ({
                   actionEditFn?.(event);
                 }}
               >
-                <Edit size={18} className="text-warning group-hover:text-warning-dark transition-colors duration-300" />
+                <Edit size={18} className="text-warning group-hover/edit:text-white transition-colors duration-300" />
               </button>
               <button
-                className="p-2 rounded-lg hover:bg-danger/20 transition-colors duration-300 group"
+                className="p-2 rounded-lg hover:bg-danger transition-colors duration-300 group/delete"
                 aria-label={`Excluir ${title}`}
                 title="Excluir presente"
                 onClick={(event) => {
@@ -84,7 +84,7 @@ const GiftCard = ({
                   actionDeleteFn?.(event);
                 }}
               >
-                <Trash size={18} className="text-danger group-hover:text-danger-dark transition-colors duration-300" />
+                <Trash size={18} className="text-danger group-hover/delete:text-white transition-colors duration-300" />
               </button>
             </div>
           )}

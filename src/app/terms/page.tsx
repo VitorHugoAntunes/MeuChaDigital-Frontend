@@ -20,17 +20,17 @@ export default function TermsPage() {
 
       <section className="w-full">
         <h2 className="text-2xl lg:text-3xl font-bold text-primary-light mb-6">Meu Chá Digital</h2>
-        <p className="text-gray-500 text-base lg:text-lg mb-8">Última atualização: 28 de março de 2025</p>
+        <p className="text-text-secondary text-base lg:text-lg mb-8">Última atualização: 28 de março de 2025</p>
 
         {items.map((item) => (
           <div id={item.id} key={item.id} className="lg:mt-12 lg:mb-12 border-b pb-6">
             <h3 className="text-xl lg:text-2xl font-semibold pt-4 pb-2 text-text-primary mb-4">{item.label}</h3>
-            <p className="text-gray-700 leading-relaxed text-base md:text-lg">{item.description}</p>
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg">{item.description}</p>
           </div>
         ))}
 
         <section className="mt-12">
-          <p className="text-base lg:text-lg">Para dúvidas ou esclarecimentos sobre estes termos, entre em contato através do email:</p>
+          <p className="text-base lg:text-lg text-text-secondary">Para dúvidas ou esclarecimentos sobre estes termos, entre em contato através do email:</p>
           <a
             href="mailto:suporte@meuchadigital.com"
             className="text-primary-dark hover:text-primary-light transition-colors duration-300 text-base lg:text-lg font-semibold"
@@ -45,10 +45,10 @@ export default function TermsPage() {
         </section>
 
         <section className="mt-12">
-          <p className="text-base lg:text-lg">Ao usar nossos serviços, você concorda com estes termos.</p>
+          <p className="text-base lg:text-lg text-text-secondary">Ao usar nossos serviços, você concorda com estes termos.</p>
         </section>
 
-        <p className="text-center lg:text-left text-base lg:text-lg mt-12">Última atualização: 28 de março de 2025</p>
+        <p className="text-center lg:text-left text-base lg:text-lg mt-12 text-text-secondary">Última atualização: 28 de março de 2025</p>
       </section>
     </main>
   );

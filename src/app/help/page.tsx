@@ -44,7 +44,7 @@ export default function Help() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-6">
           {steps.map((step, index) => (
-            <Card key={index} className="p-4 lg:p-6 rounded-2xl border border-gray-200 flex flex-col items-center bg-white shadow-sm hover:shadow-md transition-shadow">
+            <Card key={index} className="p-4 lg:p-6 rounded-2xl border border-gray-dark flex flex-col items-center bg-white shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-center w-8 h-8 lg:w-12 lg:h-12 rounded-full bg-primary text-white text-sm lg:text-lg font-bold shadow-md">
                 {index + 1}
               </div>
@@ -65,8 +65,7 @@ export default function Help() {
         </div>
       </section>
 
-      {/* Seção de perguntas frequentes */}
-      <section className="mt-12 py-12 w-screen -ml-[calc(50vw-50%)] bg-primary-extraLight bg-opacity-70" aria-labelledby="faq-heading">
+      <section className="mt-12 py-12 w-screen -ml-[calc(50vw-50%)] bg-primary-extraLight dark:bg-gray-dark bg-opacity-70" aria-labelledby="faq-heading">
         <div className="container mx-auto px-4">
           <h2 id="faq-heading" className="text-lg lg:text-xl font-semibold text-text-primary mb-6 text-center">
             Dúvidas frequentes
@@ -75,7 +74,10 @@ export default function Help() {
           <div className="max-w-2xl mx-auto">
             {faqs.map((faq, index) => (
               <article key={index} className="mb-4">
-                <Card className="rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                <Card
+                  className={`rounded-2xl border ${openIndex === index ? "border-primary dark:border-primary" : "border-gray-dark"
+                    } bg-white shadow-sm hover:shadow-md transition-shadow`}
+                >
                   <button
                     className="w-full flex justify-between items-center text-left text-lg font-semibold text-text-primary"
                     onClick={() => toggleAccordion(index)}
@@ -86,19 +88,19 @@ export default function Help() {
                     {openIndex === index ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                   </button>
 
-                  {openIndex === index && (
-                    <>
-                      <p id={`faq-answer-${index}`} className="text-md text-text-secondary mt-4 text-left">
-                        {faq.answer}
-                      </p>
+                  <div
+                    id={`faq-answer-${index}`}
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                      }`}
+                  >
+                    <p className="text-md text-text-secondary mt-4 text-left">{faq.answer}</p>
 
-                      {faq.notice && (
-                        <p className="text-sm font-bold  text-text-secondary mt-2 text-left">
-                          Atenção: {faq.notice}
-                        </p>
-                      )}
-                    </>
-                  )}
+                    {faq.notice && (
+                      <p className="text-sm font-bold text-text-secondary mt-2 text-left">
+                        Atenção: {faq.notice}
+                      </p>
+                    )}
+                  </div>
                 </Card>
               </article>
             ))}

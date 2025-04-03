@@ -18,7 +18,7 @@ export default function InvitationCalendarInfo({ eventDate, eventTime, eventLoca
 
   return (
     <section className="text-center py-8 sm:py-16">
-      <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
+      <h2 className="text-2xl sm:text-4xl font-bold text-text-primary mb-8 sm:mb-12">
         Marque no seu calendário
       </h2>
 
@@ -42,15 +42,15 @@ export default function InvitationCalendarInfo({ eventDate, eventTime, eventLoca
         ].map(({ icon: Icon, title, text }, index) => (
           <div
             key={index}
-            className="flex flex-col items-center space-y-4 bg-gray-50 rounded-lg"
+            className="flex flex-col items-center space-y-4 rounded-lg"
           >
             <div className="p-3 sm:p-4 bg-primary-extraLight rounded-full bg-opacity-50">
               <Icon size={24} className="text-primary" />
             </div>
 
             <div>
-              <h3 className="text-base sm:text-lg text-gray-600 font-normal">{title}</h3>
-              <p className="text-lg sm:text-xl text-center text-gray-700 font-semibold">
+              <h3 className="text-base sm:text-lg text-text-secondary font-normal">{title}</h3>
+              <p className="text-lg sm:text-xl text-center text-text-primary font-semibold">
                 {text}
               </p>
             </div>

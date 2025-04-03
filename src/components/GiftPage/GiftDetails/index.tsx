@@ -13,13 +13,13 @@ export default function GiftDetails({ photo, name, description }: GiftDetailsPro
   return (
     <>
       {photo && (
-        <figure className="mt-6 bg-gray-500 rounded-lg">
+        <figure className="mt-6 bg-gray-light rounded-lg">
           <Image
             src={photo.url}
             alt={name}
-            width={600}
-            height={500}
-            className="rounded-lg object-cover w-full h-full"
+            width={400}
+            height={400}
+            className="rounded-lg object-cover w-full h-full max-h-[400px]"
           />
         </figure>
       )}

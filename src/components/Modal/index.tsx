@@ -40,7 +40,14 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuc
   };
 
   return (
-    <ModalWrapper isOpen={isModalOpen} onClose={closeModal}>
+    <ModalWrapper modalTitle={
+      {
+        gift: "Adicionar presente",
+        pix: "Adicionar chave Pix",
+        invitee: "Editar convidado",
+        action: actionTitle,
+      }[modalType] || "Modal"
+    } isOpen={isModalOpen} onClose={closeModal}>
       <ModalHeader
         title={{
           gift: { add: "Adicionar presente", edit: "Editar presente" }[isEdit ? "edit" : "add"],

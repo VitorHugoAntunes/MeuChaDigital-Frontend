@@ -12,16 +12,16 @@ interface InputSelectProps {
 export default function InputSelect({ label, options, values, error, register, onChange }: InputSelectProps) {
   return (
     <div className="mb-4 md:mb-6">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-sm font-medium text-gray-700 dark:text-text-primary">{label}</label>
       <select
-        className={`mt-1 block w-full px-3 py-2 border ${error ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:border-primary focus:outline-none transition-colors bg-white h-[42px] font-inter`}
+        className={`mt-1 block w-full px-3 py-2 border ${error ? "border-red-500" : "border-gray-300 dark:border-input-border"
+          } rounded-md shadow-sm focus:border-primary focus:outline-none dark:focus:border-primary-dark transition-colors bg-white dark:bg-input h-[42px] font-inter text-gray-700 dark:text-text-primary`}
         {...register}
         {...(onChange && { onChange })}
       >
-        <option value="">Selecione</option>
+        <option className="dark:text-text-primary" value="">Selecione</option>
         {options.map((option, index) => (
-          <option key={option} value={values ? values[index] : option}>
+          <option className="dark:text-text-primary" key={option} value={values ? values[index] : option}>
             {option}
           </option>
         ))}

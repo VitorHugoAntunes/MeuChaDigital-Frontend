@@ -15,7 +15,7 @@ export const ModalHeader = ({ title, onClose }: ModalHeaderProps) => {
       </h2>
       <button
         onClick={onClose}
-        className="text-gray-600 hover:text-gray-900"
+        className="text-text-secondary hover:text-gray-400 dark:hover:text-text-primary"
         aria-label="Fechar modal"
       >
         <X size={20} />

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { ImageIcon, Trash2 } from "lucide-react";
+import { ImageIcon, Trash } from "lucide-react";
 
 interface MultiFileUploadProps {
   label: string;
@@ -69,8 +69,8 @@ export default function MultiFileUpload({
 
   return (
     <div className="flex flex-col">
-      <label className="block text-sm font-bold text-gray-700">{label}</label>
-      {description && <p className="text-sm text-gray-600">{description}</p>}
+      <label className="block text-sm font-bold text-gray-700 dark:text-text-secondary dark:border-input-border">{label}</label>
+      {description && <p className="text-sm text-gray-600 dark:text-text-secondary">{description}</p>}
       <div className="mt-2 flex flex-col items-center justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
         {selectedFiles.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
@@ -84,11 +84,12 @@ export default function MultiFileUpload({
                   height={128}
                 />
                 <button
-                  type="button"
+                  className="absolute top-1 right-1 bg-white p-1 rounded-md border-2 border-danger shadow-md hover:bg-danger transition-colors duration-300 group/delete"
                   onClick={() => handleRemoveFile(index)}
-                  className="absolute top-1 right-1 p-1 bg-red-500 rounded-full opacity-100 hover:opacity-90 transition-opacity"
+                  type="button"
+                  title="Remover imagem"
                 >
-                  <Trash2 size={16} className="text-white" />
+                  <Trash size={18} className="text-danger group-hover/delete:text-white transition-colors duration-300" />
                 </button>
               </div>
             ))}
@@ -96,7 +97,7 @@ export default function MultiFileUpload({
         ) : (
           <div className="flex flex-col items-center text-center">
             <ImageIcon size={40} className="text-gray-400" />
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-600 dark:text-text-secondary">
               Arraste e solte até {maxFiles} imagens ou clique no botão abaixo para carregar
             </p>
           </div>

@@ -67,8 +67,8 @@ export default function InputField({ label, description, inputValue, type = "tex
 
   return (
     <div className="mb-4 md:mb-6">
-      <label className="block text-sm font-bold text-gray-700">{label}</label>
-      {description && <p className="text-sm text-gray-600">{description}</p>}
+      <label className="block text-sm font-bold text-gray-700 dark:text-text-secondary">{label}</label>
+      {description && <p className="text-sm text-gray-600 dark:text-text-secondary">{description}</p>}
 
       {name && <InputFieldWithWatch name={name} mask={mask} value={value} setValue={setValue} />}
       <input
@@ -77,8 +77,8 @@ export default function InputField({ label, description, inputValue, type = "tex
         min={min}
         max={max}
         step={step}
-        className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:outline-none 
-        transition-colors appearance-none text-gray-900 h-[42px] ${disabled ? 'bg-gray-100' : 'bg-white'}`}
+        className={`mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-input-border rounded-md shadow-sm focus:border-primary-dark focus:outline-none dark:focus:border-primary-dark
+        transition-colors appearance-none text-gray-900 dark:text-text-primary h-[42px] ${disabled ? 'bg-gray-100 dark:bg-gray-dark' : 'bg-white dark:bg-input'}`}
         style={{ fontFamily: 'inherit' }}
         readOnly={readonly}
         value={value || inputValue}

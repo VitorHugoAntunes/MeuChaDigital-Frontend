@@ -26,17 +26,17 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
 
   return (
     <Card className="flex flex-col w-full mt-8">
-      <h2 className="text-lg font-semibold text-text-primary text-center md:text-left">
+      <h2 className="text-lg font-semibold text-text-primary text-left">
         Compartilhar link de convite
       </h2>
-      <p className="text-text-secondary mt-2 text-center md:text-left">
+      <p className="text-text-secondary mt-2 text-left">
         Compartilhe o link abaixo com seus convidados para que eles possam confirmar presença
       </p>
 
       <div className="flex flex-col md:flex-row items-center w-full mt-4 gap-4">
         <input
           type="text"
-          className="flex-1 px-4 py-2 text-text-primary bg-gray-100 border border-gray-300 rounded-lg md:rounded-l-lg focus:outline-none w-full"
+          className="flex-1 px-4 py-2 text-text-primary bg-gray-100 dark:bg-input border border-gray-300 dark:border-input rounded-lg md:rounded-l-lg focus:outline-none w-full"
           readOnly
           value={`https://${slug}.meuchadigital.com/invitation`}
         // value={`http://${slug}.localhost:3000/invitation`}

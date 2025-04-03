@@ -8,6 +8,7 @@ import Button from '@/components/Button';
 import { Gift, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import logo from "@/assets/logo.png";
+import { ThemeToggle } from '../ThemeToggle';
 interface InvitationHeaderProps {
   ref?: React.RefObject<HTMLHeadElement | null>;
   title: string | undefined;
@@ -61,14 +62,14 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
 
   if (title === undefined) {
     return (
-      <header className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background text-text-primary border-b-2 border-b-gray-200 animate-pulse">
-        <div className="h-8 w-48 bg-gray-300 rounded"></div>
+      <header className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background dark:bg-gray-dark text-text-primary border-b-2 border-b-gray-dark dark:border-b-gray-light animate-pulse">
+        <div className="h-8 w-48 bg-gray-dark dark:bg-gray-light rounded"></div>
 
         <nav className="flex space-x-6">
-          <div className="h-6 w-32 bg-gray-300 rounded"></div>
-          <div className="h-6 w-32 bg-gray-300 rounded"></div>
-          <div className="h-6 w-32 bg-gray-300 rounded"></div>
-          <div className="h-6 w-32 bg-gray-300 rounded"></div>
+          <div className="h-6 w-32 bg-gray-dark dark:bg-gray-light rounded"></div>
+          <div className="h-6 w-32 bbg-gray-dark dark:bg-gray-light rounded"></div>
+          <div className="h-6 w-32 bg-gray-dark dark:bg-gray-light rounded"></div>
+          <div className="h-6 w-32 bg-gray-dark dark:bg-gray-light rounded"></div>
         </nav>
       </header>
     );
@@ -78,7 +79,7 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
     <>
       <header
         ref={ref}
-        className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background text-text-primary border-b-2 border-b-gray-200"
+        className="w-screen ml-[calc(-50vw+50%)] flex items-center justify-between py-6 px-4 md:px-6 lg:px-8 bg-background dark:bg-gray-dark text-text-primary border-b-2 border-b-gray-dark dark:border-b-gray-light"
       >
         <Link
           // href={`http://${subdomain}.localhost:3000/invitation`}
@@ -103,6 +104,10 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
           <NavLink href={`http://${subdomain}.localhost:3000/invitation/#moments`}>Nossos momentos</NavLink>
           <NavLink href={`http://${subdomain}.localhost:3000/invitation/#location`}>Localização</NavLink>
           <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`}> */}
+          <div className='flex items-center space-x-4'>
+            <ThemeToggle />
+          </div>
+
           <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#rsvp`}>
             Confirme sua presença
           </NavLink>
@@ -132,7 +137,7 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
 
       {isMenuOpen && (
         <div className="fixed inset-0 bg-background z-50 lg:hidden flex flex-col overflow-y-hidden">
-          <div className="border-b-2 border-b-gray-200 py-6 px-8 flex justify-between items-center">
+          <div className="border-b-2 border-b-gray-dark py-6 px-8 flex justify-between items-center">
             <Link
               // href={`http://${subdomain}.localhost:3000/invitation`}
               href={`https://${subdomain}.meuchadigital.com/invitation`}
@@ -150,25 +155,25 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
 
           <nav className="flex-1 flex flex-col items-center w-full">
             <ul className="text-center w-full">
-              <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
+              <li className="flex w-full justify-center py-4 border-b-2 border-gray-dark hover:bg-gray-100 dark:hover:bg-gray-light transition rounded-md">
                 {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#rsvp`} onClick={closeMenu}> */}
                 <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#rsvp`} onClick={closeMenu}>
                   Confirme sua presença
                 </NavLink>
               </li>
-              <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
+              <li className="flex w-full justify-center py-4 border-b-2 border-gray-dark hover:bg-gray-100 dark:hover:bg-gray-light transition rounded-md">
                 {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#moments`} onClick={closeMenu}> */}
                 <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#moments`} onClick={closeMenu}>
                   Nossos momentos
                 </NavLink>
               </li>
-              <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
+              <li className="flex w-full justify-center py-4 border-b-2 border-gray-dark hover:bg-gray-100 dark:hover:bg-gray-light transition rounded-md">
                 {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/#location`} onClick={closeMenu}> */}
                 <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/#location`} onClick={closeMenu}>
                   Localização
                 </NavLink>
               </li>
-              <li className="flex w-full justify-center py-4 border-b-2 border-gray-200 hover:bg-gray-100 transition rounded-md">
+              <li className="flex w-full justify-center py-4 border-b-2 border-gray-dark hover:bg-gray-100 dark:hover:bg-gray-light transition rounded-md">
                 {/* <NavLink href={`http://${subdomain}.localhost:3000/invitation/gifts`} onClick={closeMenu}> */}
                 <NavLink href={`https://${subdomain}.meuchadigital.com/invitation/gifts`} onClick={closeMenu}>
                   <Button borderStyle="rounded">

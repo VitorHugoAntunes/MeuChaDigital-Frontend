@@ -122,13 +122,13 @@ export default function CreateGiftList() {
   return (
     <FormProvider {...methods}>
       <div className="max-w-2xl mt-6 md:mb-6 mx-auto flex flex-1 flex-col items-center">
-        <h1 className="text-2xl font-bold mb-4">Criar Lista de Presentes</h1>
+        <h1 className="text-2xl font-bold mb-4 text-text-primary">Criar Lista de Presentes</h1>
         <p className="text-text-secondary mb-6">Vamos criar sua lista de presentes perfeita!</p>
 
-        <div className="sticky top-0 bg-white py-4 border-y-2 border-y-gray-200 w-screen -mx-4 sm:w-full sm:static sm:py-0 sm:mx-0 sm:bg-transparent sm:border-y-0">
+        <div className="sticky top-0 bg-white py-4 border-y-2 border-y-gray-dark w-screen -mx-4 sm:w-full sm:static sm:py-0 sm:mx-0 sm:bg-transparent sm:border-y-0">
           <div className="w-full px-4 sm:px-0">
-            {/* Título do passo atual */}
-            <div className="text-sm font-medium mb-2">
+
+            <div className="text-sm font-medium mb-2 text-text-primary">
               Passo {step}: {stepTitles[step]}
             </div>
 
@@ -136,7 +136,7 @@ export default function CreateGiftList() {
               {[1, 2, 3].map((s) => (
                 <div
                   key={s}
-                  className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-primary' : 'bg-gray-200'
+                  className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-primary' : 'bg-gray-dark'
                     }`}
                 />
               ))}
@@ -149,8 +149,7 @@ export default function CreateGiftList() {
           {step === 2 && <Step2 />}
           {step === 3 && <Step3 />}
 
-          {/* Container dos botões com comportamento sticky e largura total em telas pequenas */}
-          <div className="sticky bottom-0 bg-white py-4 border-t-2 border-t-gray-200 w-screen -mx-4 sm:w-full sm:static sm:py-0 sm:mx-0 sm:bg-transparent sm:border-t-0">
+          <div className="sticky bottom-0 bg-white py-4 border-t-2 border-t-gray-dark w-screen -mx-4 sm:w-full sm:static sm:py-0 sm:mx-0 sm:bg-transparent sm:border-t-0">
             <div className="flex justify-between w-full px-4 sm:px-0">
               {step === 1 && (
                 <Button
@@ -185,8 +184,8 @@ export default function CreateGiftList() {
               {step < totalSteps && (
                 <Button
                   onClick={() => goToStep(step + 1)}
-                  loading={isLoading} // Exibe o estado de carregamento no botão
-                  disabled={isLoading || isSubmitting || isMutationLoading} // Desabilita o botão durante o carregamento ou envio
+                  loading={isLoading}
+                  disabled={isLoading || isSubmitting || isMutationLoading}
                 >
                   Prosseguir
                 </Button>

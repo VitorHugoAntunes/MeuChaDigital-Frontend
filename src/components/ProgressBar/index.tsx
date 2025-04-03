@@ -24,7 +24,7 @@ export default function ProgressBar({ initialValue, goalValue }: ProgressBarProp
         </span>
       </div>
 
-      <div className="relative bg-gray-200 h-2 lg:h-6 rounded-full w-full overflow-hidden" role="progressbar" aria-valuenow={progressRounded} aria-valuemin={0} aria-valuemax={100}>
+      <div className="relative bg-gray-dark dark:bg-gray-light h-2 rounded-full w-full overflow-hidden" role="progressbar" aria-valuenow={progressRounded} aria-valuemin={0} aria-valuemax={100}>
         <div
           className="bg-primary h-full rounded-full transition-all duration-500 ease-in-out"
           style={{ width: `${progressRounded}%` }}
