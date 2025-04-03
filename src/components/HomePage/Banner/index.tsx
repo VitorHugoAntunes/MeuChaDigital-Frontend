@@ -22,11 +22,11 @@ export default function Banner() {
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 py-8 max-w-screen-2xl mx-auto">
         <aside className="flex flex-col justify-center space-y-4 w-full md:text-inherit rounded-2xl md:p-0">
-          <h1 className="text-2xl lg:text-4xl font-semibold text-center md:text-left text-text-primary">
+          <h1 className="text-2xl lg:text-4xl font-semibold text-center md:text-left text-[#f0f0f0] md:text-text-primary">
             Planeje o Chá Perfeito do Jeito Que Sempre Sonhou!
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left text-text-primary">
+          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left text-[#f0f0f0] md:ext-text-primary">
             Planeje, organize e celebre com facilidade. Crie memórias inesquecíveis para toda a vida.
           </p>
 
