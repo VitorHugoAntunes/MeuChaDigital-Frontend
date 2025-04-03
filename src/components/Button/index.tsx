@@ -28,7 +28,7 @@ export default function Button({
     "outlined-danger": 'bg-transparent dark:bg-gray-dark dark:border-input-border text-danger rounded-full border-2 border-gray-dark',
     "outlined-warning": 'bg-transparent dark:bg-gray-dark dark:border-input-border text-warning rounded-full border-2 border-gray-dark',
     neutral: 'bg-gray-100 text-gray-700 rounded-full border-2 border-gray-dark dark:bg-gray-dark dark:text-text-secondary dark:border-input-border',
-    google: 'bg-white text-gray-700 rounded-full border border-gray-300',
+    google: 'bg-white text-gray-700 rounded-full border border-gray-300 dark:bg-gray-dark dark:text-text-secondary dark:border-input-border',
   };
 
   const hoverStyles = {
@@ -38,7 +38,7 @@ export default function Button({
     "outlined-danger": 'hover:border-danger-dark dark:hover:border-danger-dark hover:text-danger-dark',
     "outlined-warning": 'hover:border-warning-dark dark:hover:border-warning-dark hover:text-warning-dark',
     neutral: 'hover:bg-gray-dark dark:hover:bg-gray-light',
-    google: 'hover:bg-gray-50',
+    google: 'hover:bg-gray-100 dark:hover:bg-gray-dark hover:border-gray-300 dark:hover:border-gray-300',
   };
 
   const buttonStyles = `${variantStyles[variant]} ${!disabled ? hoverStyles[variant] : ''}`;

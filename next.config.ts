@@ -69,6 +69,10 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
 export default nextConfig;

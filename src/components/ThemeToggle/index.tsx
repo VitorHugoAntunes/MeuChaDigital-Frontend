@@ -8,8 +8,9 @@ export function ThemeToggle() {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-gray-dark dark:hover:bg-gray-light transition-colors"
+      className="p-2 rounded-full hover:bg-gray-dark dark:hover:bg-gray-light transition-colors text-text-primary"
       aria-label={`Alternar para modo ${theme === 'light' ? 'escuro' : 'claro'}`}
       title={`Alternar para modo ${theme === 'light' ? 'escuro' : 'claro'}`}
     >
