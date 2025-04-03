@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Satisfy, Parisienne } from "next/font/google";
 import "../styles/global.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { RedirectProvider } from "@/contexts/RedirectContext";
-import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import { PaymentProvider } from "@/contexts/PaymentContext";
-import AuthWrapper from "@/components/AuthWrapper";
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import Providers from "@/providers/LayoutProviders";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -137,13 +130,11 @@ export default function RootLayout({
 
         <script dangerouslySetInnerHTML={{
           __html: `
-            // Esconde o loading imediatamente se já estiver hidratado
             if (typeof window !== 'undefined' && document.readyState === 'complete') {
               const loadingElement = document.getElementById('global-loading');
               if (loadingElement) loadingElement.remove();
             }
-            
-            // Adiciona listener para quando a hidratação estiver completa
+
             document.addEventListener('DOMContentLoaded', () => {
               const loadingElement = document.getElementById('global-loading');
               if (loadingElement) {
@@ -154,21 +145,9 @@ export default function RootLayout({
           `
         }} />
 
-        <ThemeProvider>
-          <RedirectProvider>
-            <ReactQueryProvider>
-              <AuthProvider>
-                <PaymentProvider>
-                  <Header />
-                  <div className="flex flex-1 w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <AuthWrapper>{children}</AuthWrapper>
-                  </div>
-                  <Footer />
-                </PaymentProvider>
-              </AuthProvider>
-            </ReactQueryProvider>
-          </RedirectProvider>
-        </ThemeProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
