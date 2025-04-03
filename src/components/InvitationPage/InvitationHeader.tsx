@@ -128,7 +128,9 @@ export default function InvitationHeader({ ref, title }: InvitationHeaderProps) 
           </NavLink>
         </nav>
 
-        <div className="lg:hidden flex justify-end">
+        <div className="lg:hidden flex justify-end items-center space-x-4">
+          <ThemeToggle />
+
           <button onClick={toggleMenu} className="text-text-primary">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

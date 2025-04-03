@@ -4,11 +4,11 @@ import { headers } from 'next/headers';
 import axios from '@/config/axios';
 
 interface InvitationData {
-  name?: string;
-  description?: string;
-  data?: {
-    banner?: {
-      url?: string;
+  name: string;
+  description: string;
+  data: {
+    banner: {
+      url: string;
     };
   };
 }
@@ -32,13 +32,15 @@ const getInvitationData = async (): Promise<InvitationData> => {
 
     return response.data.data;
   } catch (error) {
-    console.error('Error fetching invitation data:', error);
-    return {};
+    console.error('Erro ao buscar dados do convite:', error);
+    throw new Error('Erro ao buscar dados do convite');
   }
 };
 
 export async function generateMetadata(): Promise<Metadata> {
   const invitationData = await getInvitationData();
+
+  console.log('invitationData', invitationData);
 
   return {
     title: invitationData.name,
@@ -58,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Meu Chá Digital",
       images: [
         {
-          url: invitationData.data?.banner?.url || '/og-image.jpg',
+          url: invitationData ? invitationData.data.banner.url : '/og-image.jpg',
           width: 1200,
           height: 630,
           alt: invitationData.name || 'Meu Chá Digital - Organize seu chá de forma fácil',
@@ -74,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: invitationData.name,
       description: invitationData.description,
-      images: [invitationData.data?.banner?.url || '/twitter-image.jpg'],
+      images: [invitationData ? invitationData.data.banner.url : '/twitter-image.jpg'],
       creator: "@meuchadigital",
     },
     appleWebApp: {
