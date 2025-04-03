@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       title: invitationData.name,
-      description: invitationData.description,
+      description: "Você está sendo convidado! Venha fazer parte desse momento especial!",
       url: "https://meuchadigital.com",
       siteName: "Meu Chá Digital",
       images: [
@@ -68,7 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: invitationData.name,
-      description: invitationData.description,
+      description: "Você está sendo convidado! Venha fazer parte desse momento especial!",
       images: [invitationData ? invitationData.banner.url : '/twitter-image.jpg'],
       creator: "@meuchadigital",
     },
