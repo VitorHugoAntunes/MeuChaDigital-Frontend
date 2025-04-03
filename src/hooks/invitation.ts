@@ -5,6 +5,7 @@ interface Invitation {
   data: {
     id: string;
     name: string;
+    description: string;
     slug: string;
     eventDate: string;
     eventTime: string;

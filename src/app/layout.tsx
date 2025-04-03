@@ -69,6 +69,40 @@ export const metadata: Metadata = {
     capable: true,
     startupImage: "/apple-touch-icon.png",
   },
+  publisher: "Meu Chá Digital",
+  creator: "Meu Chá Digital",
+  applicationName: "Meu Chá Digital",
+  alternates: {
+    canonical: "https://meuchadigital.com",
+    languages: {
+      "pt-BR": "/pt-BR",
+      "en-US": "/en-US",
+    },
+  },
+  other: {
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:image:alt": "Meu Chá Digital - Organize seu chá de forma fácil",
+    "og:image:type": "image/jpeg",
+    "og:image": "/whatsapp-image.jpg",
+    "og:url": "https://meuchadigital.com",
+    "og:type": "website",
+    "og:site_name": "Meu Chá Digital",
+    "og:title": "Meu Chá Digital",
+    "og:description": "Crie e compartilhe seu chá online de forma fácil, prática e personalizada. Adicione listas de presentes e organize tudo em um só lugar!",
+
+    // Tags específicas do WhatsApp
+    "twitter:card": "summary_large_image",
+    "twitter:site": "@meuchadigital",
+    "twitter:creator": "@meuchadigital",
+    "twitter:title": "Meu Chá Digital",
+    "twitter:description": "Crie e compartilhe seu chá online de forma fácil, prática e personalizada. Adicione listas de presentes e organize tudo em um só lugar!",
+    "twitter:image": "/whatsapp-image.jpg",
+
+    "theme-color": "#FF8AA5",
+    "msapplication-TileColor": "#FF8AA5",
+    "msapplication-TileImage": "/apple-touch-icon.png"
+  }
 };
 
 export default function RootLayout({
