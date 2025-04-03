@@ -129,7 +129,7 @@ export default function SignInPage() {
 
   return (
     <main className="flex w-full flex-col items-center justify-center min-h-screen overflow-hidden">
-      <div ref={animationRef} className="fixed inset-0 pointer-events-none z-0 overflow-hidden" />
+      <div ref={animationRef} className="fixed inset-0 pointer-events-none z-10 overflow-hidden" />
       <Card className={`
         rounded-xl p-6 sm:p-8 w-full max-w-md mx-4 sm:max-w-3xl
         transition-all duration-300
@@ -140,6 +140,7 @@ export default function SignInPage() {
         dark:bg-transparent 
         dark:border-none 
         dark:backdrop-blur-[2px]
+        relative z-20
       `}>
         <div className="flex w-full flex-col items-center">
           <div className="relative flex flex-col items-center justify-center p-4 aspect-square w-48 sm:w-64">
