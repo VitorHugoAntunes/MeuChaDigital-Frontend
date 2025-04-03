@@ -48,7 +48,6 @@ export default function MultiFileUpload({
 
     if (trigger) {
       trigger("momentImages");
-      console.log("executou o trigger após adicionar arquivos");
     }
   };
 
@@ -63,7 +62,6 @@ export default function MultiFileUpload({
 
     if (trigger) {
       trigger("momentImages");
-      console.log("executou o trigger após remover arquivos");
     }
   };
 

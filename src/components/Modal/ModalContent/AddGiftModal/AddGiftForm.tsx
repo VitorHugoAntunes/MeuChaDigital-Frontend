@@ -112,11 +112,8 @@ export const GiftForm = ({
       });
 
       if (Object.keys(updatedData).length === 0) {
-        console.log("Nenhuma alteração detectada.");
         return;
       }
-
-      console.log("Dados alterados:", updatedData);
     }
 
     const dataToSend = {
@@ -136,9 +133,6 @@ export const GiftForm = ({
           console.error("ID do presente não encontrado.");
           return;
         }
-
-        console.log("Atualizando presente...");
-        console.log("Dados enviados:", updatedData, userId, giftListId);
 
         updateGiftMutation(
           {

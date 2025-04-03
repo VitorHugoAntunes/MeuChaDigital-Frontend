@@ -17,9 +17,6 @@ const getInvitationData = async (): Promise<InvitationData> => {
 
   const subdomain = host.split('.')[0];
 
-  console.log('Host:', host);
-  console.log('Subdomínio:', subdomain);
-
   try {
     const response = await axios.get('/invitation', {
       params: {
@@ -38,11 +35,9 @@ const getInvitationData = async (): Promise<InvitationData> => {
 export async function generateMetadata(): Promise<Metadata> {
   const invitationData = await getInvitationData();
 
-  console.log('invitationData', invitationData);
-
   return {
     title: invitationData.name,
-    description: invitationData.description,
+    description: "Você está sendo convidado! Venha fazer parte desse momento especial!",
     icons: {
       icon: [
         { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },

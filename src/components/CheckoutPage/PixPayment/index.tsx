@@ -21,8 +21,6 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
   const paramsGiftId = params.giftId as string || params.gift as string || params.id as string;
 
-  console.log(paramsGiftId);
-
   const [isGenerating, setIsGenerating] = useState(false);
 
   const { user, isAuthenticated } = useAuth();
@@ -49,7 +47,6 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
   useEffect(() => {
     if (prevTimeRemainingRef.current !== "00:00:00" && timeRemaining === "00:00:00" && localId) {
-      console.log("Tempo expirado!");
 
       setLocalId(null);
       localStorage.removeItem(`charge.${paramsGiftId}`);
@@ -60,7 +57,6 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
   useEffect(() => {
     if (isError || (charge && !charge.expirationDate)) {
-      console.log("Cobrança não encontrada ou expirada. Limpando localId...");
 
       setLocalId(null);
       localStorage.removeItem(`charge.${paramsGiftId}`);

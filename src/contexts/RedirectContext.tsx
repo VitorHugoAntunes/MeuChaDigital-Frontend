@@ -29,7 +29,6 @@ export const RedirectProvider = ({ children }: any) => {
     if (!identifier) return;
 
     const getGiftList = async () => {
-      console.log("Buscando lista para:", identifier);
       const data = await getGiftListBySlug(identifier as string, true);
       setListData(data);
     };
@@ -44,7 +43,6 @@ export const RedirectProvider = ({ children }: any) => {
         ? `https://${listData.redirect}.meuchadigital.com/invitation`
         : `/lists/${listData.redirect}/gifts`;
 
-      console.log("Redirecionando para:", redirectUrl);
       router.replace(redirectUrl);
     }
   }, [listData, router, subdomain]);

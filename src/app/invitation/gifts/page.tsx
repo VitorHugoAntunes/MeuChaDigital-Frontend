@@ -13,7 +13,6 @@ export default function InvitationGifts() {
   const isUserOwner = false;
 
   useEffect(() => {
-    console.log(subdomain);
     refetch();
   }, [subdomain, refetch]);
 

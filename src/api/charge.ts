@@ -36,8 +36,6 @@ export const createDefaultCharge = async (data: ChargeDefaultUserData) => {
     payerId: data.payerId,
   };
 
-  console.log('dataToSend', dataToSend);
-
   const response = await api.post('/payments/charges', JSON.stringify(dataToSend), {
     headers: {
       'Content-Type': 'application/json',
@@ -49,8 +47,6 @@ export const createDefaultCharge = async (data: ChargeDefaultUserData) => {
     giftId: data.giftId,
     expirationDate: Date.now() + data.expiration * 1000,
   };
-
-  console.log('chargeLocalStorageInfo', chargeLocalStorageInfo);
 
   localStorage.setItem(`charge.${data.giftId}`, JSON.stringify(chargeLocalStorageInfo));
 
@@ -66,8 +62,6 @@ export const createGuestCharge = async (data: ChargeGuestUserData) => {
     giftId: data.giftId,
     isGuest: data.isGuest,
   };
-
-  console.log('dataToSend', dataToSend);
 
   const response = await api.post('/payments/charges', JSON.stringify(dataToSend), {
     headers: {
@@ -90,15 +84,11 @@ export const getCharge = async (localId?: string, giftId?: string) => {
   const savedCharge = giftId ? localStorage.getItem(`charge.${giftId}`) : null;
   const parsedCharge = savedCharge ? JSON.parse(savedCharge) : null;
 
-  console.log('a cobranca que foi resgatada', parsedCharge);
-
   if (parsedCharge && parsedCharge.expirationDate) {
     const currentTime = Date.now();
     const expirationTime = parsedCharge.expirationDate;
 
     if (currentTime > expirationTime) {
-      console.log('currentTime e expirationTime', currentTime, expirationTime);
-
       localStorage.removeItem(`charge.${giftId}`);
       return;
     }

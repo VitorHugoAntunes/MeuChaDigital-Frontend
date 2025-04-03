@@ -31,8 +31,6 @@ export default function ListSettingsPage() {
 
   const navigation = useRouter();
 
-  console.log('LIST DATA', listData)
-
   const [initialBanner, setInitialBanner] = useState<File | null>(null);
   const [initialMomentImages, setInitialMomentImages] = useState<File[]>([]);
   const [allInitialData, setAllInitialData] = useState<Record<string, any>>({});
@@ -206,12 +204,8 @@ export default function ListSettingsPage() {
     if (data.address.state !== allInitialData.address.state) updatedData.address = { ...updatedData.address, state: data.address.state };
 
     if (Object.keys(updatedData).length === 0) {
-      console.log("Nenhuma alteração detectada.");
       return;
     }
-
-    console.log("Dados antigos:", allInitialData);
-    console.log("Dados novos:", updatedData);
 
     updateGiftListMutation({
       userId: listData.data.userId,

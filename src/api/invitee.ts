@@ -33,7 +33,6 @@ export const getAllInviteesByGiftListSlug = async (slug: string) => {
 };
 
 export const getAllInviteesWithPaginationByGiftListSlug = async (slug: string, page: number, limit: number, search: string, status: string = '') => {
-  console.log("buscando invitees", slug, page, limit, search, status);
   switch (status) {
     case 'Todos':
       status = '';
@@ -60,6 +59,5 @@ export const updateInvitee = async ({ slug, id, data }: { slug: string; id: stri
 };
 
 export const deleteInvitee = async ({ slug, id }: { slug: string; id: string }) => {
-  console.log("apagando invitee", slug, id);
   return api.delete(`/invitees/${slug}/${id}`);
 };

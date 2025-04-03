@@ -140,7 +140,6 @@ export default function GiftList({
           const response = await fetch(giftToEdit.photo.url);
           const blob = await response.blob();
           file = new File([blob], "giftPhoto", { type: blob.type || "image/jpeg" });
-          console.log('conseguiu pegar a foto do presente');
         } catch (error) {
           console.error("Error fetching gift photo:", error);
         }

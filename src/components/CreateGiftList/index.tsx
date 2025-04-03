@@ -102,8 +102,6 @@ export default function CreateGiftList() {
       },
     };
 
-    console.log("Data to send:", dataToSend);
-
     try {
       createGiftListMutation(dataToSend);
     } catch (error) {

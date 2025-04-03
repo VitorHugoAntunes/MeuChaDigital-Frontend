@@ -56,7 +56,6 @@ export default function GiftContent({
         const blob = await response.blob();
         return new File([blob], "giftPhoto", { type: "image/jpeg" });
       }
-      console.log('conseguiu pegar a foto do presente');
       return new File([], "default");
 
     }

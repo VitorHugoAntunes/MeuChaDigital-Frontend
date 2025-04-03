@@ -21,8 +21,6 @@ export default function InvitationPageWrapper() {
   const messageIndexRef = useRef(0);
   const [, forceRender] = useState(0);
 
-  console.log('invitation', invitation);
-
   useEffect(() => {
     if (!isLoading && isError) {
       console.error('Erro detectado na requisição:', error);

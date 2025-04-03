@@ -3,7 +3,6 @@ interface BankSlipPaymentProps {
 }
 
 export default function BankSlipPayment({ total }: BankSlipPaymentProps) {
-  console.log(total);
   return (
     <div id="payment" className="text-center">
       <h2 className="text-lg font-bold text-text-primary">Boleto Bancário</h2>

@@ -93,7 +93,6 @@ export const createGiftList = async (data: GiftListCreateData) => {
 
 export const updateGiftList = async (data: GiftListUpdateData) => {
   const formData = new FormData();
-  console.log('DATA', data);
 
   Object.entries(data).forEach(([key, value]) => {
     if (value !== undefined) {
@@ -109,8 +108,6 @@ export const updateGiftList = async (data: GiftListUpdateData) => {
       }
     }
   });
-
-  console.log('FORM DATA', formData);
 
   const response = await api.put(`/lists/${data.giftListId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

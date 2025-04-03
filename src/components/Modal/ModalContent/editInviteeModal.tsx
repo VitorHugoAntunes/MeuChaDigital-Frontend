@@ -27,8 +27,6 @@ export const EditInviteeModal = ({ slug, initialValues, onSuccess, onClose }: Ed
   const [allInitialData, setAllInitialData] = useState<UpdateInviteeFormData | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
 
-  console.log("initialValues", initialValues);
-
   const { mutateAsync, isLoading } = useUpdateInvitee();
 
   const methods = useForm<UpdateInviteeFormData>({
@@ -86,7 +84,6 @@ export const EditInviteeModal = ({ slug, initialValues, onSuccess, onClose }: Ed
 
   function onSubmit(data: UpdateInviteeFormData) {
     if (!hasChanges) {
-      console.log("Nenhuma alteração detectada.");
       return;
     }
 
@@ -95,8 +92,6 @@ export const EditInviteeModal = ({ slug, initialValues, onSuccess, onClose }: Ed
       phone: removeMask(data.phone),
       observation: data.observation || "-",
     };
-
-    console.log("Dados enviados:", dataToSend);
 
     mutateAsync({
       slug,
