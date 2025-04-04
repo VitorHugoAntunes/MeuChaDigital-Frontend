@@ -22,8 +22,10 @@ export interface GiftUpdateData {
   giftPhoto?: File | null;
 }
 
-export const getAllGiftsBySlug = async (slug: string) => {
-  const response = await api.get(`/lists/slug/${slug}/gifts`);
+export const getAllGiftsBySlug = async (slug: string, userId: string) => {
+  const response = await api.get(`/lists/slug/${slug}/gifts`, {
+    params: { userId },
+  });
   return response.data;
 };
 

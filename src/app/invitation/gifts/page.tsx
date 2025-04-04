@@ -10,7 +10,6 @@ export default function InvitationGifts() {
   const { user } = useAuth();
   const subdomain = window.location.hostname.split('.')[0];
   const { data, isLoading, error, refetch } = useGetInvitationGifts();
-  const isUserOwner = false;
 
   useEffect(() => {
     refetch();
@@ -25,7 +24,7 @@ export default function InvitationGifts() {
         isInvitationPage
         slug={data?.giftList.slug}
         error={error}
-        isUserOwner={isUserOwner}
+        isUserOwner={user?.id === data?.giftList.userId}
       />
     </InvitationLayout>
   );

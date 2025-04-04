@@ -34,7 +34,7 @@ export default function Button({
   const hoverStyles = {
     default: 'hover:bg-primary-dark hover:border-primary-dark',
     danger: 'hover:border-danger-dark hover:text-white hover:bg-danger-dark',
-    outlined: 'hover:border-primary-dark hover:text-primary-dark',
+    outlined: 'hover:border-primary-light hover:text-primary-dark dark:hover:border-primary-dark dark:hover:text-primary-dark',
     "outlined-danger": 'hover:border-danger-dark dark:hover:border-danger-dark hover:text-danger-dark',
     "outlined-warning": 'hover:border-warning-dark dark:hover:border-warning-dark hover:text-warning-dark',
     neutral: 'hover:bg-gray-dark dark:hover:bg-gray-light',

@@ -4,11 +4,12 @@ import { useParams } from "next/navigation";
 import GiftList from "@/components/GiftList";
 import { useGiftsBySlug } from "@/hooks/gifts";
 import { useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function GiftsPage() {
+  const { user } = useAuth();
   const slug = useParams().list as string;
-  const { data, isLoading, error, refetch } = useGiftsBySlug(slug);
-  const isUserOwner = true;
+  const { data, isLoading, error, refetch } = useGiftsBySlug(slug, user?.id || "");
 
   useEffect(() => {
     refetch();
@@ -21,7 +22,7 @@ export default function GiftsPage() {
       slug={slug}
       isLoading={isLoading}
       error={error}
-      isUserOwner={isUserOwner}
+      isUserOwner={user?.id === data?.giftList.userId}
       onAddGiftSuccess={refetch}
     />
   );

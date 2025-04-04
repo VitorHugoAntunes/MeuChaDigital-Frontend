@@ -41,6 +41,7 @@ interface InvitationGifts {
   }[];
   giftList: {
     id: string;
+    userId: string;
     name: string;
     description: string;
     slug: string;

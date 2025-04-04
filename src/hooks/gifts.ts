@@ -14,10 +14,10 @@ interface Gift {
   totalContributions: number;
 }
 
-export const useGiftsBySlug = (slug: string) => {
+export const useGiftsBySlug = (slug: string, userId: string) => {
   return useQuery({
     queryKey: ['gifts', slug],
-    queryFn: () => getAllGiftsBySlug(slug),
+    queryFn: () => getAllGiftsBySlug(slug, userId),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!slug, // Só executa a query se `slug` estiver disponível
