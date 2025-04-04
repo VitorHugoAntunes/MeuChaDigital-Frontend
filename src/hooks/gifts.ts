@@ -27,10 +27,10 @@ export const useGiftsBySlug = (slug: string, userId: string) => {
   });
 };
 
-export const useGiftBySlug = (slug: string, giftId: string) => {
+export const useGiftBySlug = (slug: string, giftId: string, userId: string) => {
   return useQuery<Gift>({
     queryKey: ['gifts', slug, giftId],
-    queryFn: () => getGiftBySlug(slug, giftId),
+    queryFn: () => getGiftBySlug(slug, giftId, userId),
     staleTime: Infinity,
     cacheTime: 1000 * 60 * 5,
     enabled: !!slug && !!giftId, // Só executa a query se `slug` e `giftId` estiverem disponíveis

@@ -108,12 +108,12 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
               </div>
 
               <div className="mt-6 flex items-start gap-3">
-                <Info size={20} className="text-gray-600 flex-shrink-0 mt-1" />
+                <Info size={20} className="text-text-secondary flex-shrink-0 mt-1" />
                 <div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-text-secondary">
                     Pagamento seguro garantido pelo Efi Bank.
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-text-secondary">
                     Ao clicar em &quot;Pagar&quot;, você concorda com os{" "}
                     <Link href="/terms" className="text-primary hover:underline">
                       Termos de Uso.

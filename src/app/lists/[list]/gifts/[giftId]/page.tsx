@@ -14,7 +14,7 @@ export default function GiftPage() {
   const [isUserOwner, setIsUserOwner] = useState(false);
   const slug = useParams().list as string;
   const giftId = useParams().giftId as string;
-  const { data: gift, isLoading, error, refetch } = useGiftBySlug(slug, giftId);
+  const { data: gift, isLoading, error, refetch } = useGiftBySlug(slug, giftId, user?.id || "");
 
   useEffect(() => {
     if (gift?.list.userId && user?.id) {
