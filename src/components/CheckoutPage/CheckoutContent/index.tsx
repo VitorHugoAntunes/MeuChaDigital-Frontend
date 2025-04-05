@@ -8,10 +8,13 @@ import OrderSummary from "@/components/CheckoutPage/OrderSummary";
 import PixPayment from "@/components/CheckoutPage/PixPayment";
 import CheckoutPaymentType from "@/components/CheckoutPaymentType";
 import Divider from "@/components/Divider";
+import Modal from "@/components/Modal";
 import { usePayment } from "@/contexts/PaymentContext";
+import usePaymentWebSocket from "@/hooks/paymentWebsocket";
 import { ShieldCheck, ReceiptText } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 interface CheckoutContentProps {
@@ -22,9 +25,25 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
   const { amount, maxAmount, checkoutItem } = usePayment();
   const router = useRouter();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"paymentConfirmation">("paymentConfirmation");
+
+  const { paymentData } = usePaymentWebSocket();
+
+  const openPaymentConfirmationModal = () => {
+    setModalType("paymentConfirmation");
+    setIsModalOpen(true);
+  }
+
   const methods = useForm<{ type: string }>({
     defaultValues: { type: "" },
   });
+
+  useEffect(() => {
+    if (paymentData) {
+      openPaymentConfirmationModal();
+    }
+  }, [paymentData]);
 
   if (amount <= 0 || amount > maxAmount) {
     router.back();
@@ -34,6 +53,23 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
   return (
     <FormProvider {...methods}>
       <Checkout checkoutItem={checkoutItem} isInvitationPage={isInvitationPage} amount={amount} />
+      {isModalOpen && modalType === "paymentConfirmation" && (
+        <Modal
+          modalType="paymentConfirmation"
+          paymentData={paymentData ? {
+            ...paymentData,
+            additionalInfo: {
+              ...paymentData.additionalInfo,
+              payer: {
+                ...paymentData.additionalInfo.payer,
+                name: paymentData.additionalInfo.payer.name || "N/A"
+              }
+            }
+          } : undefined}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </FormProvider>
   );
 }

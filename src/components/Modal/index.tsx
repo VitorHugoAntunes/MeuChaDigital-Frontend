@@ -9,11 +9,12 @@ import { ActionModal } from "./ModalContent/actionModal";
 import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 import { EditInviteeModal } from "./ModalContent/editInviteeModal";
 import { UpdateInviteeFormData } from "@/schemas/createInviteeSchema";
+import { PaymentConfirmation } from "./ModalContent/paymentConfirmationModal";
 
 interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
-  modalType: "gift" | "pix" | "invitee" | "action";
+  modalType: "gift" | "pix" | "invitee" | "paymentConfirmation" | "action";
   action?: "Sair" | "Excluir" | "Confirmar" | "Rejeitar";
   actionTitle?: string;
   isActionSuccess?: boolean;
@@ -24,10 +25,20 @@ interface ModalProps {
   giftListId?: string;
   userId?: string;
   slug?: string;
+  paymentData?: {
+    transactionId: string;
+    amount: string;
+    timestamp: string;
+    additionalInfo: {
+      payer: {
+        name: string;
+      }
+    }
+  }
   onSuccess?: () => void;
 }
 
-const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuccess, isEdit, initialValues, isLoading, action, actionTitle, actionDescription, userId, slug, onSuccess }: ModalProps) => {
+const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuccess, isEdit, initialValues, isLoading, action, actionTitle, actionDescription, userId, slug, paymentData, onSuccess }: ModalProps) => {
   const closeModal = () => setIsModalOpen(false);
 
   const modalComponents: Record<string, ReactNode | null> = {
@@ -36,25 +47,34 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuc
     ) : null,
     pix: <AddPixKeyModal onClose={closeModal} />,
     invitee: <EditInviteeModal onClose={closeModal} slug={slug as string} initialValues={initialValues as UpdateInviteeFormData} onSuccess={onSuccess} />,
+    paymentConfirmation: <PaymentConfirmation title="Pagamento confirmado" description="Seu pagamento foi confirmado com sucesso!" paymentData={paymentData} onClose={closeModal} />,
     action: <ActionModal action={action || ""} description={actionDescription || ""} isActionSuccess={isActionSuccess} isLoading={isLoading} onSuccess={onSuccess} onClose={closeModal} />,
   };
 
   return (
-    <ModalWrapper modalTitle={
-      {
-        gift: "Adicionar presente",
-        pix: "Adicionar chave Pix",
-        invitee: "Editar convidado",
-        action: actionTitle,
-      }[modalType] || "Modal"
-    } isOpen={isModalOpen} onClose={closeModal}>
+    <ModalWrapper
+      modalTitle={
+        {
+          gift: "Adicionar presente",
+          pix: "Adicionar chave Pix",
+          paymentConfirmation: "Pagamento confirmado",
+          invitee: "Editar convidado",
+          action: actionTitle,
+        }[modalType] || "Modal"
+      }
+      type={modalType}
+      isOpen={isModalOpen}
+      onClose={closeModal}
+    >
       <ModalHeader
         title={{
           gift: { add: "Adicionar presente", edit: "Editar presente" }[isEdit ? "edit" : "add"],
           pix: "Adicionar chave Pix",
           invitee: "Editar convidado",
+          paymentConfirmation: "",
           action: actionTitle,
         }[modalType] || "Modal"}
+        type={modalType}
         onClose={closeModal}
       />
       {modalComponents[modalType] || null}
