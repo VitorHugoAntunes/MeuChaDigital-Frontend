@@ -1,14 +1,10 @@
 "use client"
 
-import Button from "@/components/Button";
 import Card from "@/components/Card";
+import ContributionCard from "@/components/ContributionCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useContributions } from "@/hooks/contribution";
-import { formatDateToLong, formatDateToTime } from "@/utils/formatDate";
-import { formatCurrency } from "@/utils/formatString";
-import { translatePaymentMethod, translatePaymentStatus } from "@/utils/translateString";
-import { ArrowRight, Loader2 } from "lucide-react";
-import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 export default function ContributionsPage() {
 
@@ -19,7 +15,7 @@ export default function ContributionsPage() {
   return (
     <main className="flex flex-col gap-6 lg:mt-8 py-6 h-fit w-full">
       <section>
-        <h1 className="text-2xl font-bold text-gray-dark dark:text-white">
+        <h1 className="text-2xl font-bold text-text-primary">
           Histórico de Contribuições
         </h1>
 
@@ -35,51 +31,17 @@ export default function ContributionsPage() {
               </div>
             ) : contributions && contributions.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {contributions.slice(0, 4).map((contribution) => (
-                    <Card key={contribution.id} className="relative py-4 flex flex-col justify-between gap-4" bgColorDark="bg-gray-light">
-                      <div className={`absolute w-2 h-2 rounded-full top-4 right-4 md:top-6 md:right-6 ${contribution.payment.status === "PAID" ? "bg-success" : contribution.payment.status === "PENDING" ? "bg-warning" : "bg-danger"}`} />
-
-                      <div className="flex-1 flex flex-col gap-4">
-                        <div className="flex flex-col gap-2">
-                          <h4 className="text-lg font-semibold text-text-primary">{contribution.gift.name}</h4>
-                          <h5 className="text-md text-text-secondary">
-                            {contribution.giftList.name}
-                          </h5>
-                        </div>
-
-                        <p className="text-2xl font-bold text-success">
-                          {formatCurrency(contribution.value)}
-                        </p>
-
-                        <div className="flex flex-col gap-2 mt-2">
-                          <p className="text-md text-text-secondary">
-                            {translatePaymentMethod(contribution.payment.paymentMethod)} • {translatePaymentStatus(contribution.payment.status)}
-                          </p>
-                          <p className="text-sm text-text-secondary text-wrap">
-                            ID da transação: {contribution.payment.txId}
-                          </p>
-                          <p className="text-md text-text-secondary">
-                            {formatDateToLong(contribution.createdAt)} • {formatDateToTime(contribution.createdAt)}
-                          </p>
-                        </div>
-                      </div>
-
-
-                      <Link
-                        href={`${contribution.giftList.shareableLink}/gifts/${contribution.giftId}`}
-                      >
-                        <Button widthFull>
-                          <ArrowRight size={20} />
-                          Ver detalhes do presente
-                        </Button>
-                      </Link>
-                    </Card>
+                    <ContributionCard
+                      key={contribution.id}
+                      contribution={contribution}
+                    />
                   ))}
                 </div>
               </>
             ) : (
-              <p className="text-md md:text-center text-text-secondary">Nenhuma transação realizada.</p>
+              <p className="text-md md:text-center text-text-secondary">Nenhuma contribuição realizada até o momento.</p>
             )}
           </div>
         </Card>

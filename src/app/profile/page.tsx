@@ -12,12 +12,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import { redirect, useRouter } from "next/navigation";
 import { useGetAllPixKeysByUser, useDeletePixKey } from "@/hooks/pixKey";
 import { PixKeyCreateData } from "@/api/pixKey";
-import { translatePaymentMethod, translatePaymentStatus, translateString } from "@/utils/translateString";
-import { formatCPF, formatCurrency, formatPhone } from "@/utils/formatString";
+import { translateString } from "@/utils/translateString";
+import { formatCPF, formatPhone } from "@/utils/formatString";
 import { ToastContainer } from "react-toastify";
 import { useDeleteUser } from "@/hooks/user";
 import { useContributions } from "@/hooks/contribution";
-import { formatDateToLong, formatDateToTime } from "@/utils/formatDate";
+import ContributionCard from "@/components/ContributionCard";
 
 interface PixKey extends PixKeyCreateData {
   id: string;
@@ -158,34 +158,10 @@ export default function ProfilePage() {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {contributions.slice(0, 4).map((contribution) => (
-                    <Card key={contribution.id} className="relative py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4" bgColorDark="bg-gray-light">
-                      <div className={`absolute w-2 h-2 rounded-full top-4 right-4 md:top-6 md:right-6 ${contribution.payment.status === "PAID" ? "bg-success" : contribution.payment.status === "PENDING" ? "bg-warning" : "bg-danger"}`} />
-
-                      <div className="flex-1 flex flex-col gap-4">
-                        <div className="flex flex-col gap-2">
-                          <h4 className="text-lg font-semibold text-text-primary">{contribution.gift.name}</h4>
-                          <h5 className="text-md text-text-secondary">
-                            {contribution.giftList.name}
-                          </h5>
-                        </div>
-
-                        <p className="text-2xl font-bold text-success">
-                          {formatCurrency(contribution.value)}
-                        </p>
-
-                        <div className="flex flex-col gap-2 mt-2">
-                          <p className="text-md text-text-secondary">
-                            {translatePaymentMethod(contribution.payment.paymentMethod)} • {translatePaymentStatus(contribution.payment.status)}
-                          </p>
-                          <p className="text-sm text-text-secondary text-wrap">
-                            ID da transação: {contribution.payment.txId}
-                          </p>
-                          <p className="text-md text-text-secondary">
-                            {formatDateToLong(contribution.createdAt)} • {formatDateToTime(contribution.createdAt)}
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
+                    <ContributionCard
+                      key={contribution.id}
+                      contribution={contribution}
+                    />
                   ))}
                 </div>
                 <div className="w-full sm:w-fit self-center">
