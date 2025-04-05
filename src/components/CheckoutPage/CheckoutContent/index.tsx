@@ -13,7 +13,7 @@ import { usePayment } from "@/contexts/PaymentContext";
 import usePaymentWebSocket from "@/hooks/paymentWebsocket";
 import { ShieldCheck, ReceiptText } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
@@ -24,6 +24,9 @@ interface CheckoutContentProps {
 export default function CheckoutContent({ isInvitationPage }: CheckoutContentProps) {
   const { amount, maxAmount, checkoutItem } = usePayment();
   const router = useRouter();
+  const params = useParams();
+
+  const paramsGiftId = params.giftId as string || params.gift as string || params.id as string;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"paymentConfirmation">("paymentConfirmation");
@@ -42,8 +45,10 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
   useEffect(() => {
     if (paymentData) {
       openPaymentConfirmationModal();
+
+      localStorage.removeItem(`charge.${paramsGiftId}`);
     }
-  }, [paymentData]);
+  }, [paymentData, paramsGiftId]);
 
   if (amount <= 0 || amount > maxAmount) {
     router.back();

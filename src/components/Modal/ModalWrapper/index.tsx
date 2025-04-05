@@ -37,7 +37,7 @@ export const ModalWrapper = ({ isOpen, type, modalTitle, onClose, children }: Mo
       role="dialog"
       aria-labelledby={modalTitle}
       aria-hidden={!isOpen}
-      onClick={onClose}
+      onClick={type === "paymentConfirmation" ? undefined : onClose}
     >
       <div
         className={`bg-white dark:bg-gray-dark p-4 m-4 rounded-lg shadow-lg w-full ${type === "paymentConfirmation" ? "max-w-[540px]" : "max-w-2xl"} max-h-[90vh] overflow-y-auto transform transition-all duration-300`}

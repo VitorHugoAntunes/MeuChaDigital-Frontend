@@ -53,28 +53,33 @@ export default function InvitationPageWrapper() {
   return (
     <InvitationLayout title={invitation?.data.name || undefined}>
       {(headerHeight) => (
-        <main className="flex flex-col flex-1 w-full">
-          <InvitationHeroSection
-            bannerUrl={invitation?.data.banner.url || ''}
-            title={invitation?.data.name || ''}
-            headerHeight={headerHeight || 0}
-            eventDate={invitation?.data.eventDate || ''}
-          />
-          <InvitationCalendarInfo
-            eventDate={invitation?.data.eventDate || ''}
-            eventTime={invitation?.data.eventTime || ''}
-            eventLocation={invitation?.data.address ?? {
-              streetAddress: '',
-              streetNumber: '',
-              neighborhood: '',
-              city: '',
-              state: ''
-            }}
-          />
-          <InvitationRSVPSection giftListId={invitation?.data.id || ''} />
-          <InvitationMomentsSection momentsImages={invitation?.data.momentsImages || []} />
-          {invitation?.data.address && <InvitationLocationSection address={invitation.data.address} />}
-        </main>
+        <>
+          <head>
+            <meta name='robots' content='noindex' />
+          </head>
+          <main className="flex flex-col flex-1 w-full">
+            <InvitationHeroSection
+              bannerUrl={invitation?.data.banner.url || ''}
+              title={invitation?.data.name || ''}
+              headerHeight={headerHeight || 0}
+              eventDate={invitation?.data.eventDate || ''}
+            />
+            <InvitationCalendarInfo
+              eventDate={invitation?.data.eventDate || ''}
+              eventTime={invitation?.data.eventTime || ''}
+              eventLocation={invitation?.data.address ?? {
+                streetAddress: '',
+                streetNumber: '',
+                neighborhood: '',
+                city: '',
+                state: ''
+              }}
+            />
+            <InvitationRSVPSection giftListId={invitation?.data.id || ''} />
+            <InvitationMomentsSection momentsImages={invitation?.data.momentsImages || []} />
+            {invitation?.data.address && <InvitationLocationSection address={invitation.data.address} />}
+          </main>
+        </>
       )}
     </InvitationLayout>
   );
