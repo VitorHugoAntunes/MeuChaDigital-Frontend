@@ -12,3 +12,29 @@ export const translateString = (string: string) => {
       return string;
   }
 }
+
+export const translatePaymentStatus = (status: string) => {
+  switch (status) {
+    case 'PENDING':
+      return 'Pendente';
+    case 'PAID':
+      return 'Pago';
+    case 'CANCELED':
+      return 'Cancelado';
+    default:
+      return status;
+  }
+}
+
+export const translatePaymentMethod = (method: string) => {
+  switch (method) {
+    case 'PIX':
+      return 'Pix';
+    case 'CREDIT_CARD':
+      return 'Cartão de crédito';
+    case 'DEBIT_CARD':
+      return 'Cartão de débito';
+    default:
+      return method;
+  }
+}

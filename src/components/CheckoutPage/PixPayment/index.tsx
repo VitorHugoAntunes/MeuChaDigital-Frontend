@@ -98,7 +98,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
   };
 
   function handleCopyCode() {
-    navigator.clipboard.writeText(charge?.pixKey || "");
+    navigator.clipboard.writeText(charge?.pixCopyAndPaste || "");
     toast.success("Código copiado para a área de transferência.");
   }
 

@@ -13,6 +13,21 @@ export const formatDateToBR = (date: string) => {
   });
 };
 
+export const formatDateToLong = (date: string) => {
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    console.error("Data inválida:", date);
+    return "Data inválida";
+  }
+
+  return parsedDate.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export const formatDateToFull = (date: string) => {
   const parsedDate = new Date(date);
 
@@ -30,3 +45,17 @@ export const formatDateToFull = (date: string) => {
 
   return parsedDate.toLocaleDateString("pt-BR", options);
 };
+
+export const formatDateToTime = (date: string) => {
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    console.error("Data inválida:", date);
+    return "Data inválida";
+  }
+
+  return parsedDate.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
