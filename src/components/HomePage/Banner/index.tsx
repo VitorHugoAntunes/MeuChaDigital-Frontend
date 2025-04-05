@@ -26,7 +26,7 @@ export default function Banner() {
             Planeje o Chá Perfeito do Jeito Que Sempre Sonhou!
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left text-[#f0f0f0] md:ext-text-primary">
+          <p className="text-sm sm:text-base lg:text-xl mt-2 sm:mt-4 text-center md:text-left text-[#f0f0f0] md:text-text-primary">
             Planeje, organize e celebre com facilidade. Crie memórias inesquecíveis para toda a vida.
           </p>
 
