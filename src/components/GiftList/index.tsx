@@ -2,7 +2,7 @@
 
 import Button from "@/components/Button";
 import GiftCard from "@/components/GiftCard";
-import { Plus, Users, Settings2 } from "lucide-react";
+import { Plus, Users, Settings } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Modal from "@/components/Modal";
@@ -12,6 +12,7 @@ import { useDeleteGift } from "@/hooks/gifts";
 import { ToastContainer } from "react-toastify";
 import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 import InputSelect from "@/components/InputSelect";
+import { ContributionMessages } from "../ContributionMessages";
 
 interface Gift {
   id: string;
@@ -215,34 +216,34 @@ export default function GiftList({
       <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
         <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] dark:from-gray-dark dark:to-gray-extraDark shadow-sm py-4 lg:py-8">
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
-            <h1 className="text-2xl sm:text-4xl font-bold text-text-primary mb-3">
+            <h1 className="text-2xl sm:text-4xl font-bold text-text-primary md:mb-3">
               {giftList?.name}
             </h1>
             <p className="text-base sm:text-lg text-text-secondary mb-6">
               {giftList?.description || ""}
             </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex flex-row items-start sm:items-center justify-between gap-4">
               {isUserOwner && (
-                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <div className="flex flex-row gap-4 w-full md:w-fit">
+                  <div className="w-full md:w-fit">
+                    <Button onClick={openAddGiftModal} widthFull>
+                      <Plus className="hidden md:block" size={20} />
+                      <span>Novo presente</span>
+                    </Button>
+                  </div>
+
                   <Link href="/lists/[slug]/invitee-list" as={`/lists/${slug}/invitee-list`} className="w-full md:w-fit">
                     <Button variant="outlined" widthFull>
-                      <Users size={20} />
+                      <Users className="hidden md:block" size={20} />
                       <span>Convidados</span>
                     </Button>
                   </Link>
-                  <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`} className="w-full md:w-fit">
-                    <Button variant="outlined" widthFull>
-                      <Settings2 size={20} />
-                      <span>Configurações</span>
+                  <Link href="/lists/[slug]/settings" as={`/lists/${slug}/settings`} className="w-fit">
+                    <Button variant="outlined">
+                      <Settings size={20} />
+                      <span className="hidden md:block">Configurações</span>
                     </Button>
                   </Link>
-
-                  <div className="w-full md:w-fit">
-                    <Button onClick={openAddGiftModal} widthFull>
-                      <Plus size={20} />
-                      <span>Adicionar Presente</span>
-                    </Button>
-                  </div>
                 </div>
               )}
             </div>
@@ -250,30 +251,65 @@ export default function GiftList({
         </div>
       </header>
 
-      <div className="w-full mb-6 flex flex-col sm:flex-row gap-4">
-        <div className="w-full sm:w-1/3">
-          <InputSelect
-            label="Categoria"
-            options={categories}
-            values={categories}
-            onChange={(e) => handleFilterChange("category", e.target.value)}
-          />
+      {isUserOwner && (
+        <ContributionMessages slug={slug} />
+      )}
+
+      <div className="w-full mb-6">
+        <div className="hidden sm:flex flex-col sm:flex-row gap-4 lg:gap-8">
+          <div className="w-full sm:w-1/3">
+            <InputSelect
+              label="Categoria"
+              options={categories}
+              values={categories}
+              onChange={(e) => handleFilterChange("category", e.target.value)}
+            />
+          </div>
+          <div className="w-full sm:w-1/3">
+            <InputSelect
+              label="Prioridade"
+              options={["Todas", "Baixa", "Média", "Alta"]}
+              values={["Todas", "LOW", "MEDIUM", "HIGH"]}
+              onChange={(e) => handleFilterChange("priority", e.target.value)}
+            />
+          </div>
+          <div className="w-full sm:w-1/3">
+            <InputSelect
+              label="Ordenar por"
+              options={["Nome (A-Z)", "Nome (Z-A)", "Preço (menor)", "Preço (maior)", "Prioridade"]}
+              values={["nome-asc", "nome-desc", "preco-asc", "preco-desc", "prioridade"]}
+              onChange={(e) => handleFilterChange("sort", e.target.value)}
+            />
+          </div>
         </div>
-        <div className="w-full sm:w-1/3">
-          <InputSelect
-            label="Prioridade"
-            options={["Todas", "Baixa", "Média", "Alta"]}
-            values={["Todas", "LOW", "MEDIUM", "HIGH"]}
-            onChange={(e) => handleFilterChange("priority", e.target.value)}
-          />
-        </div>
-        <div className="w-full sm:w-1/3">
-          <InputSelect
-            label="Ordenar por"
-            options={["Nome (A-Z)", "Nome (Z-A)", "Preço (menor)", "Preço (maior)", "Prioridade"]}
-            values={["nome-asc", "nome-desc", "preco-asc", "preco-desc", "prioridade"]}
-            onChange={(e) => handleFilterChange("sort", e.target.value)}
-          />
+
+        <div className="sm:hidden w-screen -mx-4 px-4 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="flex gap-4 w-max">
+            <div className="min-w-fit">
+              <InputSelect
+                label="Categoria"
+                options={categories}
+                values={categories}
+                onChange={(e) => handleFilterChange("category", e.target.value)}
+              />
+            </div>
+            <div className="min-w-fit">
+              <InputSelect
+                label="Prioridade"
+                options={["Todas", "Baixa", "Média", "Alta"]}
+                values={["Todas", "LOW", "MEDIUM", "HIGH"]}
+                onChange={(e) => handleFilterChange("priority", e.target.value)}
+              />
+            </div>
+            <div className="min-w-fit">
+              <InputSelect
+                label="Ordenar por"
+                options={["Nome (A-Z)", "Nome (Z-A)", "Preço (menor)", "Preço (maior)", "Prioridade"]}
+                values={["nome-asc", "nome-desc", "preco-asc", "preco-desc", "prioridade"]}
+                onChange={(e) => handleFilterChange("sort", e.target.value)}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
