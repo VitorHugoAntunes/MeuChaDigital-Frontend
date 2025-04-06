@@ -1,25 +1,51 @@
 "use client"
 
 import { ContributionMessagesWithoutAccordion } from "@/components/ContributionMessages";
-// import { useAuth } from "@/contexts/AuthContext";
-import { Loader2 } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useAuth } from "@/contexts/AuthContext";
+import { useContributionByGiftListSlug } from "@/hooks/contribution";
+import { useParams } from "next/navigation";
 
 export default function ContributionsMessagesPage() {
 
-  // const { user } = useAuth();
+  const { user } = useAuth();
+
+  const slug = useParams().list as string;
+
+  const {
+    data: contributions,
+    isLoading,
+  } = useContributionByGiftListSlug(user?.id || "", slug || "");
 
   return (
     <main className="flex flex-col gap-6 lg:mt-8 py-6 h-fit w-full">
       <section>
-        <h1 className="text-2xl md:text-3xl font-bold text-text-primary">
-          Mensagens das Contribuições
-        </h1>
+        <div className="space-y-2 md:space-y-4">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary">
+            Contribuições recebidas
+          </h1>
 
-        <p className="text-md text-text-secondary">
-          Aqui você pode acompanhar todas as mensagens que você recebeu de contribuições para sua lista de presentes. As mensagens são exibidas em ordem cronológica, com as mais recentes no topo.
-        </p>
+          <div className="max-w-4xl"> {/* Container para limitar largura do texto */}
+            <p className="text-md md:text-lg text-text-secondary leading-relaxed md:leading-normal">
+              Acompanhe todas as contribuições para sua lista.
+              <span className="block md:inline"> {/* Quebra responsiva */}
+                As doações são exibidas em ordem cronológica,
+                <span className="hidden sm:inline"> com as mais recentes primeiro.</span>
+                <span className="sm:hidden"> das mais novas às mais antigas.</span>
+              </span>
+            </p>
+          </div>
+        </div>
 
-        <ContributionMessagesWithoutAccordion />
+        {
+          isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <ContributionMessagesWithoutAccordion
+              contributionMessages={contributions}
+            />
+          )
+        }
       </section>
     </main>
   )

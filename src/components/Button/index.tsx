@@ -22,7 +22,7 @@ export default function Button({
   disabled = false,
 }: ButtonProps) {
   const variantStyles = {
-    default: 'bg-primary-light text-white rounded-full border-2 border-primary-light',
+    default: 'bg-primary text-white rounded-full border-2 border-primary',
     danger: 'bg-danger text-white rounded-full border-2 border-gray-dark',
     outlined: 'bg-white dark:bg-gray-dark text-primary-light rounded-full border-2 border-primary-light dark:border-input-border',
     "outlined-danger": 'bg-transparent dark:bg-gray-dark dark:border-input-border text-danger rounded-full border-2 border-gray-dark',
@@ -32,7 +32,7 @@ export default function Button({
   };
 
   const hoverStyles = {
-    default: 'hover:bg-primary-dark hover:border-primary-dark',
+    default: 'hover:bg-primary-light hover:border-primary-light',
     danger: 'hover:border-danger-dark hover:text-white hover:bg-danger-dark',
     outlined: 'hover:border-primary-light hover:text-primary-dark dark:hover:border-primary-dark dark:hover:text-primary-dark',
     "outlined-danger": 'hover:border-danger-dark dark:hover:border-danger-dark hover:text-danger-dark',

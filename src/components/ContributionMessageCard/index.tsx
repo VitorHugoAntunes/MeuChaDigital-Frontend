@@ -12,32 +12,34 @@ interface ContributionMessageCardProps {
 
 export default function ContributionMessageCard({ contributorName, date, message, giftName, value }: ContributionMessageCardProps) {
   return (
-    <Card className="relative py-4 flex flex-col justify-between gap-4" bgColor="bg-[#FFF0F5]" bgColorDark="bg-gray-dark">
+    <Card className="relative py-4 flex flex-col h-full justify-between gap-4" bgColor="bg-[#FFF0F5]" bgColorDark="bg-gray-dark">
       <div className="flex-1 flex flex-col gap-4">
         <div className="flex flex-col items-start lg:flex-row lg:justify-between lg:items-center">
           <h5 className="text-md text-text-primary">
             {contributorName}
           </h5>
 
-          <span className="text-xs font-semibold capitalize text-text-secondary mt-1 md:mt-0">
+          <span className="text-xs font-semibold first-letter:uppercase text-text-secondary mt-1 md:mt-0">
             {formatDateToRelativeTime(date)}
           </span>
         </div>
 
-        <p className="text-sm text-text-secondary text-wrap">
+        <div className="text-sm text-text-secondary text-wrap">
           <p className="text-md text-primary-dark dark:text-primary-light">
             {giftName}
           </p>
           <p className="text-lg font-bold text-success">
             {formatCurrency(value)}
           </p>
-        </p>
+        </div>
 
-        <Card bgColorDark="bg-background dark:border-none">
-          <p className="text-sm text-text-secondary">
-            {message}
-          </p>
-        </Card>
+        {message && (
+          <article className="text-sm text-text-secondary text-wrap bg-background rounded-lg p-4 border dark:border-none">
+            <p className="text-md text-text-primary">
+              {message}
+            </p>
+          </article>
+        )}
       </div>
     </Card>
   )

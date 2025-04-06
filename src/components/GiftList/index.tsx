@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 import InputSelect from "@/components/InputSelect";
 import { ContributionMessages } from "../ContributionMessages";
+import { useContributionByGiftListSlug } from "@/hooks/contribution";
 
 interface Gift {
   id: string;
@@ -67,6 +68,10 @@ export default function GiftList({
     priority: "Todas",
     sort: "nome-asc"
   });
+
+  const {
+    data: contributions,
+  } = useContributionByGiftListSlug(user?.id || "", slug || "");
 
   const { isLoading: isDeletingGift, mutateAsync: deleteGift } = useDeleteGift(slug || "");
 
@@ -213,7 +218,7 @@ export default function GiftList({
 
   return (
     <main className="flex flex-col flex-1 w-full">
-      <header className="mb-8 w-screen relative left-1/2 -translate-x-1/2">
+      <header className="mb-4 md:mb-8 w-screen relative left-1/2 -translate-x-1/2">
         <div className="gradient-bg bg-gradient-to-r from-[#FFF0F5] to-[#FFE4E9] dark:from-gray-dark dark:to-gray-extraDark shadow-sm py-4 lg:py-8">
           <div className="max-w-screen-2xl mx-auto px-4 sm:px-8">
             <h1 className="text-2xl sm:text-4xl font-bold text-text-primary md:mb-3">
@@ -251,11 +256,11 @@ export default function GiftList({
         </div>
       </header>
 
-      {isUserOwner && (
-        <ContributionMessages slug={slug} />
+      {isUserOwner && contributions && (
+        <ContributionMessages slug={slug} contributionMessages={contributions} />
       )}
 
-      <div className="w-full mb-6">
+      <div className="w-full mt-4 mb-6">
         <div className="hidden sm:flex flex-col sm:flex-row gap-4 lg:gap-8">
           <div className="w-full sm:w-1/3">
             <InputSelect

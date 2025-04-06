@@ -1,6 +1,5 @@
 "use client"
 
-import Card from "@/components/Card";
 import ContributionCard from "@/components/ContributionCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useContributions } from "@/hooks/contribution";
