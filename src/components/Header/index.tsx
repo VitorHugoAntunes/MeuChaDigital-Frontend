@@ -82,7 +82,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-background dark:bg-gray-dark text-text-primary border-b-2 border-b-gray-dark dark:border-b-gray-light py-6 px-4 md:px-6 lg:px-8 flex items-center">
+      <header className="bg-background dark:bg-gray-dark text-text-primary border-b-2 border-b-gray-dark dark:border-b-gray-light py-2 md:py-4 px-4 md:px-6 lg:px-8 flex items-center">
         <div className="flex-1 flex justify-start">
           <Link href="/" className="group hover:text-primary-dark transition-colors duration-300 w-fit inline-block">
             <div className="flex items-center space-x-2">

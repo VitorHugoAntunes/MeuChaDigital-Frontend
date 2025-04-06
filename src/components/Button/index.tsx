@@ -49,9 +49,9 @@ export default function Button({
       onClick={onClick}
       disabled={loading || disabled}
       className={
-        `py-2 px-6 lg:px-8 font-semibold
+        `py-2 px-2 md:px-6 lg:px-8 font-semibold  flex items-center justify-center gap-2 md:gap-4
         ${buttonStyles} transition-colors duration-300
-         ${widthFull ? 'w-full flex items-center justify-center gap-4' : 'w-fit flex items-center justify-center gap-4'}
+         ${widthFull ? 'w-full' : 'w-fit'}
          ${borderStyle === 'rounded' ? 'rounded-md' : 'rounded-full'}
          ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`
       }

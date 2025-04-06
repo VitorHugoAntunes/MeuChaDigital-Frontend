@@ -274,7 +274,7 @@ export default function ListSettingsPage() {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 lg:gap-8">
           <header>
-            <h1 className="text-3xl font-bold text-text-primary">Configurações da Lista</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-text-primary">Configurações da Lista</h1>
           </header>
 
           <BasicInfoSection methods={methods} errors={errors} typeValue={listData.data.eventType} />

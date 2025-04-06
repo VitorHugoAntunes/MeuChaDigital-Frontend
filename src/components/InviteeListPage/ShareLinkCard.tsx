@@ -25,7 +25,7 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
   };
 
   return (
-    <Card className="flex flex-col w-full mt-8">
+    <Card className="flex flex-col w-full md:mt-8">
       <h2 className="text-lg font-semibold text-text-primary text-left">
         Compartilhar link de convite
       </h2>

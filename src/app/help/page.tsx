@@ -30,11 +30,10 @@ export default function Help() {
   ];
 
   return (
-    <main className="lg:mt-8 py-6 h-fit text-center w-full">
-      {/* Seção de como funciona */}
+    <main className="lg:mt-8 py-6 h-fit w-full">
       <section aria-labelledby="how-it-works-heading">
         <header>
-          <h1 id="how-it-works-heading" className="text-3xl font-bold text-text-primary mb-4 lg:mb-8">
+          <h1 id="how-it-works-heading" className="text-2xl md:text-3xl font-bold text-text-primary mb-4 lg:mb-8">
             Ajuda
           </h1>
           <h2 className="text-xl font-semibold text-text-primary mb-4 lg:mb-6">

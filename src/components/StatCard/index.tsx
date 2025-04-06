@@ -14,7 +14,7 @@ export default function StatCard({ title, value, color }: StatCardProps) {
   };
 
   return (
-    <article className={`flex flex-col justify-between p-6 rounded-lg ${colors[color as keyof typeof colors]}`}>
+    <article className={`flex flex-col justify-between p-4 md:p-6 rounded-lg ${colors[color as keyof typeof colors]}`}>
       <h2 className="text-sm font-semibold">{title}</h2>
       <span className="text-2xl font-semibold">{value}</span>
     </article>
