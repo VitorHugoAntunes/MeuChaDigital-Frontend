@@ -7,6 +7,8 @@ interface PaymentContextType {
   setAmount: (amount: number) => void;
   maxAmount: number;
   setMaxAmount: (maxAmount: number) => void;
+  fee: number;
+  setFee: (fee: number) => void;
   message?: string;
   setMessage: (message: string) => void;
   checkoutItem: string;
@@ -35,12 +37,12 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const [checkoutData, setCheckoutData] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedData = localStorage.getItem(`checkout_${checkoutId}`);
-      return savedData ? JSON.parse(savedData) : { amount: 0, maxAmount: 0, checkoutItem: '', message: '' };
+      return savedData ? JSON.parse(savedData) : { amount: 0, maxAmount: 0, fee: 0, checkoutItem: '', message: '' };
     }
-    return { amount: 0, maxAmount: 0, checkoutItem: '', message: '' };
+    return { amount: 0, maxAmount: 0, fee: 0, checkoutItem: '', message: '' };
   });
 
-  const { amount, maxAmount, message, checkoutItem } = checkoutData;
+  const { amount, maxAmount, fee, message, checkoutItem } = checkoutData;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -57,6 +59,10 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
     setCheckoutData((prevData: PaymentProps) => ({ ...prevData, maxAmount }));
   };
 
+  const setFee = (fee: number) => {
+    setCheckoutData((prevData: PaymentProps) => ({ ...prevData, fee }));
+  };
+
   const setMessage = (message: string) => {
     setCheckoutData((prevData: PaymentProps) => ({ ...prevData, message }));
   };
@@ -71,6 +77,8 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
       setAmount,
       maxAmount,
       setMaxAmount,
+      fee,
+      setFee,
       message,
       setMessage,
       checkoutItem,

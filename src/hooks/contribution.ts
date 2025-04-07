@@ -59,7 +59,7 @@ export const useContributionByGiftListSlug = (userId: string, slug: string) => {
 
 export const useCreateContribution = () => {
   return useMutation({
-    mutationFn: (data: { txId: string; value: number; message: string }) => createContribution(data),
+    mutationFn: (data: { txId: string; value: number; valueWithFee: number, fee: number, message: string }) => createContribution(data),
     mutationKey: ['createContribution'],
   });
 };

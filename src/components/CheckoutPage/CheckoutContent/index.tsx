@@ -23,7 +23,7 @@ interface CheckoutContentProps {
 }
 
 export default function CheckoutContent({ isInvitationPage }: CheckoutContentProps) {
-  const { amount, maxAmount, message, checkoutItem } = usePayment();
+  const { amount, maxAmount, fee, message, checkoutItem } = usePayment();
   const { mutateAsync } = useCreateContribution();
   const router = useRouter();
   const params = useParams();
@@ -53,7 +53,9 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
 
       const data = {
         txId,
-        value: Number(value),
+        value: amount,
+        valueWithFee: Number(value),
+        fee: fee,
         message: message || "",
       };
 
@@ -103,6 +105,7 @@ interface CheckoutProps {
 }
 
 function Checkout({ isInvitationPage, checkoutItem, amount, message }: CheckoutProps) {
+  const { setFee } = usePayment();
   const { watch } = useFormContext();
   const selectedPaymentType = watch("type") as "PIX" | "CREDIT_CARD" | "BANK_SLIP" | undefined;
 
@@ -121,6 +124,10 @@ function Checkout({ isInvitationPage, checkoutItem, amount, message }: CheckoutP
   }
 
   const total = amount + fee;
+
+  useEffect(() => {
+    setFee(fee);
+  }, [fee]);
 
   return (
     <main className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:mt-8 py-6 w-full">
