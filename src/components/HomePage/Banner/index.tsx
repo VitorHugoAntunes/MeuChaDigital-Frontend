@@ -33,7 +33,9 @@ export default function Banner() {
           <div className="md:hidden flex flex-col items-center w-full">
 
             <div className="flex justify-center mt-4 w-full ">
-              <Button widthFull>Comece a Planejar Agora</Button>
+              <Link href="/sign-in">
+                <Button widthFull>Comece a Planejar Agora</Button>
+              </Link>
             </div>
           </div>
 
