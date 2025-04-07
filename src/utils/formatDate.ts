@@ -36,14 +36,24 @@ export const formatDateToFull = (date: string) => {
     return "Data inválida";
   }
 
+  const utcDate = new Date(Date.UTC(
+    parsedDate.getUTCFullYear(),
+    parsedDate.getUTCMonth(),
+    parsedDate.getUTCDate(),
+    parsedDate.getUTCHours(),
+    parsedDate.getUTCMinutes(),
+    parsedDate.getUTCSeconds()
+  ));
+
   const options: Intl.DateTimeFormatOptions = {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    timeZone: 'UTC' // Força o uso de UTC na formatação
   };
 
-  return parsedDate.toLocaleDateString("pt-BR", options);
+  return utcDate.toLocaleDateString("pt-BR", options);
 };
 
 export const formatDateToTime = (date: string) => {
