@@ -6,7 +6,7 @@ import Image from "next/image";
 import Card from "@/components/Card";
 import KeyInfo from "@/components/ProfilePage/KeyInfo";
 import TipCard from "@/components/ProfilePage/TipCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/components/Modal";
 import { useAuth } from "@/contexts/AuthContext";
 import { redirect, useRouter } from "next/navigation";
@@ -18,6 +18,7 @@ import { ToastContainer } from "react-toastify";
 import { useDeleteUser } from "@/hooks/user";
 import { useContributions } from "@/hooks/contribution";
 import ContributionCard from "@/components/ContributionCard";
+import { useUserPayment } from "@/contexts/UserPaymentContext";
 
 interface PixKey extends PixKeyCreateData {
   id: string;
@@ -29,6 +30,7 @@ export default function ProfilePage() {
   const [selectedPixKeyId, setSelectedPixKeyId] = useState<string | null>(null);
 
   const { user, logoutUser, isLoading, isLoggingOut } = useAuth();
+  const { handleSelectFirstPixKey } = useUserPayment();
 
   const router = useRouter();
 
@@ -66,6 +68,15 @@ export default function ProfilePage() {
   async function handleDeletePixKey(pixKeyId: string) {
     try {
       await deletePixKey(pixKeyId);
+
+      const updatedKeys = pixKeys?.filter((key: { id: string; }) => key.id !== pixKeyId) || [];
+
+      if (updatedKeys.length === 0) {
+        handleSelectFirstPixKey([]);
+      } else {
+        handleSelectFirstPixKey(updatedKeys);
+      }
+
       setIsModalOpen(false);
     } catch (error) {
       console.error("Erro ao excluir a chave PIX", error);
@@ -80,6 +91,17 @@ export default function ProfilePage() {
   function handleToAllContributions() {
     router.push("/contributions");
   }
+
+  useEffect(() => {
+    if (pixKeys) {
+      const storedKeyId = localStorage.getItem('selectedPixKeyId');
+      if (storedKeyId && !pixKeys.some((key: { id: string; }) => key.id === storedKeyId)) {
+        localStorage.removeItem('selectedPixKeyId');
+      }
+
+      handleSelectFirstPixKey(pixKeys);
+    }
+  }, [pixKeys, handleSelectFirstPixKey]);
 
   return (
     <main className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:mt-8 py-6 h-fit">
@@ -126,6 +148,10 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          <p className="text-md text-text-secondary mt-4">
+            A chave PIX selecionada será utilizada para receber contribuições.
+          </p>
+
           <div className="mt-6 space-y-4">
             {isGettingAllPixKeysLoading ? (
               <div className="flex justify-center items-center py-4">
@@ -137,6 +163,8 @@ export default function ProfilePage() {
                   key={key.id}
                   title={translateString(key.type)}
                   value={key.type === "CPF" ? formatCPF(key.key) : key.type === "PHONE" ? formatPhone(key.key) : key.key}
+                  type="PIX-KEY"
+                  pixKey={key}
                   action={() => openDeletePixKeyModal(key.id)}
                 />
               ))

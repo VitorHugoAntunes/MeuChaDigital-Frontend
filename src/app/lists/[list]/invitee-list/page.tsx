@@ -105,7 +105,7 @@ export default function InviteeListPage() {
               <p className="text-text-secondary mt-4 text-left md:text-center">
                 Você ainda não tem convidados confirmados.
               </p>
-              <p className="text-text-secondary text-left md:text-center">
+              <p className="text-text-secondary text-left md:text-center mt-2">
                 Compartilhe o convite para começar a receber as respostas!
               </p>
             </Card>

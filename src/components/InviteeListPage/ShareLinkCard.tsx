@@ -3,12 +3,15 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useUserPayment } from "@/contexts/UserPaymentContext";
 
 interface ShareLinkCardProps {
   slug: string;
 }
 
 export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
+  const { pixKey } = useUserPayment();
+
   const handleCopyLink = () => {
     const link = `https://${slug}.meuchadigital.com/invitation`;
     // const link = `http://${slug}.localhost:3000/invitation`;
@@ -29,33 +32,46 @@ export const ShareLinkCard = ({ slug }: ShareLinkCardProps) => {
       <h2 className="text-lg font-semibold text-text-primary text-left">
         Compartilhar link de convite
       </h2>
-      <p className="text-text-secondary mt-2 text-left">
-        Compartilhe o link abaixo com seus convidados para que eles possam confirmar presença
-      </p>
 
-      <div className="flex flex-col md:flex-row items-center w-full mt-4 gap-4">
-        <input
-          type="text"
-          className="flex-1 px-4 py-2 text-text-primary bg-gray-100 dark:bg-input border border-gray-300 dark:border-input rounded-lg md:rounded-l-lg focus:outline-none w-full"
-          readOnly
-          value={`https://${slug}.meuchadigital.com/invitation`}
-        // value={`http://${slug}.localhost:3000/invitation`}
-        />
-        <div className="w-full md:w-auto">
-          <Button onClick={handleCopyLink} widthFull>
-            <ClipboardCopy size={20} />
-            Copiar link
-          </Button>
+      {pixKey?.id && pixKey.id !== "" ? (
+        <>
+          <p className="text-text-secondary mt-2 text-left">
+            Compartilhe o link abaixo com seus convidados para que eles possam confirmar presença
+          </p>
+          <div className="flex flex-col md:flex-row items-center w-full mt-4 gap-4">
+            <input
+              type="text"
+              className="flex-1 px-4 py-2 text-text-primary bg-gray-100 dark:bg-input border border-gray-300 dark:border-input rounded-lg md:rounded-l-lg focus:outline-none w-full"
+              readOnly
+              value={`https://${slug}.meuchadigital.com/invitation`}
+            // value={`http://${slug}.localhost:3000/invitation`}
+            />
+            <div className="w-full md:w-auto">
+              <Button onClick={handleCopyLink} widthFull>
+                <ClipboardCopy size={20} />
+                Copiar link
+              </Button>
+            </div>
+          </div>
+
+          <Link
+            href={`https://${slug}.meuchadigital.com/invitation`}
+            // href={`http://${slug}.localhost:3000/invitation`}
+            className="w-fit mt-4 text-center md:text-left text-primary hover:text-primary-light underline hover:no-underline transition-colors duration-300 mx-auto md:mx-0"
+          >
+            Ver link de convite
+          </Link>
+        </>
+      ) : (
+        <div className="flex flex-col w-full mt-4 text-left md:text-center">
+          <p className="text-text-secondary">
+            Nenhum método de pagamento cadastrado.
+          </p>
+          <p className="text-text-secondary max-w-xl md:self-center mt-2">
+            Adicione um método de pagamento no seu perfil para compartilhar seu link de convite e receber contribuições.
+          </p>
         </div>
-      </div>
-
-      <Link
-        href={`https://${slug}.meuchadigital.com/invitation`}
-        // href={`http://${slug}.localhost:3000/invitation`}
-        className="w-fit mt-4 text-center md:text-left text-primary hover:text-primary-light underline hover:no-underline transition-colors duration-300 mx-auto md:mx-0"
-      >
-        Ver link de convite
-      </Link>
+      )}
     </Card>
   );
 };
