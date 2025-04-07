@@ -225,6 +225,8 @@ export const GiftForm = ({
           label="Descrição"
           placeholder="Descreva o presente"
           register={{ ...register("description", { required: "Descrição é obrigatória" }) }}
+          maxLength={250}
+          name="description"
           error={errors.description?.message}
         />
 

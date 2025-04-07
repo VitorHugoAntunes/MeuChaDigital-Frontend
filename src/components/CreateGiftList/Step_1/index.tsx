@@ -106,6 +106,8 @@ export default function Step1() {
             })
           }
         }
+        maxLength={250}
+        name="description"
         error={errors.description?.message ? errors.description.message.toString() : ""}
       />
     </div>
