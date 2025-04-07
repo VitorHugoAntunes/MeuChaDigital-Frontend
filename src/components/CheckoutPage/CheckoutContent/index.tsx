@@ -171,7 +171,7 @@ function Checkout({ isInvitationPage, checkoutItem, amount, message }: CheckoutP
               <>
                 Pagamento seguro garantido pelo Efi Bank.<br />
                 Ao efetuar o pagamento, você concorda com os {" "}
-                <Link href="#" className="text-primary underline">termos de serviço</Link> do Efi Bank.
+                <Link href="https://sejaefi.com.br/termos-e-contratos" className="text-primary underline">termos de serviço</Link> do Efi Bank.
               </>
             }
           />
