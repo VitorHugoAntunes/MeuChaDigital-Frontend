@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getContributionsByUserId, getContributionByGiftListSlug } from '@/api/contribution';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { getContributionsByUserId, getContributionByGiftListSlug, createContribution } from '@/api/contribution';
 
 type UserContribution = {
   id: string;
@@ -54,5 +54,12 @@ export const useContributionByGiftListSlug = (userId: string, slug: string) => {
     cacheTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+  });
+};
+
+export const useCreateContribution = () => {
+  return useMutation({
+    mutationFn: (data: { txId: string; value: number; message: string }) => createContribution(data),
+    mutationKey: ['createContribution'],
   });
 };

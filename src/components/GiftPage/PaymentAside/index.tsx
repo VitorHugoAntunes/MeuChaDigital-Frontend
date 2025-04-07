@@ -10,6 +10,7 @@ import { Info, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { paymentAmountSchema } from '@/schemas/paymentAmountSchema';
 import { CurrencyMask } from '@/utils/masks';
+import InputTextArea from '@/components/InputTextArea';
 
 interface PaymentAsideProps {
   isUserOwner: boolean;
@@ -22,11 +23,14 @@ interface PaymentAsideProps {
 
 export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxAmount, isInvitationPage }: PaymentAsideProps) {
   const router = useRouter();
-  const { setAmount, setMaxAmount, setCheckoutItem } = usePayment();
+  const { setAmount, setMaxAmount, setMessage, setCheckoutItem } = usePayment();
 
   const methods = useForm({
     resolver: zodResolver(paymentAmountSchema(maxAmount)),
-    defaultValues: { amount: undefined },
+    defaultValues: {
+      amount: undefined,
+      message: "",
+    },
   });
 
   const {
@@ -40,9 +44,10 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
     router.push(`https://${slug}.meuchadigital.com/invitation/gifts/${giftId}`);
   };
 
-  const onSubmit = (data: { amount: number }) => {
+  const onSubmit = (data: { amount: number, message?: string }) => {
     setAmount(data.amount);
     setMaxAmount(maxAmount);
+    setMessage(data.message ?? "");
     setCheckoutItem(giftName);
 
     if (isInvitationPage === true) {
@@ -100,6 +105,16 @@ export default function PaymentAside({ isUserOwner, slug, giftId, giftName, maxA
                   mask={CurrencyMask}
                   min={0.01}
                   max={maxAmount}
+                />
+
+                <InputTextArea
+                  label="Mensagem (opcional)"
+                  placeholder="Digite sua mensagem"
+                  register={register("message")}
+                  error={isSubmitted ? errors.message?.message : undefined}
+                  maxLength={150}
+                  name='message'
+                  description="Essa mensagem será enviada junto com sua contribuição."
                 />
               </div>
 

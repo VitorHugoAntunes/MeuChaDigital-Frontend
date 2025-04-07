@@ -16,3 +16,15 @@ export const getContributionByGiftListSlug = async (userId: string, slug: string
 
   return response.data;
 }
+
+export const createContribution = async (data: {
+  txId: string;
+  value: number;
+  message?: string;
+}) => {
+  const response = await api.post('/contributions', data, {
+    withCredentials: true,
+  });
+
+  return response.data;
+}

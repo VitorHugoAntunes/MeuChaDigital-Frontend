@@ -10,6 +10,7 @@ import CheckoutPaymentType from "@/components/CheckoutPaymentType";
 import Divider from "@/components/Divider";
 import Modal from "@/components/Modal";
 import { usePayment } from "@/contexts/PaymentContext";
+import { useCreateContribution } from "@/hooks/contribution";
 import usePaymentWebSocket from "@/hooks/paymentWebsocket";
 import { ShieldCheck, ReceiptText } from "lucide-react";
 import Link from "next/link";
@@ -22,7 +23,8 @@ interface CheckoutContentProps {
 }
 
 export default function CheckoutContent({ isInvitationPage }: CheckoutContentProps) {
-  const { amount, maxAmount, checkoutItem } = usePayment();
+  const { amount, maxAmount, message, checkoutItem } = usePayment();
+  const { mutateAsync } = useCreateContribution();
   const router = useRouter();
   const params = useParams();
 
@@ -42,13 +44,27 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
     defaultValues: { type: "" },
   });
 
+  const [hasProcessed, setHasProcessed] = useState(false);
+
   useEffect(() => {
-    if (paymentData) {
+    if (paymentData && paymentData.transactionId && paymentData.amount && !hasProcessed) {
+      const txId = paymentData.transactionId;
+      const value = paymentData.amount;
+
+      const data = {
+        txId,
+        value: Number(value),
+        message: message || "",
+      };
+
+      setHasProcessed(true);
+      mutateAsync(data);
+
       openPaymentConfirmationModal();
 
       localStorage.removeItem(`charge.${paramsGiftId}`);
     }
-  }, [paymentData, paramsGiftId]);
+  }, [paymentData, paramsGiftId, message, mutateAsync, hasProcessed]);
 
   if (amount <= 0 || amount > maxAmount) {
     router.back();
@@ -57,7 +73,7 @@ export default function CheckoutContent({ isInvitationPage }: CheckoutContentPro
 
   return (
     <FormProvider {...methods}>
-      <Checkout checkoutItem={checkoutItem} isInvitationPage={isInvitationPage} amount={amount} />
+      <Checkout checkoutItem={checkoutItem} isInvitationPage={isInvitationPage} amount={amount} message={message || ""} />
       {isModalOpen && modalType === "paymentConfirmation" && (
         <Modal
           modalType="paymentConfirmation"
@@ -83,9 +99,10 @@ interface CheckoutProps {
   isInvitationPage?: boolean;
   checkoutItem: string;
   amount: number;
+  message: string;
 }
 
-function Checkout({ isInvitationPage, checkoutItem, amount }: CheckoutProps) {
+function Checkout({ isInvitationPage, checkoutItem, amount, message }: CheckoutProps) {
   const { watch } = useFormContext();
   const selectedPaymentType = watch("type") as "PIX" | "CREDIT_CARD" | "BANK_SLIP" | undefined;
 
@@ -121,6 +138,28 @@ function Checkout({ isInvitationPage, checkoutItem, amount }: CheckoutProps) {
           <OrderSummary checkoutItem={checkoutItem} amount={amount} fee={fee} total={total} />
 
           <Divider />
+
+          {message && message !== "" && (
+            <>
+              <div className="mt-6">
+                <div className="flex flex-col gap-1 font-bold">
+                  <p className="text-sm text-text-primary">
+                    Mensagem:
+                  </p>
+                  <article className="text-sm text-text-secondary text-wrap bg-background rounded-lg p-4 border dark:border-none">
+                    <p className="text-md text-text-primary">
+                      {message}
+                    </p>
+                  </article>
+                </div>
+                <p className="text-md text-text-secondary mt-4">
+                  Sua mensagem será enviada junto com o pagamento.
+                </p>
+              </div>
+              <Divider />
+            </>
+          )}
+
 
           <CheckoutPaymentType anchor="#payment" />
 

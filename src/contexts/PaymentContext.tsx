@@ -7,6 +7,8 @@ interface PaymentContextType {
   setAmount: (amount: number) => void;
   maxAmount: number;
   setMaxAmount: (maxAmount: number) => void;
+  message?: string;
+  setMessage: (message: string) => void;
   checkoutItem: string;
   setCheckoutItem: (checkoutItem: string) => void;
   checkoutId: string;
@@ -16,6 +18,7 @@ interface PaymentProps {
   amount: number;
   maxAmount: number;
   checkoutItem: string;
+  message?: string;
 }
 
 const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
@@ -32,12 +35,12 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const [checkoutData, setCheckoutData] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedData = localStorage.getItem(`checkout_${checkoutId}`);
-      return savedData ? JSON.parse(savedData) : { amount: 0, maxAmount: 0, checkoutItem: '' };
+      return savedData ? JSON.parse(savedData) : { amount: 0, maxAmount: 0, checkoutItem: '', message: '' };
     }
-    return { amount: 0, maxAmount: 0, checkoutItem: '' };
+    return { amount: 0, maxAmount: 0, checkoutItem: '', message: '' };
   });
 
-  const { amount, maxAmount, checkoutItem } = checkoutData;
+  const { amount, maxAmount, message, checkoutItem } = checkoutData;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -54,12 +57,26 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
     setCheckoutData((prevData: PaymentProps) => ({ ...prevData, maxAmount }));
   };
 
+  const setMessage = (message: string) => {
+    setCheckoutData((prevData: PaymentProps) => ({ ...prevData, message }));
+  };
+
   const setCheckoutItem = (checkoutItem: string) => {
     setCheckoutData((prevData: PaymentProps) => ({ ...prevData, checkoutItem }));
   };
 
   return (
-    <PaymentContext.Provider value={{ amount, setAmount, maxAmount, setMaxAmount, checkoutItem, setCheckoutItem, checkoutId }}>
+    <PaymentContext.Provider value={{
+      amount,
+      setAmount,
+      maxAmount,
+      setMaxAmount,
+      message,
+      setMessage,
+      checkoutItem,
+      setCheckoutItem,
+      checkoutId
+    }}>
       {children}
     </PaymentContext.Provider>
   );
