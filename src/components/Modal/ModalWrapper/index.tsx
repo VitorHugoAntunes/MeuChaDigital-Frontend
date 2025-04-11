@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 interface ModalWrapperProps {
   isOpen: boolean;
-  type?: "gift" | "pix" | "invitee" | "paymentConfirmation" | "action";
+  type?: "gift" | "pix" | "bankAccount" | "invitee" | "paymentConfirmation" | "action";
   modalTitle: string;
   onClose: () => void;
   children: React.ReactNode;

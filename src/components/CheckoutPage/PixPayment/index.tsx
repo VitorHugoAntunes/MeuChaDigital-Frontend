@@ -10,6 +10,7 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import { useParams } from "next/navigation";
 import calculateTimeRemaining from "@/utils/calculateTimeRemaining";
 import Image from "next/image";
+import { usePayment } from "@/contexts/PaymentContext";
 
 interface PixPaymentProps {
   total: number;
@@ -18,6 +19,7 @@ interface PixPaymentProps {
 export default function PixPayment({ total }: PixPaymentProps) {
   const [timeRemaining, setTimeRemaining] = useState<string>("00:00:00");
   const params = useParams();
+  const { checkoutItem } = usePayment();
 
   const paramsGiftId = params.giftId as string || params.gift as string || params.id as string;
 
@@ -69,8 +71,7 @@ export default function PixPayment({ total }: PixPaymentProps) {
     const chargeData = {
       expiration: 3600, // 1 hora
       value: total.toString(),
-      pixKey: "03f46041-ace4-4ade-b074-faf9d0b78e5f",
-      requestPayer: "Descrição do pagamento",
+      requestPayer: "Contribuição para o presente: " + checkoutItem,
       giftId: paramsGiftId,
     };
 
@@ -127,12 +128,12 @@ export default function PixPayment({ total }: PixPaymentProps) {
 
       {isLoading ? (
         <div className="animate-pulse">
-          <div className="h-6 w-48 bg-gray-dark rounded mx-auto mb-4 animate-pulse"></div> {/* Título */}
-          <div className="h-4 w-64 bg-gray-dark rounded mx-auto mb-6 animate-pulse"></div> {/* Descrição */}
-          <div className="w-48 h-48 bg-gray-dark rounded-lg mx-auto animate-pulse"></div> {/* QR Code Skeleton */}
+          <div className="h-6 w-48 bg-gray-light rounded mx-auto mb-4 animate-pulse"></div>
+          <div className="h-4 w-64 bg-gray-light rounded mx-auto mb-6 animate-pulse"></div>
+          <div className="w-48 h-48 bg-gray-light rounded-lg mx-auto animate-pulse"></div>
           <Divider />
-          <div className="h-4 w-56 bg-gray-dark rounded mx-auto mt-4 mb-6 animate-pulse"></div> {/* Texto de expiração */}
-          <div className="h-10 w-full bg-gray-dark rounded-lg animate-pulse"></div> {/* Botão de copiar código */}
+          <div className="h-4 w-56 bg-gray-light rounded mx-auto mt-4 mb-6 animate-pulse"></div>
+          <div className="h-10 w-full bg-gray-light rounded-lg animate-pulse"></div>
         </div>
       ) : (
         charge && timeRemaining !== "00:00:00" && localId && (

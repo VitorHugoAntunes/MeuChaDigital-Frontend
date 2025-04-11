@@ -2,64 +2,66 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
-type PixKey = {
+type BankAccount = {
   id: string;
-  key: string;
+  account: string;
   type: string;
+  cpf?: string;
+  cnpj?: string;
 };
 
 interface UserPaymentContextType {
-  pixKey: PixKey | null;
-  handleSetPixKey: (pixKey: PixKey) => void;
-  handleSelectFirstPixKey: (pixKeys: PixKey[]) => void;
-  clearPixKey: () => void;
+  bankAccount: BankAccount | null;
+  handleSetBankAccount: (account: BankAccount) => void;
+  handleSelectFirstBankAccount: (accounts: BankAccount[]) => void;
+  clearBankAccount: () => void;
 }
 
 const UserPaymentContext = createContext<UserPaymentContextType | undefined>(undefined);
 
 export const UserPaymentProvider = ({ children }: { children: ReactNode }) => {
-  const [pixKey, setPixKey] = useState<PixKey | null>(null);
+  const [bankAccount, setBankAccount] = useState<BankAccount | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const selectedPixKeyId = localStorage.getItem('selectedPixKeyId');
-      if (selectedPixKeyId) {
-        setPixKey({ id: selectedPixKeyId, key: '', type: '' });
+      const selectedAccountId = localStorage.getItem('selectedBankAccountId');
+      if (selectedAccountId) {
+        setBankAccount({ id: selectedAccountId, account: '', type: '' });
       }
     }
   }, []);
 
-  const handleSetPixKey = (pixKey: PixKey) => {
-    setPixKey(pixKey);
-    localStorage.setItem('selectedPixKeyId', pixKey.id);
+  const handleSetBankAccount = (account: BankAccount) => {
+    setBankAccount(account);
+    localStorage.setItem('selectedBankAccountId', account.id);
   };
 
-  const clearPixKey = () => {
-    setPixKey(null);
-    localStorage.removeItem('selectedPixKeyId');
+  const clearBankAccount = () => {
+    setBankAccount(null);
+    localStorage.removeItem('selectedBankAccountId');
   };
 
-  const handleSelectFirstPixKey = (pixKeys: PixKey[]) => {
-    if (pixKeys.length > 0) {
-      if (pixKey?.id) {
-        const keyExists = pixKeys.some(key => key.id === pixKey.id);
-        if (!keyExists) {
-          handleSetPixKey(pixKeys[0]);
+  const handleSelectFirstBankAccount = (accounts: BankAccount[]) => {
+    if (accounts.length > 0) {
+      if (bankAccount?.id) {
+        const accountExists = accounts.some(acc => acc.id === bankAccount.id);
+        if (!accountExists) {
+          handleSetBankAccount(accounts[0]);
         }
       } else {
-        handleSetPixKey(pixKeys[0]);
+        handleSetBankAccount(accounts[0]);
       }
     } else {
-      clearPixKey();
+      clearBankAccount();
     }
   };
 
   return (
     <UserPaymentContext.Provider value={{
-      pixKey,
-      handleSetPixKey,
-      handleSelectFirstPixKey,
-      clearPixKey,
+      bankAccount,
+      handleSetBankAccount,
+      handleSelectFirstBankAccount,
+      clearBankAccount,
     }}>
       {children}
     </UserPaymentContext.Provider>

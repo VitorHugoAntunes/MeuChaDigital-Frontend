@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 
 interface ModalHeaderProps {
   title: string;
-  type?: "gift" | "pix" | "invitee" | "paymentConfirmation" | "action";
+  type?: "gift" | "pix" | "bankAccount" | "invitee" | "paymentConfirmation" | "action";
   onClose: () => void;
 }
 

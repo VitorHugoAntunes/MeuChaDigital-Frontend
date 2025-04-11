@@ -13,6 +13,17 @@ export const translateString = (string: string) => {
   }
 }
 
+export const translateBankAccountType = (type: string) => {
+  switch (type) {
+    case 'PERSONAL':
+      return 'Pessoa física';
+    case 'BUSINESS':
+      return 'Pessoa jurídica';
+    default:
+      return type;
+  }
+}
+
 export const translatePaymentStatus = (status: string) => {
   switch (status) {
     case 'PENDING':

@@ -18,7 +18,9 @@ enum TagColors {
   PRIORITY_HIGH = "bg-red-200 text-red-800",
 
   // Cor padrão
-  DEFAULT = "bg-gray-dark text-gray-900"
+  DEFAULT = "bg-gray-dark text-gray-900",
+
+  NEUTRAL = "bg-gray-light text-text-secondary",
 }
 
 interface TagProps {

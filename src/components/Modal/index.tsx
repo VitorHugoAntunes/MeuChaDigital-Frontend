@@ -10,11 +10,12 @@ import { GiftUpdateFormData } from "@/schemas/createGiftSchema";
 import { EditInviteeModal } from "./ModalContent/editInviteeModal";
 import { UpdateInviteeFormData } from "@/schemas/createInviteeSchema";
 import { PaymentConfirmation } from "./ModalContent/paymentConfirmationModal";
+import { AddBankAccountModal } from "./ModalContent/addBankAccountModal";
 
 interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isOpen: boolean) => void;
-  modalType: "gift" | "pix" | "invitee" | "paymentConfirmation" | "action";
+  modalType: "gift" | "pix" | "bankAccount" | "invitee" | "paymentConfirmation" | "action";
   action?: "Sair" | "Excluir" | "Confirmar" | "Rejeitar";
   actionTitle?: string;
   isActionSuccess?: boolean;
@@ -46,6 +47,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuc
       <AddGiftModal giftListId={giftListId} userId={userId} isEdit={isEdit} initialValues={initialValues as GiftUpdateFormData} onClose={closeModal} onSuccess={onSuccess} />
     ) : null,
     pix: <AddPixKeyModal onClose={closeModal} />,
+    bankAccount: <AddBankAccountModal onClose={closeModal} />,
     invitee: <EditInviteeModal onClose={closeModal} slug={slug as string} initialValues={initialValues as UpdateInviteeFormData} onSuccess={onSuccess} />,
     paymentConfirmation: <PaymentConfirmation title="Pagamento confirmado" description="Seu pagamento foi confirmado com sucesso!" paymentData={paymentData} onClose={closeModal} />,
     action: <ActionModal action={action || ""} description={actionDescription || ""} isActionSuccess={isActionSuccess} isLoading={isLoading} onSuccess={onSuccess} onClose={closeModal} />,
@@ -57,6 +59,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuc
         {
           gift: "Adicionar presente",
           pix: "Adicionar chave Pix",
+          bankAccount: "Adicionar conta bancária",
           paymentConfirmation: "Pagamento confirmado",
           invitee: "Editar convidado",
           action: actionTitle,
@@ -70,6 +73,7 @@ const Modal = ({ isModalOpen, setIsModalOpen, modalType, giftListId, isActionSuc
         title={{
           gift: { add: "Adicionar presente", edit: "Editar presente" }[isEdit ? "edit" : "add"],
           pix: "Adicionar chave Pix",
+          bankAccount: "Adicionar conta bancária",
           invitee: "Editar convidado",
           paymentConfirmation: "",
           action: actionTitle,

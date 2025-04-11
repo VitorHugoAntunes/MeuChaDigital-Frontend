@@ -1,4 +1,3 @@
-// import api from '../config/axios';
 import axios from 'axios';
 
 const api = axios.create({
@@ -8,7 +7,6 @@ const api = axios.create({
 export interface ChargeDefaultUserData {
   expiration: number;
   value: string;
-  pixKey: string;
   requestPayer: string;
   giftId: string;
   payerId: string;
@@ -27,10 +25,10 @@ const formatValue = (value: string) => {
 };
 
 export const createDefaultCharge = async (data: ChargeDefaultUserData) => {
+
   const dataToSend = {
     expiracao: data.expiration,
     original: formatValue(data.value),
-    chave: data.pixKey,
     solicitacaoPagador: data.requestPayer,
     giftId: data.giftId,
     payerId: data.payerId,
@@ -57,7 +55,6 @@ export const createGuestCharge = async (data: ChargeGuestUserData) => {
   const dataToSend = {
     expiracao: data.expiration,
     original: formatValue(data.value),
-    chave: data.pixKey,
     solicitacaoPagador: data.requestPayer,
     giftId: data.giftId,
     isGuest: data.isGuest,
